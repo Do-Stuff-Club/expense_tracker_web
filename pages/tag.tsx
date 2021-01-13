@@ -8,6 +8,7 @@ import styles from "../styles/Home.module.css";
 import withAuth, { AuthProps } from "../components/withAuthentication";
 import { useEffect } from 'react';
 import { fetchTags } from '../redux/tags/action';
+import CategoryCreator from '../components/categoryCreator';
 
 const stateToProps = (state: RootState) => ({
   auth: {
@@ -41,6 +42,7 @@ function Tag(props: TagProps) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Tags!</h1>
+        <CategoryCreator></CategoryCreator>
       </main>
 
       <footer className={styles.footer}></footer>

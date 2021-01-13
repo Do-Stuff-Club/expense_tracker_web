@@ -11,6 +11,6 @@ export default function tag(state = defaultTagState, action: TagAction): TagStat
         case TagActionTypes.FETCH:
             return action.payload.tags
         default:
-            return action.payload.tags
+            return state
     }
 }

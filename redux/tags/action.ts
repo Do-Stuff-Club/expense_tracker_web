@@ -31,8 +31,9 @@ export const fetchTags = (params: FetchTagParams): ThunkAction<Promise<any>, Roo
                     uid: response.headers["uid"],
                     "access-token": response.headers["access-token"],
                     "token-type": response.headers["token-type"],
-                }
-            }
+                },
+                tags: response.data
+            },
         })
 
         return Promise.resolve("a fancy message")// FIXME

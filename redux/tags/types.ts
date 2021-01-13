@@ -1,14 +1,18 @@
 import { AuthHeaders } from '../user/types';
 
+export interface Tag {
+    name: string
+    id: number
+}
+
+export interface Category {
+    name: string
+    id: number
+    tags: ReadonlyArray<Tag>
+}
+
 export interface TagState {
-    categories: ReadonlyArray<{
-        name: string
-        id: number
-        tags: ReadonlyArray<{
-            name: string
-            id: number
-        }>
-    }>
+    categories: ReadonlyArray<Category>
 }
 
 export enum TagActionTypes {
