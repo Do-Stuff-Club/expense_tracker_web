@@ -1,10 +1,23 @@
 import { Button, Card, Grid, List, TextField } from "@material-ui/core";
 import React, { ChangeEvent, useState } from "react";
+import { connect, ConnectedProps } from "react-redux";
 import TagItem from "./tagItem";
 
-interface CategoryCreatorProps {}
+import { newCategory } from "../redux/tags/action";
+import { RootState } from "../redux/store";
+
+const stateToProps = (state: RootState) => ({
+  ...state,
+});
+const connector = connect(stateToProps, {
+  newCategory,
+});
+type ReduxProps = ConnectedProps<typeof connector>;
+type CategoryCreatorProps = ReduxProps;
 
 export default function CategoryCreator(props: CategoryCreatorProps) {
+  const [categoryName, setCategoryName] = useState<string>("");
+  const [required, setRequired] = useState<boolean>(false);
   const [tagArray, setTagArray] = useState<Array<string>>([]);
   const [newTagName, setNewTagName] = useState<string>("");
   const [newTagHasError, setNewTagHasError] = useState<boolean>(false);
@@ -32,25 +45,26 @@ export default function CategoryCreator(props: CategoryCreatorProps) {
     }
   };
 
-  const renameTag = (newName: string, idx: number): [boolean, string] => {
-    // Validate new tag name
-    if (tagArray.includes(newName)) {
-      return [true, "Tag already exists"];
-    } else if (newName.trim() == "") {
-      return [true, "Tag name cannot be empty"];
-    } else {
-      // Tag is good
-      const newArray = tagArray.map((oldName, i) =>
-        i == idx ? newName : oldName
-      );
-      setTagArray(newArray);
-      return [false, "No Error"];
-    }
+  const deleteTag = (idx: number) => {
+    const newTagArray = tagArray.filter((tag, i) => i !== idx);
+    setTagArray(newTagArray);
+  };
+
+  const submitCategory = () => {
+    props.newCategory({
+      name: categoryName,
+      required: required,
+      tags: tagArray,
+      headers: props.user.authHeaders,
+    });
   };
 
   return (
     <Card>
       <Grid container direction="column" justify="center" alignItems="center">
+        <Grid>
+          <TextField label="Name"></TextField>
+        </Grid>
         <Grid>
           {newTagHasError ? (
             <TextField
@@ -69,14 +83,11 @@ export default function CategoryCreator(props: CategoryCreatorProps) {
           <List>
             {tagArray.map((tag, i) => {
               return (
-                <TagItem
-                  name={tag}
-                  setTagName={(newName) => renameTag(newName, i)}
-                  key={i}
-                />
+                <TagItem name={tag} key={i} onDelete={() => deleteTag(i)} />
               );
             })}
           </List>
+          <Button onClick={submitCategory}>Save</Button>
         </Grid>
       </Grid>
     </Card>

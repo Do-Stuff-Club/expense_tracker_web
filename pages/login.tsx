@@ -39,7 +39,7 @@ function Login(props: LoginProps) {
     props.login(state).then(
       (success) => {
         console.log(success);
-        router.push("/tag");// FIXME
+        router.push("/tag"); // FIXME
       },
       (error) => {
         console.log(error);
@@ -53,7 +53,7 @@ function Login(props: LoginProps) {
       <Head>
         <title>Create Next App</title>
       </Head>
-      <h1>Sign Up</h1>
+      <h1>Log in</h1>
       <form onSubmit={handleSubmit}>
         <TextField
           label="Email"
