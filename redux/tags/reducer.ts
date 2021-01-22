@@ -13,6 +13,13 @@ export default function tag(
   switch (action.type) {
     case TagActionTypes.FETCH:
       return action.payload.tags;
+    case TagActionTypes.EDIT_CATEGORY:
+      const newCategories =state.categories.map((category) => {
+        if (category.id == action.payload.category.id)
+
+      })
+ 
+      return {categories: newCategories    }
     case TagActionTypes.DELETE_CATEGORY:
       return action.payload.tags;
     default:

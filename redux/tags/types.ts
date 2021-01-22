@@ -22,6 +22,7 @@ export enum TagActionTypes {
   RENAME_TAG = "rename_tag",
   DELETE_TAG = "delete_tag",
   CREATE_CATEGORY = "create_category",
+  EDIT_CATEGORY = "edit_category",
   DELETE_CATEGORY = "delete_category",
 }
 
@@ -42,4 +43,15 @@ export interface TagCreateCategoryAction {
   };
 }
 
-export type TagAction = TagFetchAction | TagCreateCategoryAction;
+export interface EditCategoryAction {
+  type: TagActionTypes;
+  payload: {
+    category: Category;
+    authHeaders: AuthHeaders;
+  };
+}
+
+export type TagAction =
+  | TagFetchAction
+  | TagCreateCategoryAction
+  | EditCategoryAction;
