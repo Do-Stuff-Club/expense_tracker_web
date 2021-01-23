@@ -197,7 +197,7 @@ export const deleteCategory = (
     );
 
     dispatch({
-      type: TagActionTypes.DELETE_CATEGORY,
+      type: TagActionTypes.FETCH, //FIXME cahnge to delete type?
       payload: {
         authHeaders: {
           client: response.headers["client"],
@@ -341,12 +341,180 @@ export const newTag = (
       url: "/categories/" + params.category.id + "/tags",
       params: {
         tag: {
-          name: params.category.name,
+          name: params.name,
         },
       },
       headers: params.headers,
     });
-    const obj = JSON.parse(response.data);
+    const obj = response.data;
+    console.log(obj);
+    const tags: ReadonlyArray<Tag> = obj.tags.map((tag: any) => ({
+      id: tag.id,
+      name: tag.name,
+    }));
+    const category = {
+      id: obj.id,
+      name: obj.name,
+      required: obj.required,
+      tags: tags,
+    };
+
+    dispatch({
+      type: TagActionTypes.EDIT_CATEGORY,
+      payload: {
+        authHeaders: {
+          client: response.headers["client"],
+          expiry: response.headers["expiry"],
+          uid: response.headers["uid"],
+          "access-token": response.headers["access-token"],
+          "token-type": response.headers["token-type"],
+        },
+        category: category,
+      },
+    });
+
+    return Promise.resolve("a fancy message"); // FIXME
+  } catch (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+      return Promise.reject(error);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log("Error", error.message); // FIXME
+    }
+  }
+};
+
+export interface DeleteTagParams {
+  id: number;
+  category: Category;
+  headers: AuthHeaders;
+}
+export const deleteTag = (
+  params: DeleteTagParams
+): ThunkAction<Promise<any>, RootState, unknown, Action<string>> => async (
+  dispatch
+) => {
+  try {
+    console.log("delete Tag!");
+    // Format nested params correctly
+    // FIXME maybe let's move off axios since it has this stupid bug
+    axios.interceptors.request.use((config) => {
+      window.console.log(config);
+
+      config.paramsSerializer = (params) => {
+        return qs.stringify(params, {
+          arrayFormat: "brackets",
+          encode: false,
+        });
+      };
+
+      return config;
+    });
+    console.log(params);
+    const response = await axios({
+      method: "delete",
+      baseURL: "https://expense-tracker-test-api.herokuapp.com/",
+      url: "/categories/" + params.category.id + "/tags/" + params.id,
+      headers: params.headers,
+    });
+    const obj = response.data;
+    console.log(obj);
+    const tags: ReadonlyArray<Tag> = obj.tags.map((tag: any) => ({
+      id: tag.id,
+      name: tag.name,
+    }));
+    const category = {
+      id: obj.id,
+      name: obj.name,
+      required: obj.required,
+      tags: tags,
+    };
+
+    dispatch({
+      type: TagActionTypes.EDIT_CATEGORY,
+      payload: {
+        authHeaders: {
+          client: response.headers["client"],
+          expiry: response.headers["expiry"],
+          uid: response.headers["uid"],
+          "access-token": response.headers["access-token"],
+          "token-type": response.headers["token-type"],
+        },
+        category: category,
+      },
+    });
+
+    return Promise.resolve("a fancy message"); // FIXME
+  } catch (error) {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+      return Promise.reject(error);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log("Error", error.message); // FIXME
+    }
+  }
+};
+
+export interface EditTagParams {
+  tag: Tag;
+  category: Category;
+  headers: AuthHeaders;
+}
+export const editTag = (
+  params: EditTagParams
+): ThunkAction<Promise<any>, RootState, unknown, Action<string>> => async (
+  dispatch
+) => {
+  try {
+    console.log("edit Tag!");
+    // Format nested params correctly
+    // FIXME maybe let's move off axios since it has this stupid bug
+    axios.interceptors.request.use((config) => {
+      window.console.log(config);
+
+      config.paramsSerializer = (params) => {
+        return qs.stringify(params, {
+          arrayFormat: "brackets",
+          encode: false,
+        });
+      };
+
+      return config;
+    });
+    console.log(params);
+    const response = await axios({
+      method: "patch",
+      baseURL: "https://expense-tracker-test-api.herokuapp.com/",
+      url: "/categories/" + params.category.id + "/tags/" + params.tag.id,
+      params: {
+        tag: {
+          name: params.tag.name,
+        },
+      },
+      headers: params.headers,
+    });
+    const obj = response.data;
+    console.log(obj);
     const tags: ReadonlyArray<Tag> = obj.tags.map((tag: any) => ({
       id: tag.id,
       name: tag.name,

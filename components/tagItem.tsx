@@ -19,7 +19,7 @@ type TagItemProps = {
 
 export default function TagItem(props: TagItemProps) {
   return (
-    <ListItem>
+    <ListItem divider>
       <ListItemText primary={props.name}></ListItemText>
       <ListItemSecondaryAction>
         <IconButton aria-label="Delete">

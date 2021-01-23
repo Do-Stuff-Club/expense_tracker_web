@@ -18,8 +18,6 @@ export default function user(
 ): UserState {
   console.log("In User Reducer");
   switch (action.type) {
-    case UserActionTypes.SIGN_UP:
-      return action.payload;
     case UserActionTypes.LOGIN:
       return action.payload;
     default:

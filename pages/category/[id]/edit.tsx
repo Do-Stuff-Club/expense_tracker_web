@@ -5,10 +5,16 @@ import React, { ChangeEvent, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import EditTagItem from "../../../components/editTagItem";
 
-import { editCategory, newCategory, newTag } from "../../../redux/tags/action";
+import {
+  editCategory,
+  newCategory,
+  newTag,
+  deleteTag,
+  editTag,
+} from "../../../redux/tags/action";
 import { RootState } from "../../../redux/store";
 import withAuth from "../../../components/withAuthentication";
-import { Category } from "../../../redux/tags/types";
+import { Category, Tag } from "../../../redux/tags/types";
 import { GetStaticPaths, GetStaticProps } from "next";
 
 const stateToProps = (state: RootState) => ({
@@ -21,6 +27,8 @@ const connector = connect(stateToProps, {
   newCategory,
   editCategory,
   newTag,
+  editTag,
+  deleteTag,
 });
 type ReduxProps = ConnectedProps<typeof connector>;
 type EditCategoryProps = ReduxProps;
@@ -40,13 +48,6 @@ function EditCategory(props: EditCategoryProps) {
 
   const handleIdError = () => {};
 
-  const handleChangeCategoryName = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const target = event.target;
-    setCategoryName(target.value.trim());
-  };
-
   const handleChangeNewTagName = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -58,40 +59,64 @@ function EditCategory(props: EditCategoryProps) {
     handleIdError();
     return <></>; // FIXME
   } else {
+    const handleChangeCategoryName = (
+      event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+      const newName = event.target.value.trim();
+      setCategoryName(newName);
+    };
     const addNewTag = () => {
       // Validate new tag name
       category.tags.forEach((tag) => {
         if (tag.name == newTagName) {
           setNewTagHasError(true);
           setNewTagErrorMessage("Tag already exists.");
-          return;
         } else if (newTagName == "") {
           setNewTagHasError(true);
           setNewTagErrorMessage("Tag name cannot be empty.");
-          return;
         }
       });
-      // Tag is good
-      console.log("adding new tag");
-      props.newTag({
-        name: newTagName,
+      if (!newTagHasError) {
+        // Tag is good
+        console.log("adding new tag");
+        props.newTag({
+          name: newTagName,
+          category: category,
+          headers: props.user.authHeaders,
+        });
+      }
+    };
+
+    const validateTagText = (id: number) => (
+      newName: string
+    ): [boolean, string] => {
+      const otherTags = category.tags.filter((tag) => tag.id != id);
+      for (var i = 0; i < otherTags.length; i++) {
+        if (otherTags[i].name == newName) {
+          return [true, "Tag already exists"];
+        } else if (newName == "") {
+          return [true, "Tag name cannot be empty"];
+        }
+      }
+      return [false, ""];
+    };
+    const onRename = (tag: Tag) => (newName: string): void => {
+      const newTag = {
+        ...tag,
+        name: newName,
+      };
+      props.editTag({
+        tag: newTag,
         category: category,
         headers: props.user.authHeaders,
       });
     };
-
-    const validateTagText = (idx: number) => (
-      newName: string
-    ): [boolean, string] => {
-      const otherTags = category.tags.filter((_, i) => i !== idx);
-      otherTags.forEach((tag) => {
-        if (tag.name == newName) {
-          return [false, "Tag already exists"];
-        } else if (newName == "") {
-          return [false, "Tag name cannot be empty"];
-        }
+    const onDelete = (id: number) => (): void => {
+      props.deleteTag({
+        id: id,
+        category: category,
+        headers: props.user.authHeaders,
       });
-      return [true, ""];
     };
     const handleChangeRequired = (
       event: React.ChangeEvent<HTMLInputElement>
@@ -141,6 +166,8 @@ function EditCategory(props: EditCategoryProps) {
                     name={tag.name}
                     id={tag.id}
                     validateTagText={validateTagText(tag.id)}
+                    onDelete={onDelete(tag.id)}
+                    onRename={onRename(tag)}
                     key={i}
                   />
                 );

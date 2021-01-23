@@ -1,4 +1,5 @@
 import { AuthHeaders } from "../user/types";
+import { deleteCategory } from "./action";
 
 export interface Tag {
   name: string;
@@ -27,7 +28,7 @@ export enum TagActionTypes {
 }
 
 export interface TagFetchAction {
-  type: TagActionTypes;
+  type: TagActionTypes.FETCH;
   payload: {
     tags: TagState;
     authHeaders: AuthHeaders;
@@ -35,7 +36,7 @@ export interface TagFetchAction {
 }
 
 export interface TagCreateCategoryAction {
-  type: TagActionTypes;
+  type: TagActionTypes.CREATE_CATEGORY;
   payload: {
     name: string;
     tags: TagState;
@@ -44,7 +45,7 @@ export interface TagCreateCategoryAction {
 }
 
 export interface EditCategoryAction {
-  type: TagActionTypes;
+  type: TagActionTypes.EDIT_CATEGORY;
   payload: {
     category: Category;
     authHeaders: AuthHeaders;

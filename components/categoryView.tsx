@@ -33,7 +33,7 @@ export default function CategoryView(props: CategoryViewProps) {
   const onEdit = () => {};
   return (
     <>
-      <ListItem button onClick={handleClick} key={props.listKey}>
+      <ListItem divider button onClick={handleClick} key={props.listKey}>
         <ListItemText primary={"Name: " + props.category.name} />
         <ListItemSecondaryAction>
           <Link href={"/category/" + props.category.id + "/edit"} passHref>

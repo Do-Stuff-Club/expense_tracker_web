@@ -10,18 +10,18 @@ export default function tag(
   state = defaultTagState,
   action: TagAction
 ): TagState {
+  console.log("In Tag Reducer!");
   switch (action.type) {
     case TagActionTypes.FETCH:
       return action.payload.tags;
     case TagActionTypes.EDIT_CATEGORY:
-      const newCategories =state.categories.map((category) => {
+      // Replace the edited category
+      const newCategories = state.categories.map((category) => {
         if (category.id == action.payload.category.id)
-
-      })
- 
-      return {categories: newCategories    }
-    case TagActionTypes.DELETE_CATEGORY:
-      return action.payload.tags;
+          return action.payload.category;
+        else return category;
+      });
+      return { categories: newCategories };
     default:
       return state;
   }
