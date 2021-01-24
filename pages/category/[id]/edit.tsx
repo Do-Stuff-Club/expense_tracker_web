@@ -16,6 +16,7 @@ import { RootState } from "../../../redux/store";
 import withAuth from "../../../components/withAuthentication";
 import { Category, Tag } from "../../../redux/tags/types";
 import { GetStaticPaths, GetStaticProps } from "next";
+import PageLayout from "../../../components/pageLayout";
 
 const stateToProps = (state: RootState) => ({
   auth: {
@@ -131,52 +132,59 @@ function EditCategory(props: EditCategoryProps) {
       }); // FIXME add error handling
     };
     return (
-      <Card>
-        <Grid container direction="column" justify="center" alignItems="center">
-          <Grid>
-            <TextField
-              label="Name"
-              onChange={handleChangeCategoryName}
-              defaultValue={category.name}
-            ></TextField>
-            <Switch
-              checked={category.required}
-              onChange={handleChangeRequired}
-            ></Switch>
-          </Grid>
-          <Grid>
-            {newTagHasError ? (
+      <PageLayout pageName="Edit Category">
+        <Card>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Grid>
               <TextField
-                label="Tag Name"
-                error
-                helperText={newTagErrorMessage}
-                onChange={(e) => handleChangeNewTagName(e)}
-              />
-            ) : (
-              <TextField
-                label="Tag Name"
-                onChange={(e) => handleChangeNewTagName(e)}
-              />
-            )}
-            <Button onClick={addNewTag}>Add</Button>
-            <List>
-              {category.tags.map((tag, i) => {
-                return (
-                  <EditTagItem
-                    name={tag.name}
-                    id={tag.id}
-                    validateTagText={validateTagText(tag.id)}
-                    onDelete={onDelete(tag.id)}
-                    onRename={onRename(tag)}
-                    key={i}
-                  />
-                );
-              })}
-            </List>
-            <Link href="/tag">Done Editing</Link>
+                label="Name"
+                onChange={handleChangeCategoryName}
+                defaultValue={category.name}
+              ></TextField>
+              <Switch
+                checked={category.required}
+                onChange={handleChangeRequired}
+              ></Switch>
+            </Grid>
+            <Grid>
+              {newTagHasError ? (
+                <TextField
+                  label="Tag Name"
+                  error
+                  helperText={newTagErrorMessage}
+                  onChange={(e) => handleChangeNewTagName(e)}
+                />
+              ) : (
+                <TextField
+                  label="Tag Name"
+                  onChange={(e) => handleChangeNewTagName(e)}
+                />
+              )}
+              <Button onClick={addNewTag}>Add</Button>
+              <List>
+                {category.tags.map((tag, i) => {
+                  return (
+                    <EditTagItem
+                      name={tag.name}
+                      id={tag.id}
+                      validateTagText={validateTagText(tag.id)}
+                      onDelete={onDelete(tag.id)}
+                      onRename={onRename(tag)}
+                      key={i}
+                    />
+                  );
+                })}
+              </List>
+              <Link href="/tag">Done Editing</Link>
+            </Grid>
           </Grid>
-        </Grid>
-      </Card>
+        </Card>
+      </PageLayout>
     );
   }
 }

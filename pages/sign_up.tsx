@@ -7,6 +7,7 @@ import { TextField, Button } from "@material-ui/core";
 
 import { signUp, SignUpParams } from "../redux/user/action";
 import TestComponent from "../components/test";
+import PageLayout from "../components/pageLayout";
 
 const connector = connect(null, {
   signUp,
@@ -47,10 +48,7 @@ export function SignUp(props: SignUpProps) {
   };
 
   return (
-    <>
-      <Head>
-        <title>Create Next App</title>
-      </Head>
+    <PageLayout pageName="Sign Up">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <TextField
@@ -76,7 +74,7 @@ export function SignUp(props: SignUpProps) {
         </Button>
       </form>
       <TestComponent></TestComponent>
-    </>
+    </PageLayout>
   );
 }
 

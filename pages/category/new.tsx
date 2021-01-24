@@ -9,6 +9,7 @@ import { newCategory } from "../../redux/tags/action";
 import { RootState } from "../../redux/store";
 import withAuth from "../../components/withAuthentication";
 import TestComponent from "../../components/test";
+import PageLayout from "../../components/pageLayout";
 
 const stateToProps = (state: RootState) => ({
   auth: {
@@ -89,43 +90,45 @@ function NewCategory(props: NewCategoryProps) {
   };
 
   return (
-    <Card>
-      <Grid container direction="column" justify="center" alignItems="center">
-        <Grid>
-          <TextField
-            label="Name"
-            onChange={handleChangeCategoryName}
-          ></TextField>
-          <Switch checked={required} onChange={handleChangeRequired}></Switch>
-        </Grid>
-        <Grid>
-          {newTagHasError ? (
+    <PageLayout pageName="Create Category">
+      <Card>
+        <Grid container direction="column" justify="center" alignItems="center">
+          <Grid>
             <TextField
-              label="Tag Name"
-              error
-              helperText={newTagErrorMessage}
-              onChange={(e) => handleChangeNewTagName(e)}
-            />
-          ) : (
-            <TextField
-              label="Tag Name"
-              onChange={(e) => handleChangeNewTagName(e)}
-            />
-          )}
-          <Button onClick={addNewTag}>Add</Button>
-          <List>
-            {tagArray.map((tag, i) => {
-              return (
-                <TagItem name={tag} key={i} onDelete={() => deleteTag(i)} />
-              );
-            })}
-          </List>
-          <Button onClick={submitCategory}>Save</Button>
-          <Link href="/tag">Cancel</Link>
+              label="Name"
+              onChange={handleChangeCategoryName}
+            ></TextField>
+            <Switch checked={required} onChange={handleChangeRequired}></Switch>
+          </Grid>
+          <Grid>
+            {newTagHasError ? (
+              <TextField
+                label="Tag Name"
+                error
+                helperText={newTagErrorMessage}
+                onChange={(e) => handleChangeNewTagName(e)}
+              />
+            ) : (
+              <TextField
+                label="Tag Name"
+                onChange={(e) => handleChangeNewTagName(e)}
+              />
+            )}
+            <Button onClick={addNewTag}>Add</Button>
+            <List>
+              {tagArray.map((tag, i) => {
+                return (
+                  <TagItem name={tag} key={i} onDelete={() => deleteTag(i)} />
+                );
+              })}
+            </List>
+            <Button onClick={submitCategory}>Save</Button>
+            <Link href="/tag">Cancel</Link>
+          </Grid>
+          <TestComponent></TestComponent>
         </Grid>
-        <TestComponent></TestComponent>
-      </Grid>
-    </Card>
+      </Card>
+    </PageLayout>
   );
 }
 

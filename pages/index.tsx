@@ -4,6 +4,8 @@ import Link from "next/link";
 import { RootState } from "../redux/store";
 import { connect, ConnectedProps } from "react-redux";
 import styles from "../styles/Home.module.css";
+import React from "react";
+import PageLayout from "../components/pageLayout";
 
 const stateToProps = (state: RootState) => state;
 
@@ -13,7 +15,7 @@ type HomeProps = ReduxProps;
 
 function Home(props: HomeProps) {
   return (
-    <div className={styles.container}>
+    <PageLayout pageName="Expense Tracker">
       <Head>
         <title>Expense Tracker</title>
         <link rel="icon" href="/favicon.ico" />
@@ -28,9 +30,7 @@ function Home(props: HomeProps) {
           <a>Sign Up</a>
         </Link>
       </main>
-
-      <footer className={styles.footer}></footer>
-    </div>
+    </PageLayout>
   );
 }
 

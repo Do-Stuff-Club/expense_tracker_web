@@ -10,6 +10,7 @@ import { login, LoginParams } from "../redux/user/action";
 import TestComponent from "../components/test";
 import { Router } from "@material-ui/icons";
 import withAuthentication from "../components/withAuthentication";
+import PageLayout from "../components/pageLayout";
 
 const connector = connect(null, {
   login,
@@ -49,7 +50,7 @@ function Login(props: LoginProps) {
   };
 
   return (
-    <>
+    <PageLayout pageName="Expense Tracker Login">
       <Head>
         <title>Create Next App</title>
       </Head>
@@ -75,7 +76,7 @@ function Login(props: LoginProps) {
       <Link href="/">
         <a>Home</a>
       </Link>
-    </>
+    </PageLayout>
   );
 }
 

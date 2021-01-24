@@ -12,6 +12,7 @@ import CategoryCreator from "../components/categoryCreator";
 import { Button } from "@material-ui/core";
 import CategoryView from "../components/categoryView";
 import TestComponent from "../components/test";
+import PageLayout from "../components/pageLayout";
 
 const stateToProps = (state: RootState) => ({
   auth: {
@@ -45,12 +46,7 @@ function Tag(props: TagProps) {
   };
 
   return (
-    <>
-      <Head>
-        <title>Tag Tracker</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+    <PageLayout pageName="My Tags">
       <main>
         <h1 className={styles.title}>Tags!</h1>
         <Link href="/category/new" passHref>
@@ -68,9 +64,7 @@ function Tag(props: TagProps) {
         <p>{JSON.stringify(props.tag)}</p>
         <TestComponent></TestComponent>
       </main>
-
-      <footer className={styles.footer}></footer>
-    </>
+    </PageLayout>
   );
 }
 
