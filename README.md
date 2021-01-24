@@ -29,3 +29,4 @@ Each page has a dedicated file under `pages/`, and re-usable components are in `
 * Framework I'm using: https://nextjs.org/docs/getting-started
 * Main Component Library (see for styling and stuff too): https://material-ui.com/getting-started/usage/
 * Client-side data: https://redux.js.org/tutorials/essentials/part-1-overview-concepts
+* Figma Mocks: https://www.figma.com/file/7BFFhw1Gk07gBDjh0aXNSV/tags?node-id=0%3A1
