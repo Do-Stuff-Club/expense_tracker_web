@@ -22,3 +22,8 @@ The test login is:
 - Password: asdfasdf
 
 Currently a user can create and edit "categories," which are groups of "tags." The information will be automatically persisted on the test server https://expense-tracker-test-api.herokuapp.com/
+
+## General links
+* Framework I'm using: https://nextjs.org/docs/getting-started
+* Main Component Library (see for styling and stuff too): https://material-ui.com/getting-started/usage/
+* Client-side data: https://redux.js.org/tutorials/essentials/part-1-overview-concepts
