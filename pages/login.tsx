@@ -11,6 +11,7 @@ import TestComponent from "../components/test";
 import { Router } from "@material-ui/icons";
 import withAuthentication from "../components/withAuthentication";
 import PageLayout from "../components/pageLayout";
+import styles from '../styles/Login.module.css';
 
 const connector = connect(null, {
   login,
@@ -54,28 +55,34 @@ function Login(props: LoginProps) {
       <Head>
         <title>Create Next App</title>
       </Head>
-      <h1>Log in</h1>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Email"
-          variant="filled"
-          onChange={(e) => handleChange("email", e)}
-        />
-        <br />
-        <TextField
-          label="Password"
-          variant="filled"
-          onChange={(e) => handleChange("password", e)}
-        />
-        <br />
-        <Button variant="contained" type="submit">
-          Log In
-        </Button>
-      </form>
+      <div className={styles.outerContainer}>
+        <div className={styles.loginText}>
+          <h1>Log in</h1>
+        </div>
+        <div className={styles.loginContainer}>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              label="Email"
+              variant="filled"
+              onChange={(e) => handleChange("email", e)}
+            />
+            <br />
+            <TextField
+              label="Password"
+              variant="filled"
+              onChange={(e) => handleChange("password", e)}
+            />
+            <br />
+            <Button color="primary" variant="outlined" href="/">
+              Home
+          </Button>
+            <Button variant="outlined" type="submit">
+              Log In
+          </Button>
+          </form>
+        </div>
+      </div>
       <TestComponent></TestComponent>
-      <Link href="/">
-        <a>Home</a>
-      </Link>
     </PageLayout>
   );
 }
