@@ -23,6 +23,8 @@ The test login is:
 
 Currently a user can create and edit "categories," which are groups of "tags." The information will be automatically persisted on the test server https://expense-tracker-test-api.herokuapp.com/
 
+Each page has a dedicated file under `pages/`, and re-usable components are in `components/`. The `redux` folder is for client-side storage code, and the `pages/_app.tsx` is a special file used by Next.js.
+
 ## General links
 * Framework I'm using: https://nextjs.org/docs/getting-started
 * Main Component Library (see for styling and stuff too): https://material-ui.com/getting-started/usage/
