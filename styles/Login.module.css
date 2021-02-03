@@ -18,8 +18,5 @@
 .loginButtonContainer{
     display: inline-block;
     padding: 4px;
-}
-
-.loginButton{
-    background-color: white;
+    margin-top: 20px;
 }

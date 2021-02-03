@@ -13,11 +13,24 @@ import withAuthentication from "../components/withAuthentication";
 import PageLayout from "../components/pageLayout";
 import styles from '../styles/Login.module.css';
 
-const useStyles = makeStyles({
+const buttonStyling = makeStyles({
   outlinedPrimary: {
-    backgroundColor: "white",
+    color: 'white',
+    border: '1px solid white'
   }
 }, { name: 'MuiButton' });
+
+const textFieldStyling = makeStyles({
+  cssLabel: {
+    color: 'white'
+  }
+}, { name: 'MuiInputBase' });
+
+// const outlinedInputStyling = makeStyles({
+//   cssLabel: {
+//     color: 'white'
+//   }
+// }, { name: 'OutlinedInput' });
 
 const connector = connect(null, {
   login,
@@ -26,7 +39,8 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type LoginProps = ReduxProps;
 
 function Login(props: LoginProps) {
-  const customStyles = useStyles();
+  const buttonStyles = buttonStyling();
+  const textFieldStyles = textFieldStyling();
 
   const [state, setState] = useState<LoginParams>({
     email: "",
@@ -71,23 +85,28 @@ function Login(props: LoginProps) {
           <form onSubmit={handleSubmit}>
             <TextField
               label="Email"
-              variant="filled"
+              variant="outlined"
               onChange={(e) => handleChange("email", e)}
+              InputLabelProps={{
+                classes: {
+                  root: textFieldStyles.cssLabel
+                }
+              }}
             />
             <br />
             <TextField
               label="Password"
-              variant="filled"
+              variant="outlined"
               onChange={(e) => handleChange("password", e)}
             />
             <br />
             <div className={styles.loginButtonContainer}>
-              <Button className={customStyles.outlinedPrimary} color="primary" variant="outlined" href="/">
+              <Button className={buttonStyles.outlinedPrimary} color="primary" variant="outlined" href="/">
                 Home
               </Button>
             </div>
             <div className={styles.loginButtonContainer}>
-              <Button className={customStyles.outlinedPrimary} color="primary" variant="outlined" type="submit">
+              <Button className={buttonStyles.outlinedPrimary} color="primary" variant="outlined" type="submit">
                 Log In
               </Button>
             </div>
