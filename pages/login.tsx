@@ -40,7 +40,7 @@ function Login(props: LoginProps) {
     props.login(state).then(
       (success) => {
         console.log(success);
-        router.push("/tag"); // FIXME
+        router.push("/category"); // FIXME
       },
       (error) => {
         console.log(error);
