@@ -6,17 +6,15 @@ import { connect, ConnectedProps } from "react-redux";
 import EditTagItem from "../../../components/editTagItem";
 
 import {
-  editCategory,
-  newCategory,
-  newTag,
-  deleteTag,
-  editTag,
+  updateOneCategoryAction,
+  updateAllCategoriesAction
 } from "../../../redux/tags/action";
 import { RootState } from "../../../redux/store";
 import withAuth from "../../../components/withAuthentication";
 import { Category, Tag } from "../../../redux/tags/types";
 import { GetStaticPaths, GetStaticProps } from "next";
 import PageLayout from "../../../components/pageLayout";
+import { createTagCall, deleteTagCall, updateCategoryCall, updateTagCall } from "../../../api/tag/call";
 
 const stateToProps = (state: RootState) => ({
   auth: {
@@ -25,11 +23,8 @@ const stateToProps = (state: RootState) => ({
   ...state,
 });
 const connector = connect(stateToProps, {
-  newCategory,
-  editCategory,
-  newTag,
-  editTag,
-  deleteTag,
+  updateOneCategoryAction,
+  updateAllCategoriesAction
 });
 type ReduxProps = ConnectedProps<typeof connector>;
 type EditCategoryProps = ReduxProps;
@@ -42,12 +37,13 @@ function EditCategory(props: EditCategoryProps) {
   const router = useRouter();
 
   const { id } = router.query; //FIXME set type for router query
+  console.log(props)
   const category = props.tag.categories.find(
     // @ts-expect-error FIXME- router query type doesn't work as I want it to, temporarily ignore types
     (category) => category.id == parseInt(id) // FIXME handle issue where index is not found
   );
 
-  const handleIdError = () => {};
+  const handleIdError = () => { };
 
   const handleChangeNewTagName = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -80,11 +76,14 @@ function EditCategory(props: EditCategoryProps) {
       if (!newTagHasError) {
         // Tag is good
         console.log("adding new tag");
-        props.newTag({
+        createTagCall({
           name: newTagName,
           category: category,
           headers: props.user.authHeaders,
-        });
+        }).then(
+          (data) => props.updateOneCategoryAction(data),
+          (error) => console.log(error)
+        )
       }
     };
 
@@ -106,18 +105,24 @@ function EditCategory(props: EditCategoryProps) {
         ...tag,
         name: newName,
       };
-      props.editTag({
+      updateTagCall({
         tag: newTag,
         category: category,
         headers: props.user.authHeaders,
-      });
+      }).then(
+        (data) => props.updateOneCategoryAction(data),
+        (error) => console.log(error)
+      )
     };
     const onDelete = (id: number) => (): void => {
-      props.deleteTag({
+      deleteTagCall({
         id: id,
         category: category,
         headers: props.user.authHeaders,
-      });
+      }).then(
+        (data) => props.updateOneCategoryAction(data),
+        (error) => console.log(error)
+      );
     };
     const handleChangeRequired = (
       event: React.ChangeEvent<HTMLInputElement>
@@ -126,10 +131,13 @@ function EditCategory(props: EditCategoryProps) {
         ...category,
         required: event.target.checked,
       };
-      props.editCategory({
+      updateCategoryCall({
         category: newCategory,
         headers: props.user.authHeaders,
-      }); // FIXME add error handling
+      }).then(
+        (data) => props.updateAllCategoriesAction(data), // FIXME this should probably be update ONE category
+        (error) => console.log(error)
+      ); // FIXME add error handling
     };
     return (
       <PageLayout pageName="Edit Category">
@@ -160,11 +168,11 @@ function EditCategory(props: EditCategoryProps) {
                   onChange={(e) => handleChangeNewTagName(e)}
                 />
               ) : (
-                <TextField
-                  label="Tag Name"
-                  onChange={(e) => handleChangeNewTagName(e)}
-                />
-              )}
+                  <TextField
+                    label="Tag Name"
+                    onChange={(e) => handleChangeNewTagName(e)}
+                  />
+                )}
               <Button onClick={addNewTag}>Add</Button>
               <List>
                 {category.tags.map((tag, i) => {
@@ -180,7 +188,7 @@ function EditCategory(props: EditCategoryProps) {
                   );
                 })}
               </List>
-              <Link href="/tag">Done Editing</Link>
+              <Link href="/category">Done Editing</Link>
             </Grid>
           </Grid>
         </Card>

@@ -1,5 +1,5 @@
+import { CreateTagParams } from "../../api/tag/types";
 import { AuthHeaders } from "../user/types";
-import { deleteCategory } from "./action";
 
 export interface Tag {
   name: string;
@@ -18,34 +18,29 @@ export interface TagState {
 }
 
 export enum TagActionTypes {
-  FETCH = "fetch",
-  CREATE_TAG = "create_tag",
-  RENAME_TAG = "rename_tag",
-  DELETE_TAG = "delete_tag",
+  UPDATE_ALL_CATEGORIES = "update_all_categories",
+  UPDATE_ONE_CATEGORY = "update_one_category",
   CREATE_CATEGORY = "create_category",
-  EDIT_CATEGORY = "edit_category",
-  DELETE_CATEGORY = "delete_category",
 }
 
-export interface TagFetchAction {
-  type: TagActionTypes.FETCH;
+export interface UpdateAllCategoriesAction {
+  type: TagActionTypes.UPDATE_ALL_CATEGORIES;
   payload: {
-    tags: TagState;
+    categories: ReadonlyArray<Category>;
     authHeaders: AuthHeaders;
   };
 }
 
-export interface TagCreateCategoryAction {
+export interface UpdateOneCategoryAction {
+  type: TagActionTypes.UPDATE_ONE_CATEGORY;
+  payload: {
+    category: Category;
+    authHeaders: AuthHeaders;
+  };
+}
+
+export interface CreateCategoryAction {
   type: TagActionTypes.CREATE_CATEGORY;
-  payload: {
-    name: string;
-    tags: TagState;
-    authHeaders: AuthHeaders;
-  };
-}
-
-export interface EditCategoryAction {
-  type: TagActionTypes.EDIT_CATEGORY;
   payload: {
     category: Category;
     authHeaders: AuthHeaders;
@@ -53,6 +48,6 @@ export interface EditCategoryAction {
 }
 
 export type TagAction =
-  | TagFetchAction
-  | TagCreateCategoryAction
-  | EditCategoryAction;
+  | UpdateAllCategoriesAction
+  | UpdateOneCategoryAction
+  | CreateCategoryAction

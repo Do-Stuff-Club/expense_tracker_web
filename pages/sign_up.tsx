@@ -5,18 +5,20 @@ import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { TextField, Button } from "@material-ui/core";
 
-import { signUp, SignUpParams } from "../redux/user/action";
 import TestComponent from "../components/test";
 import PageLayout from "../components/pageLayout";
+import { newUserCall } from "../api/user/call";
+import { NewUserParams } from "../api/user/types";
+import { loginAction } from "../redux/user/action";
 
 const connector = connect(null, {
-  signUp,
+  loginAction,
 });
 type ReduxProps = ConnectedProps<typeof connector>;
 type SignUpProps = ReduxProps;
 
 export function SignUp(props: SignUpProps) {
-  const [state, setState] = useState<SignUpParams>({
+  const [state, setState] = useState<NewUserParams>({
     email: "",
     password: "",
     password_confirmation: "",
@@ -35,15 +37,13 @@ export function SignUp(props: SignUpProps) {
   };
 
   const handleSubmit = (event: SyntheticEvent) => {
-    props.signUp(state).then(
-      (success) => {
-        console.log(success);
-        router.push("/");
+    newUserCall(state).then(
+      (data) => {
+        props.loginAction(data)
       },
       (error) => {
-        console.log(error);
-      }
-    );
+        console.log(error)
+      })
     event.preventDefault();
   };
 

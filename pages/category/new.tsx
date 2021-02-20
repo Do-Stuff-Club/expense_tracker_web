@@ -5,11 +5,12 @@ import React, { ChangeEvent, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import TagItem from "../../components/tagItem";
 
-import { newCategory } from "../../redux/tags/action";
+import { createCategoryAction, updateAllCategoriesAction } from "../../redux/tags/action";
 import { RootState } from "../../redux/store";
 import withAuth from "../../components/withAuthentication";
 import TestComponent from "../../components/test";
 import PageLayout from "../../components/pageLayout";
+import { createCategoryCall } from "../../api/tag/call";
 
 const stateToProps = (state: RootState) => ({
   auth: {
@@ -18,7 +19,8 @@ const stateToProps = (state: RootState) => ({
   ...state,
 });
 const connector = connect(stateToProps, {
-  newCategory,
+  updateAllCategoriesAction,
+  createCategoryAction,
 });
 type ReduxProps = ConnectedProps<typeof connector>;
 type NewCategoryProps = ReduxProps;
@@ -71,22 +73,18 @@ function NewCategory(props: NewCategoryProps) {
   };
 
   const submitCategory = () => {
-    props
-      .newCategory({
-        name: categoryName,
-        required: required,
-        tags: tagArray,
-        headers: props.user.authHeaders,
-      })
-      .then(
-        (success) => {
-          console.log(success);
-          router.push("/tag"); // FIXME
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    createCategoryCall({
+      name: categoryName,
+      required: required,
+      tags: tagArray,
+      headers: props.user.authHeaders,
+    }).then(
+      (data) => {
+        props.createCategoryAction(data)
+        router.push("/category")
+      },
+      (error) => console.log(error)
+    );
   };
 
   return (
@@ -109,11 +107,11 @@ function NewCategory(props: NewCategoryProps) {
                 onChange={(e) => handleChangeNewTagName(e)}
               />
             ) : (
-              <TextField
-                label="Tag Name"
-                onChange={(e) => handleChangeNewTagName(e)}
-              />
-            )}
+                <TextField
+                  label="Tag Name"
+                  onChange={(e) => handleChangeNewTagName(e)}
+                />
+              )}
             <Button onClick={addNewTag}>Add</Button>
             <List>
               {tagArray.map((tag, i) => {
