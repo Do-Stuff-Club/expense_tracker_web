@@ -4,15 +4,17 @@ import { useRouter } from "next/router";
 
 import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { TextField, Button, makeStyles } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 
 import { loginAction } from "../redux/user/action";
 import TestComponent from "../components/test";
 import { Router } from "@material-ui/icons";
 import withAuthentication from "../components/withAuthentication";
 import PageLayout from "../components/pageLayout";
-<<<<<<< HEAD
+import { LoginParams } from "../api/user/types";
+import { loginCall } from "../api/user/call";
 import styles from '../styles/Login.module.css';
+import textFieldStyles from '../styles/TextField.module.css';
 
 const buttonStyling = makeStyles({
   outlinedPrimary: {
@@ -20,22 +22,6 @@ const buttonStyling = makeStyles({
     border: '1px solid white'
   }
 }, { name: 'MuiButton' });
-
-const textFieldStyling = makeStyles({
-  cssLabel: {
-    color: 'white'
-  }
-}, { name: 'MuiInputBase' });
-
-// const outlinedInputStyling = makeStyles({
-//   cssLabel: {
-//     color: 'white'
-//   }
-// }, { name: 'OutlinedInput' });
-=======
-import { LoginParams } from "../api/user/types";
-import { loginCall } from "../api/user/call";
->>>>>>> 209b11695e10fbe2048b3bbdbf3856459a16e7f1
 
 const connector = connect(null, {
   loginAction,
@@ -45,7 +31,6 @@ type LoginProps = ReduxProps;
 
 function Login(props: LoginProps) {
   const buttonStyles = buttonStyling();
-  const textFieldStyles = textFieldStyling();
 
   const [state, setState] = useState<LoginParams>({
     email: "",
@@ -87,23 +72,18 @@ function Login(props: LoginProps) {
         </div>
         <div className={styles.loginContainer}>
           <form onSubmit={handleSubmit}>
-            <TextField
-              label="Email"
-              variant="outlined"
-              onChange={(e) => handleChange("email", e)}
-              InputLabelProps={{
-                classes: {
-                  root: textFieldStyles.cssLabel
-                }
-              }}
-            />
-            <br />
-            <TextField
-              label="Password"
-              variant="outlined"
-              onChange={(e) => handleChange("password", e)}
-            />
-            <br />
+            <div className={textFieldStyles.textField}>
+              <div>
+                <p>Email</p>
+              </div>
+              <input type="text" onChange={(e) => handleChange("email", e)}></input>
+            </div>
+            <div className={textFieldStyles.textField}>
+              <div>
+                <p>Password</p>
+              </div>
+              <input type="text" onChange={(e) => handleChange("password", e)}></input>
+            </div>
             <div className={styles.loginButtonContainer}>
               <Button className={buttonStyles.outlinedPrimary} color="primary" variant="outlined" href="/">
                 Home
