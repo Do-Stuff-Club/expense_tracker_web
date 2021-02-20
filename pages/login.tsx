@@ -6,14 +6,16 @@ import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { TextField, Button } from "@material-ui/core";
 
-import { login, LoginParams } from "../redux/user/action";
+import { loginAction } from "../redux/user/action";
 import TestComponent from "../components/test";
 import { Router } from "@material-ui/icons";
 import withAuthentication from "../components/withAuthentication";
 import PageLayout from "../components/pageLayout";
+import { LoginParams } from "../api/user/types";
+import { loginCall } from "../api/user/call";
 
 const connector = connect(null, {
-  login,
+  loginAction,
 });
 type ReduxProps = ConnectedProps<typeof connector>;
 type LoginProps = ReduxProps;
@@ -37,15 +39,14 @@ function Login(props: LoginProps) {
   };
 
   const handleSubmit = (event: SyntheticEvent) => {
-    props.login(state).then(
-      (success) => {
-        console.log(success);
-        router.push("/category"); // FIXME
+    loginCall(state).then(
+      (data) => {
+        props.loginAction(data)
+        router.push("/dashboard")
       },
       (error) => {
-        console.log(error);
-      }
-    );
+        console.log(error)
+      })
     event.preventDefault();
   };
 

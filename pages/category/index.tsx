@@ -7,12 +7,13 @@ import { compose } from "redux";
 import styles from "../../styles/Home.module.css";
 import withAuth, { AuthProps } from "../../components/withAuthentication";
 import React, { useEffect } from "react";
-import { fetchTags, deleteCategory } from "../../redux/tags/action";
+import { updateAllCategoriesAction } from "../../redux/tags/action";
 import { Button } from "@material-ui/core";
 import CategoryView from "../../components/categoryView";
 import TestComponent from "../../components/test";
 import PageLayout from "../../components/pageLayout";
 import NavBreadcrumbs from "../../components/navBreadcrumbs";
+import { deleteCategoryCall, getTagsCall } from "../../api/tag/call";
 
 const stateToProps = (state: RootState) => ({
   auth: {
@@ -22,8 +23,7 @@ const stateToProps = (state: RootState) => ({
 });
 
 const dispatchToProps = {
-  fetchTags,
-  deleteCategory,
+  updateAllCategoriesAction
 };
 
 const connector = connect(stateToProps, dispatchToProps);
@@ -32,17 +32,23 @@ type TagProps = ReduxProps;
 
 function Tag(props: TagProps) {
   useEffect(() => {
-    props.fetchTags({
+    getTagsCall({
       user_id: props.user.id,
       headers: props.user.authHeaders,
-    });
+    }).then(
+      (data) => props.updateAllCategoriesAction(data),
+      (error) => console.log(error)
+    )
   }, []); // Pass an empty array so it only fires once
 
   const onDelete = (id: number) => {
-    props.deleteCategory({
+    deleteCategoryCall({
       id: id,
       headers: props.user.authHeaders,
-    });
+    }).then(
+      (data) => props.updateAllCategoriesAction(data),
+      (error) => console.log(error)
+    );
   };
 
   return (
