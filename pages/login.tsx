@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { TextField, Button } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 
 import { loginAction } from "../redux/user/action";
 import TestComponent from "../components/test";
@@ -13,6 +13,19 @@ import withAuthentication from "../components/withAuthentication";
 import PageLayout from "../components/pageLayout";
 import { LoginParams } from "../api/user/types";
 import { loginCall } from "../api/user/call";
+import styles from '../styles/Login.module.css';
+import textFieldStyles from '../styles/TextField.module.css';
+
+const buttonStyling = makeStyles({
+  outlinedPrimary: {
+    color: 'white',
+    border: '1px solid white',
+    '&:hover': {
+      backgroundColor: 'white',
+      color: '#4253B4'
+    }
+  }
+}, { name: 'MuiButton' });
 
 const connector = connect(null, {
   loginAction,
@@ -21,6 +34,8 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type LoginProps = ReduxProps;
 
 function Login(props: LoginProps) {
+  const buttonStyles = buttonStyling();
+
   const [state, setState] = useState<LoginParams>({
     email: "",
     password: "",
@@ -55,28 +70,38 @@ function Login(props: LoginProps) {
       <Head>
         <title>Create Next App</title>
       </Head>
-      <h1>Log in</h1>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Email"
-          variant="filled"
-          onChange={(e) => handleChange("email", e)}
-        />
-        <br />
-        <TextField
-          label="Password"
-          variant="filled"
-          onChange={(e) => handleChange("password", e)}
-        />
-        <br />
-        <Button variant="contained" type="submit">
-          Log In
-        </Button>
-      </form>
+      <div className={styles.outerContainer}>
+        <div className={styles.loginText}>
+          <h1>Log in</h1>
+        </div>
+        <div className={styles.loginContainer}>
+          <form onSubmit={handleSubmit}>
+            <div className={textFieldStyles.textField}>
+              <div>
+                <p>Email</p>
+              </div>
+              <input type="text" onChange={(e) => handleChange("email", e)}></input>
+            </div>
+            <div className={textFieldStyles.textField}>
+              <div>
+                <p>Password</p>
+              </div>
+              <input type="text" onChange={(e) => handleChange("password", e)}></input>
+            </div>
+            <div className={styles.loginButtonContainer}>
+              <Button className={buttonStyles.outlinedPrimary} color="primary" variant="outlined" href="/">
+                Home
+              </Button>
+            </div>
+            <div className={styles.loginButtonContainer}>
+              <Button className={buttonStyles.outlinedPrimary} color="primary" variant="outlined" type="submit">
+                Log In
+              </Button>
+            </div>
+          </form>
+        </div>
+      </div>
       <TestComponent></TestComponent>
-      <Link href="/">
-        <a>Home</a>
-      </Link>
     </PageLayout>
   );
 }
