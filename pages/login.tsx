@@ -19,7 +19,11 @@ import textFieldStyles from '../styles/TextField.module.css';
 const buttonStyling = makeStyles({
   outlinedPrimary: {
     color: 'white',
-    border: '1px solid white'
+    border: '1px solid white',
+    '&:hover': {
+      backgroundColor: 'white',
+      color: '#4253B4'
+    }
   }
 }, { name: 'MuiButton' });
 
