@@ -1,3 +1,6 @@
+// ===================================================================
+//                             Imports 
+// ===================================================================
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -15,6 +18,10 @@ import { LoginParams } from "../api/user/types";
 import { loginCall } from "../api/user/call";
 import styles from '../styles/Login.module.css';
 import textFieldStyles from '../styles/TextField.module.css';
+
+// ===================================================================
+//                            Component
+// ===================================================================
 
 const connector = connect(null, {
   loginAction,
