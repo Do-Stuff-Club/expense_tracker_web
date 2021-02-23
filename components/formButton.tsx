@@ -1,5 +1,12 @@
+// ===================================================================
+//                             Imports 
+// ===================================================================
 import { Button, ButtonProps, makeStyles } from "@material-ui/core";
 
+
+// ===================================================================
+//                             Styling 
+// ===================================================================
 const buttonStyling = makeStyles({
     outlinedPrimary: {
         color: 'white',
@@ -12,6 +19,9 @@ const buttonStyling = makeStyles({
 }, { name: 'MuiButton' });
 
 
+// ===================================================================
+//                            Component
+// ===================================================================
 export default function FormButton(props: ButtonProps) {
     const buttonStyles = buttonStyling();
 
