@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { Button, makeStyles } from "@material-ui/core";
+import FormButton from "../components/formButton";
 
 import { loginAction } from "../redux/user/action";
 import TestComponent from "../components/test";
@@ -16,17 +16,6 @@ import { loginCall } from "../api/user/call";
 import styles from '../styles/Login.module.css';
 import textFieldStyles from '../styles/TextField.module.css';
 
-const buttonStyling = makeStyles({
-  outlinedPrimary: {
-    color: 'white',
-    border: '1px solid white',
-    '&:hover': {
-      backgroundColor: 'white',
-      color: '#4253B4'
-    }
-  }
-}, { name: 'MuiButton' });
-
 const connector = connect(null, {
   loginAction,
 });
@@ -34,7 +23,6 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type LoginProps = ReduxProps;
 
 function Login(props: LoginProps) {
-  const buttonStyles = buttonStyling();
 
   const [state, setState] = useState<LoginParams>({
     email: "",
@@ -89,14 +77,10 @@ function Login(props: LoginProps) {
               <input type="text" onChange={(e) => handleChange("password", e)}></input>
             </div>
             <div className={styles.loginButtonContainer}>
-              <Button className={buttonStyles.outlinedPrimary} color="primary" variant="outlined" href="/">
-                Home
-              </Button>
+              <FormButton href="/" name="Home" />
             </div>
             <div className={styles.loginButtonContainer}>
-              <Button className={buttonStyles.outlinedPrimary} color="primary" variant="outlined" type="submit">
-                Log In
-              </Button>
+              <FormButton type="submit" name="Log In" />
             </div>
           </form>
         </div>
