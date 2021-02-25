@@ -27,4 +27,4 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run prettier check
-        run: yarn run prettier --check ./*
+        run: yarn run prettier --check ./
