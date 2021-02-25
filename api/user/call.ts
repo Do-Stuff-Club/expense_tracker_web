@@ -1,28 +1,27 @@
-import axios from "axios";
-import { LoginParams, NewUserParams, UserData } from "./types";
+import axios from 'axios';
+import { LoginParams, NewUserParams, UserData } from './types';
 
 //==================================================
 
 export async function newUserCall(params: NewUserParams): Promise<UserData> {
     try {
         const response = await axios({
-            method: "post",
-            baseURL: "https://expense-tracker-test-api.herokuapp.com/",
-            url: "/auth",
+            method: 'post',
+            baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
+            url: '/auth',
             params: params,
         });
 
         return Promise.resolve({
             id: response.data.data.id,
             authHeaders: {
-                client: response.headers["client"],
-                expiry: response.headers["expiry"],
-                uid: response.headers["uid"],
-                "access-token": response.headers["access-token"],
-                "token-type": response.headers["token-type"],
+                client: response.headers['client'],
+                expiry: response.headers['expiry'],
+                uid: response.headers['uid'],
+                'access-token': response.headers['access-token'],
+                'token-type': response.headers['token-type'],
             },
-
-        })
+        });
     } catch (error) {
         if (error.response) {
             // The request was made and the server responded with a status code
@@ -37,36 +36,33 @@ export async function newUserCall(params: NewUserParams): Promise<UserData> {
             console.log(error.request);
         } else {
             // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message); // FIXME
+            console.log('Error', error.message); // FIXME
         }
         return Promise.reject(error);
     }
-
 }
 
 //==================================================
 
-export async function loginCall(
-    params: LoginParams
-): Promise<UserData> {
+export async function loginCall(params: LoginParams): Promise<UserData> {
     try {
         const response = await axios({
-            method: "post",
-            baseURL: "https://expense-tracker-test-api.herokuapp.com/",
-            url: "/auth/sign_in",
+            method: 'post',
+            baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
+            url: '/auth/sign_in',
             params: params,
         });
 
         return Promise.resolve({
             id: response.data.data.id,
             authHeaders: {
-                client: response.headers["client"],
-                expiry: response.headers["expiry"],
-                uid: response.headers["uid"],
-                "access-token": response.headers["access-token"],
-                "token-type": response.headers["token-type"],
+                client: response.headers['client'],
+                expiry: response.headers['expiry'],
+                uid: response.headers['uid'],
+                'access-token': response.headers['access-token'],
+                'token-type': response.headers['token-type'],
             },
-        })
+        });
     } catch (error) {
         if (error.response) {
             // The request was made and the server responded with a status code
@@ -81,7 +77,7 @@ export async function loginCall(
             console.log(error.request);
         } else {
             // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
+            console.log('Error', error.message);
         }
         return Promise.reject(error);
     }

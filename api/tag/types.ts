@@ -1,5 +1,5 @@
-import { Category, Tag } from "../../redux/tags/types";
-import { AuthHeaders } from "../../redux/user/types";
+import { Category, Tag } from '../../redux/tags/types';
+import { AuthHeaders } from '../../redux/user/types';
 
 export interface GetTagParams {
     user_id: number;
@@ -43,7 +43,7 @@ export interface UpdateTagParams {
 
 export interface AllCategoriesData {
     authHeaders: AuthHeaders;
-    categories: ReadonlyArray<Category>
+    categories: ReadonlyArray<Category>;
 }
 
 export interface OneCategoryData {

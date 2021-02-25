@@ -1,4 +1,4 @@
-import { AuthHeaders } from "../../redux/user/types";
+import { AuthHeaders } from '../../redux/user/types';
 
 export interface NewUserParams {
     email: string;
