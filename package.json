@@ -5,7 +5,8 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "start": "next start"
+        "start": "next start",
+        "preinstall": "git config core.hooksPath git_hooks"
     },
     "dependencies": {
         "@material-ui/core": "^4.11.2",
