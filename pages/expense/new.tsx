@@ -21,7 +21,7 @@ type NewExpenseProps = ReduxProps;
 function NewExpense(props: NewExpenseProps) {
     const router = useRouter();
 
-    return <PageLayout pageName="Create Expense">New Expense!</PageLayout>;
+    return <PageLayout pageName='Create Expense'>New Expense!</PageLayout>;
 }
 
 export default connector(withAuth(NewExpense));
