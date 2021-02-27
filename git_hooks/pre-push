@@ -37,14 +37,14 @@ yarn run eslint ./
 eslint_exit_code="$?"
 
 # Print error messsages
-if [[ "$prettier_exit_code" != "0" ]]; then
+if [ "$prettier_exit_code" != "0" ]; then
   echo -e "${RED}Prettier failed"
   exit 1
 else
   echo -e "${GREEN}Prettier passed"
 fi
 
-if [[ "$eslint_exit_code" != "0" ]]; then
+if [ "$eslint_exit_code" != "0" ]; then
   echo -e "${RED}ESLint failed"
   exit 1
 else
