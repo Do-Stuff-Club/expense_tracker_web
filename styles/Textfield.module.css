@@ -17,6 +17,6 @@
     outline: none;
 }
 
-.textField input:focus{
+.textField input:focus {
     border: 2px solid #98a5f3;
 }
