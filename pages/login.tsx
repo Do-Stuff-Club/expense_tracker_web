@@ -2,7 +2,6 @@
 //                             Imports
 // ===================================================================
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
@@ -11,8 +10,6 @@ import FormButton from '../components/formButton';
 
 import { loginAction } from '../redux/user/action';
 import TestComponent from '../components/test';
-import { Router } from '@material-ui/icons';
-import withAuthentication from '../components/withAuthentication';
 import PageLayout from '../components/pageLayout';
 import { LoginParams } from '../api/user/types';
 import { loginCall } from '../api/user/call';

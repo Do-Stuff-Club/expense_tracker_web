@@ -1,4 +1,6 @@
-import Head from 'next/head';
+// ===================================================================
+//                             Imports
+// ===================================================================
 import { useRouter } from 'next/router';
 
 import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
@@ -10,6 +12,13 @@ import PageLayout from '../components/pageLayout';
 import { newUserCall } from '../api/user/call';
 import { NewUserParams } from '../api/user/types';
 import { loginAction } from '../redux/user/action';
+
+import styles from '../styles/Login.module.css';
+import textFieldStyles from '../styles/TextField.module.css';
+
+// ===================================================================
+//                            Component
+// ===================================================================
 
 const connector = connect(null, {
     loginAction,
@@ -50,30 +59,46 @@ export function SignUp(props: SignUpProps) {
 
     return (
         <PageLayout pageName='Sign Up'>
-            <h1>Sign Up</h1>
-            <form onSubmit={handleSubmit}>
-                <TextField
-                    label='Email'
-                    variant='filled'
-                    onChange={(e) => handleChange('email', e)}
-                />
-                <br />
-                <TextField
-                    label='Password'
-                    variant='filled'
-                    onChange={(e) => handleChange('password', e)}
-                />
-                <br />
-                <TextField
-                    label='Password Confirmation'
-                    variant='filled'
-                    onChange={(e) => handleChange('password_confirmation', e)}
-                />
-                <br />
-                <Button variant='contained' type='submit'>
-                    Sign Up
-                </Button>
-            </form>
+            <div className={styles.outerContainer}>
+                <div className={styles.loginText}>
+                    <h1>Sign Up</h1>
+                </div>
+                <form onSubmit={handleSubmit}>
+                <div className={styles.loginContainer}>
+                    <div className={textFieldStyles.textField}>
+                        <div>
+                            <p>Email</p>
+                        </div>
+                        <input
+                            type='text'
+                            onChange={(e) => handleChange('email', e)}
+                        />
+                    </div>
+                    <div className={textFieldStyles.textField}>
+                        <div>
+                            <p>Password</p>
+                        </div>
+                        <input
+                            type='text'
+                            onChange={(e) => handleChange('password', e)}
+                        />
+                    </div>
+                    <div className={textFieldStyles.textField}>
+                        <div>
+                            <p>Password Confirmation</p>
+                        </div>
+                        <input 
+                            type='text'
+                            onChange={(e) => handleChange('password_confirmation', e)}
+                        />
+                    </div>
+                    <br />
+                    <Button variant='contained' type='submit'>
+                        Sign Up
+                    </Button>
+                    </div>
+                </form>
+            </div>
             <TestComponent></TestComponent>
         </PageLayout>
     );
