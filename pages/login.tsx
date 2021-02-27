@@ -67,7 +67,7 @@ function Login(props: LoginProps) {
             </Head>
             <div className={styles.outerContainer}>
                 <div className={styles.loginText}>
-                    <h1>Log in</h1>
+                    <h1>Log In</h1>
                 </div>
                 <div className={styles.loginContainer}>
                     <form onSubmit={handleSubmit}>

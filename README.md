@@ -1,6 +1,5 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -10,12 +9,19 @@ First, install all required packages:
 ```bash
 yarn install
 ```
+
 Running install also configures the git hooks for the dev environment. Please run yarn install again to ensure you have the githooks set up.
 
 Next, run the development server:
 
 ```bash
 yarn dev
+```
+
+Before checking in your code, run prettier:
+
+```bash
+yarn run prettier --check .
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
