@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { TextField, Button } from '@material-ui/core';
+import FormButton from '../components/formButton';
 
 import TestComponent from '../components/test';
 import PageLayout from '../components/pageLayout';
@@ -13,7 +13,7 @@ import { newUserCall } from '../api/user/call';
 import { NewUserParams } from '../api/user/types';
 import { loginAction } from '../redux/user/action';
 
-import styles from '../styles/Login.module.css';
+import styles from '../styles/Form.module.css';
 import textFieldStyles from '../styles/TextField.module.css';
 
 // ===================================================================
@@ -49,6 +49,7 @@ export function SignUp(props: SignUpProps) {
         newUserCall(state).then(
             (data) => {
                 props.loginAction(data);
+                router.push('/dashboard');
             },
             (error) => {
                 console.log(error);
@@ -60,11 +61,11 @@ export function SignUp(props: SignUpProps) {
     return (
         <PageLayout pageName='Sign Up'>
             <div className={styles.outerContainer}>
-                <div className={styles.loginText}>
+                <div className={styles.formText}>
                     <h1>Sign Up</h1>
                 </div>
                 <form onSubmit={handleSubmit}>
-                    <div className={styles.loginContainer}>
+                    <div className={styles.formContainer}>
                         <div className={textFieldStyles.textField}>
                             <div>
                                 <p>Email</p>
@@ -94,10 +95,12 @@ export function SignUp(props: SignUpProps) {
                                 }
                             />
                         </div>
-                        <br />
-                        <Button variant='contained' type='submit'>
-                            Sign Up
-                        </Button>
+                        <div className={styles.formButtonContainer}>
+                            <FormButton href='/' name='Home' />
+                        </div>
+                        <div className={styles.formButtonContainer}>
+                            <FormButton type='submit' name='Sign Up' />
+                        </div>
                     </div>
                 </form>
             </div>

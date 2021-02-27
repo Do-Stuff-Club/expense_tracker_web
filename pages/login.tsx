@@ -13,7 +13,7 @@ import TestComponent from '../components/test';
 import PageLayout from '../components/pageLayout';
 import { LoginParams } from '../api/user/types';
 import { loginCall } from '../api/user/call';
-import styles from '../styles/Login.module.css';
+import styles from '../styles/Form.module.css';
 import textFieldStyles from '../styles/TextField.module.css';
 
 // ===================================================================
@@ -63,10 +63,10 @@ function Login(props: LoginProps) {
                 <title>Create Next App</title>
             </Head>
             <div className={styles.outerContainer}>
-                <div className={styles.loginText}>
+                <div className={styles.formText}>
                     <h1>Log In</h1>
                 </div>
-                <div className={styles.loginContainer}>
+                <div className={styles.formContainer}>
                     <form onSubmit={handleSubmit}>
                         <div className={textFieldStyles.textField}>
                             <div>
@@ -86,10 +86,10 @@ function Login(props: LoginProps) {
                                 onChange={(e) => handleChange('password', e)}
                             ></input>
                         </div>
-                        <div className={styles.loginButtonContainer}>
+                        <div className={styles.formButtonContainer}>
                             <FormButton href='/' name='Home' />
                         </div>
-                        <div className={styles.loginButtonContainer}>
+                        <div className={styles.formButtonContainer}>
                             <FormButton type='submit' name='Log In' />
                         </div>
                     </form>
