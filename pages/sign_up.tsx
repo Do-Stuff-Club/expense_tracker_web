@@ -64,38 +64,40 @@ export function SignUp(props: SignUpProps) {
                     <h1>Sign Up</h1>
                 </div>
                 <form onSubmit={handleSubmit}>
-                <div className={styles.loginContainer}>
-                    <div className={textFieldStyles.textField}>
-                        <div>
-                            <p>Email</p>
+                    <div className={styles.loginContainer}>
+                        <div className={textFieldStyles.textField}>
+                            <div>
+                                <p>Email</p>
+                            </div>
+                            <input
+                                type='text'
+                                onChange={(e) => handleChange('email', e)}
+                            />
                         </div>
-                        <input
-                            type='text'
-                            onChange={(e) => handleChange('email', e)}
-                        />
-                    </div>
-                    <div className={textFieldStyles.textField}>
-                        <div>
-                            <p>Password</p>
+                        <div className={textFieldStyles.textField}>
+                            <div>
+                                <p>Password</p>
+                            </div>
+                            <input
+                                type='text'
+                                onChange={(e) => handleChange('password', e)}
+                            />
                         </div>
-                        <input
-                            type='text'
-                            onChange={(e) => handleChange('password', e)}
-                        />
-                    </div>
-                    <div className={textFieldStyles.textField}>
-                        <div>
-                            <p>Password Confirmation</p>
+                        <div className={textFieldStyles.textField}>
+                            <div>
+                                <p>Password Confirmation</p>
+                            </div>
+                            <input
+                                type='text'
+                                onChange={(e) =>
+                                    handleChange('password_confirmation', e)
+                                }
+                            />
                         </div>
-                        <input 
-                            type='text'
-                            onChange={(e) => handleChange('password_confirmation', e)}
-                        />
-                    </div>
-                    <br />
-                    <Button variant='contained' type='submit'>
-                        Sign Up
-                    </Button>
+                        <br />
+                        <Button variant='contained' type='submit'>
+                            Sign Up
+                        </Button>
                     </div>
                 </form>
             </div>
