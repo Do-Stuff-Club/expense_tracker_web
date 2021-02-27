@@ -53,4 +53,4 @@ else
   echo "${YELLOW}ESLint ${GREEN}passed"
 fi
 
-exit exit_code
+exit ${exit_code}
