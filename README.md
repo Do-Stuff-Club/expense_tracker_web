@@ -10,6 +10,7 @@ First, install all required packages:
 ```bash
 yarn install
 ```
+Running install also configures the git hooks for the dev environment. Please run yarn install again to ensure you have the githooks set up.
 
 Next, run the development server:
 
