@@ -31,9 +31,8 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type LoginProps = ReduxProps;
 
 function Login(props: LoginProps) {
-
     const formik = useFormik({
-        initialValues: { 
+        initialValues: {
             email: '',
             password: '',
         },
@@ -47,14 +46,14 @@ function Login(props: LoginProps) {
                     console.log(error);
                 },
             );
-                
+
             //event.preventDefault();
-        }
+        },
     });
 
     //TODO: add validation for pass
     //const validation
-      
+
     const router = useRouter();
 
     return (
