@@ -27,7 +27,6 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type SignUpProps = ReduxProps;
 
 export function SignUp(props: SignUpProps) {
-    
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -48,7 +47,7 @@ export function SignUp(props: SignUpProps) {
             //event.preventDefault();
         },
     });
-    
+
     const router = useRouter();
 
     return (
