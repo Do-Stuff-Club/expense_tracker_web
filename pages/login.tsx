@@ -4,14 +4,13 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
+import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import FormButton from '../components/formButton';
 
 import { loginAction } from '../redux/user/action';
 import TestComponent from '../components/test';
 import PageLayout from '../components/pageLayout';
-import { LoginParams } from '../api/user/types';
 import { loginCall } from '../api/user/call';
 import styles from '../styles/Form.module.css';
 import textFieldStyles from '../styles/TextField.module.css';
