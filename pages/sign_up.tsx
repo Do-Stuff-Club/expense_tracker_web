@@ -1,15 +1,24 @@
-import Head from 'next/head';
+// ===================================================================
+//                             Imports
+// ===================================================================
 import { useRouter } from 'next/router';
 
 import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { TextField, Button } from '@material-ui/core';
+import FormButton from '../components/formButton';
 
 import TestComponent from '../components/test';
 import PageLayout from '../components/pageLayout';
 import { newUserCall } from '../api/user/call';
 import { NewUserParams } from '../api/user/types';
 import { loginAction } from '../redux/user/action';
+
+import styles from '../styles/Form.module.css';
+import textFieldStyles from '../styles/TextField.module.css';
+
+// ===================================================================
+//                            Component
+// ===================================================================
 
 const connector = connect(null, {
     loginAction,
@@ -40,6 +49,7 @@ export function SignUp(props: SignUpProps) {
         newUserCall(state).then(
             (data) => {
                 props.loginAction(data);
+                router.push('/dashboard');
             },
             (error) => {
                 console.log(error);
@@ -50,30 +60,50 @@ export function SignUp(props: SignUpProps) {
 
     return (
         <PageLayout pageName='Sign Up'>
-            <h1>Sign Up</h1>
-            <form onSubmit={handleSubmit}>
-                <TextField
-                    label='Email'
-                    variant='filled'
-                    onChange={(e) => handleChange('email', e)}
-                />
-                <br />
-                <TextField
-                    label='Password'
-                    variant='filled'
-                    onChange={(e) => handleChange('password', e)}
-                />
-                <br />
-                <TextField
-                    label='Password Confirmation'
-                    variant='filled'
-                    onChange={(e) => handleChange('password_confirmation', e)}
-                />
-                <br />
-                <Button variant='contained' type='submit'>
-                    Sign Up
-                </Button>
-            </form>
+            <div className={styles.outerContainer}>
+                <div className={styles.formText}>
+                    <h1>Sign Up</h1>
+                </div>
+                <form onSubmit={handleSubmit}>
+                    <div className={styles.formContainer}>
+                        <div className={textFieldStyles.textField}>
+                            <div>
+                                <p>Email</p>
+                            </div>
+                            <input
+                                type='text'
+                                onChange={(e) => handleChange('email', e)}
+                            />
+                        </div>
+                        <div className={textFieldStyles.textField}>
+                            <div>
+                                <p>Password</p>
+                            </div>
+                            <input
+                                type='text'
+                                onChange={(e) => handleChange('password', e)}
+                            />
+                        </div>
+                        <div className={textFieldStyles.textField}>
+                            <div>
+                                <p>Password Confirmation</p>
+                            </div>
+                            <input
+                                type='text'
+                                onChange={(e) =>
+                                    handleChange('password_confirmation', e)
+                                }
+                            />
+                        </div>
+                        <div className={styles.formButtonContainer}>
+                            <FormButton href='/' name='Home' />
+                        </div>
+                        <div className={styles.formButtonContainer}>
+                            <FormButton type='submit' name='Sign Up' />
+                        </div>
+                    </div>
+                </form>
+            </div>
             <TestComponent></TestComponent>
         </PageLayout>
     );

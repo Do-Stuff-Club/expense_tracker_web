@@ -2,7 +2,6 @@
 //                             Imports
 // ===================================================================
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
@@ -11,12 +10,10 @@ import FormButton from '../components/formButton';
 
 import { loginAction } from '../redux/user/action';
 import TestComponent from '../components/test';
-import { Router } from '@material-ui/icons';
-import withAuthentication from '../components/withAuthentication';
 import PageLayout from '../components/pageLayout';
 import { LoginParams } from '../api/user/types';
 import { loginCall } from '../api/user/call';
-import styles from '../styles/Login.module.css';
+import styles from '../styles/Form.module.css';
 import textFieldStyles from '../styles/TextField.module.css';
 
 // ===================================================================
@@ -66,10 +63,10 @@ function Login(props: LoginProps) {
                 <title>Create Next App</title>
             </Head>
             <div className={styles.outerContainer}>
-                <div className={styles.loginText}>
+                <div className={styles.formText}>
                     <h1>Log In</h1>
                 </div>
-                <div className={styles.loginContainer}>
+                <div className={styles.formContainer}>
                     <form onSubmit={handleSubmit}>
                         <div className={textFieldStyles.textField}>
                             <div>
@@ -89,10 +86,10 @@ function Login(props: LoginProps) {
                                 onChange={(e) => handleChange('password', e)}
                             ></input>
                         </div>
-                        <div className={styles.loginButtonContainer}>
+                        <div className={styles.formButtonContainer}>
                             <FormButton href='/' name='Home' />
                         </div>
-                        <div className={styles.loginButtonContainer}>
+                        <div className={styles.formButtonContainer}>
                             <FormButton type='submit' name='Log In' />
                         </div>
                     </form>
