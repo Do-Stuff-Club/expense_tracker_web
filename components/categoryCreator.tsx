@@ -15,7 +15,9 @@ const connector = connect(stateToProps, {
 type ReduxProps = ConnectedProps<typeof connector>;
 type CategoryCreatorProps = ReduxProps;
 
-export default function CategoryCreator(props: CategoryCreatorProps): JSX.Element {
+export default function CategoryCreator(
+    props: CategoryCreatorProps,
+): JSX.Element {
     const [categoryName, setCategoryName] = useState<string>('');
     const [required, setRequired] = useState<boolean>(false);
     const [tagArray, setTagArray] = useState<Array<string>>([]);

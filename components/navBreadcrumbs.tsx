@@ -4,7 +4,9 @@ import { Breadcrumbs } from '@material-ui/core';
 
 export interface NavBreadcrumbsProps {}
 
-export default function NavBreadcrumbs(props: NavBreadcrumbsProps): JSX.Element {
+export default function NavBreadcrumbs(
+    props: NavBreadcrumbsProps,
+): JSX.Element {
     return (
         <Breadcrumbs>
             <Link href='/category'>

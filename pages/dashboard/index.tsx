@@ -18,7 +18,6 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type DashboardProps = ReduxProps;
 
 function Dashboard(props: DashboardProps) {
-
     return (
         <PageLayout pageName='Dashboard'>
             <NavBreadcrumbs></NavBreadcrumbs>
