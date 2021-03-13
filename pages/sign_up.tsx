@@ -26,7 +26,7 @@ const connector = connect(null, {
 type ReduxProps = ConnectedProps<typeof connector>;
 type SignUpProps = ReduxProps;
 
-export function SignUp(props: SignUpProps) {
+export function SignUp(props: SignUpProps): JSX.Element {
     const validate = (values) => {
         const errors = {};
 

@@ -3,19 +3,21 @@ import React, { ChangeEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import TagItem from './tagItem';
 
-import { newCategory } from '../redux/tags/action';
+import { createCategoryAction } from '../redux/tags/action';
 import { RootState } from '../redux/store';
 
 const stateToProps = (state: RootState) => ({
     ...state,
 });
 const connector = connect(stateToProps, {
-    newCategory,
+    createCategoryAction,
 });
 type ReduxProps = ConnectedProps<typeof connector>;
 type CategoryCreatorProps = ReduxProps;
 
-export default function CategoryCreator(props: CategoryCreatorProps) {
+export default function CategoryCreator(
+    props: CategoryCreatorProps,
+): JSX.Element {
     const [categoryName, setCategoryName] = useState<string>('');
     const [required, setRequired] = useState<boolean>(false);
     const [tagArray, setTagArray] = useState<Array<string>>([]);

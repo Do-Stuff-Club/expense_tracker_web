@@ -7,7 +7,7 @@ export interface PageLayoutProps {
     children: React.ReactNode;
 }
 
-export default function PageLayout(props: PageLayoutProps) {
+export default function PageLayout(props: PageLayoutProps): JSX.Element {
     return (
         <>
             <Head>

@@ -1,10 +1,7 @@
-import axios from 'axios';
-import qs from 'qs';
-import { loadGetInitialProps } from 'next/dist/next-server/lib/utils';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../store';
-import { TagActionTypes, UpdateAllCategoriesAction } from './types';
+import { TagActionTypes } from './types';
 import { AllCategoriesData, OneCategoryData } from '../../api/tag/types';
 
 export const updateAllCategoriesAction = (

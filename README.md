@@ -18,11 +18,13 @@ Next, run the development server:
 yarn dev
 ```
 
-Before checking in your code, run prettier:
+Other yarn scripts:
 
-```bash
-yarn run prettier --check .
-```
+| Name | Command | Description |
+| --- | --- | --- |
+| `yarn lint_check` | `eslint ./` | Runs ESLint and prints any warnings or errors |
+| `yarn format_check` | `prettier --check ./` | Checks formatting using Prettier |
+| `yarn reformat` | `prettier --write ./` | Reformats files using Prettier |
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

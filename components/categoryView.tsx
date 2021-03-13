@@ -1,15 +1,13 @@
-import classes from '*.module.css';
 import Link from 'next/link';
 import {
     ListItem,
-    ListItemIcon,
     ListItemText,
     Collapse,
     List,
     ListItemSecondaryAction,
     IconButton,
 } from '@material-ui/core';
-import { ExpandLess, ExpandMore, StarBorder } from '@material-ui/icons';
+import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import React from 'react';
 import { Category } from '../redux/tags/types';
 import EditIcon from '@material-ui/icons/Edit';
@@ -22,7 +20,7 @@ export interface CategoryViewProps {
     onDelete: () => void;
 }
 
-export default function CategoryView(props: CategoryViewProps) {
+export default function CategoryView(props: CategoryViewProps): JSX.Element {
     const [open, setOpen] = React.useState(true);
     const router = useRouter();
 

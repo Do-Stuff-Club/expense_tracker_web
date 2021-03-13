@@ -1,7 +1,4 @@
-import { connect, ConnectedProps, DispatchProp, Matching } from 'react-redux';
-import { AnyAction, compose } from 'redux';
-import { RootState, wrapper } from '../redux/store';
-import { ComponentType, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 

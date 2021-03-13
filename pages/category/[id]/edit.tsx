@@ -12,7 +12,6 @@ import {
 import { RootState } from '../../../redux/store';
 import withAuth from '../../../components/withAuthentication';
 import { Category, Tag } from '../../../redux/tags/types';
-import { GetStaticPaths, GetStaticProps } from 'next';
 import PageLayout from '../../../components/pageLayout';
 import {
     createTagCall,
@@ -96,7 +95,7 @@ function EditCategory(props: EditCategoryProps) {
             newName: string,
         ): [boolean, string] => {
             const otherTags = category.tags.filter((tag) => tag.id != id);
-            for (var i = 0; i < otherTags.length; i++) {
+            for (let i = 0; i < otherTags.length; i++) {
                 if (otherTags[i].name == newName) {
                     return [true, 'Tag already exists'];
                 } else if (newName == '') {
