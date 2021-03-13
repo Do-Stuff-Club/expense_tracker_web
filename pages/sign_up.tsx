@@ -30,6 +30,10 @@ export function SignUp(props: SignUpProps) {
     const validate = (values) => {
         const errors = {};
 
+        if (!values.email.includes('@')) {
+            errors.email = 'Not a valid email address';
+        }
+
         if (values.password.length < 6) {
             errors.password = 'Password must be at least 6 characters long';
         }
@@ -69,7 +73,7 @@ export function SignUp(props: SignUpProps) {
                 <div className={styles.formText}>
                     <h1>Sign Up</h1>
                 </div>
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={formik.handleSubmit} noValidate>
                     <div className={styles.formContainer}>
                         <div className={textFieldStyles.textField}>
                             <div>
@@ -84,6 +88,11 @@ export function SignUp(props: SignUpProps) {
                                 value={formik.values.email}
                             />
                         </div>
+                        {formik.touched.email && formik.errors.email ? (
+                            <div className={styles.formErrors}>
+                                {formik.errors.email}
+                            </div>
+                        ) : null}
                         <div className={textFieldStyles.textField}>
                             <div>
                                 <p>Password</p>

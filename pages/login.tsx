@@ -27,11 +27,22 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type LoginProps = ReduxProps;
 
 function Login(props: LoginProps) {
+    const validate = (values) => {
+        const errors = {};
+
+        if (!values.email.includes('@')) {
+            errors.email = 'Not a valid email address';
+        }
+
+        return errors;
+    };
+
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
         },
+        validate,
         onSubmit: (values) => {
             loginCall(values).then(
                 (data) => {
@@ -57,7 +68,7 @@ function Login(props: LoginProps) {
                     <h1>Log In</h1>
                 </div>
                 <div className={styles.formContainer}>
-                    <form onSubmit={formik.handleSubmit}>
+                    <form onSubmit={formik.handleSubmit} noValidate>
                         <div className={textFieldStyles.textField}>
                             <div>
                                 <p>Email</p>
@@ -67,9 +78,15 @@ function Login(props: LoginProps) {
                                 name='email'
                                 type='email'
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 value={formik.values.email}
                             ></input>
                         </div>
+                        {formik.touched.email && formik.errors.email ? (
+                            <div className={styles.formErrors}>
+                                {formik.errors.email}
+                            </div>
+                        ) : null}
                         <div className={textFieldStyles.textField}>
                             <div>
                                 <p>Password</p>
