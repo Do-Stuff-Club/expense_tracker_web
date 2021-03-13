@@ -91,7 +91,7 @@ export function SignUp(props: SignUpProps) {
                             <input
                                 id='password'
                                 name='password'
-                                type='text'
+                                type='password'
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.password}
@@ -110,7 +110,7 @@ export function SignUp(props: SignUpProps) {
                             <input
                                 id='password_confirmation'
                                 name='password_confirmation'
-                                type='text'
+                                type='password'
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.password_confirmation}
