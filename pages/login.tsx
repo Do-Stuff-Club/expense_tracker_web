@@ -4,17 +4,17 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
+import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import FormButton from '../components/formButton';
 
 import { loginAction } from '../redux/user/action';
 import TestComponent from '../components/test';
 import PageLayout from '../components/pageLayout';
-import { LoginParams } from '../api/user/types';
 import { loginCall } from '../api/user/call';
 import styles from '../styles/Form.module.css';
 import textFieldStyles from '../styles/TextField.module.css';
+import { useFormik } from 'formik';
 
 // ===================================================================
 //                            Component
@@ -27,35 +27,30 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type LoginProps = ReduxProps;
 
 function Login(props: LoginProps) {
-    const [state, setState] = useState<LoginParams>({
-        email: '',
-        password: '',
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        onSubmit: (values) => {
+            loginCall(values).then(
+                (data) => {
+                    props.loginAction(data);
+                    router.push('/dashboard');
+                },
+                (error) => {
+                    console.log(error);
+                },
+            );
+
+            //event.preventDefault();
+        },
     });
+
+    //TODO: add validation for pass
+    //const validation
+
     const router = useRouter();
-
-    const handleChange = (
-        name: string,
-        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ) => {
-        const target = event.target;
-        setState({
-            ...state,
-            [name]: target.value,
-        });
-    };
-
-    const handleSubmit = (event: SyntheticEvent) => {
-        loginCall(state).then(
-            (data) => {
-                props.loginAction(data);
-                router.push('/dashboard');
-            },
-            (error) => {
-                console.log(error);
-            },
-        );
-        event.preventDefault();
-    };
 
     return (
         <PageLayout pageName='Expense Tracker Login'>
@@ -67,14 +62,17 @@ function Login(props: LoginProps) {
                     <h1>Log In</h1>
                 </div>
                 <div className={styles.formContainer}>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={formik.handleSubmit}>
                         <div className={textFieldStyles.textField}>
                             <div>
                                 <p>Email</p>
                             </div>
                             <input
-                                type='text'
-                                onChange={(e) => handleChange('email', e)}
+                                id='email'
+                                name='email'
+                                type='email'
+                                onChange={formik.handleChange}
+                                value={formik.values.email}
                             ></input>
                         </div>
                         <div className={textFieldStyles.textField}>
@@ -82,8 +80,11 @@ function Login(props: LoginProps) {
                                 <p>Password</p>
                             </div>
                             <input
+                                id='password'
+                                name='password'
                                 type='text'
-                                onChange={(e) => handleChange('password', e)}
+                                onChange={formik.handleChange}
+                                value={formik.values.password}
                             ></input>
                         </div>
                         <div className={styles.formButtonContainer}>
