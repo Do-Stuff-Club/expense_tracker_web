@@ -42,8 +42,6 @@ function Login(props: LoginProps) {
                     console.log(error);
                 },
             );
-
-            //event.preventDefault();
         },
     });
 
