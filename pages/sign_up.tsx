@@ -58,8 +58,6 @@ export function SignUp(props: SignUpProps) {
                     console.log(error);
                 },
             );
-
-            //event.preventDefault();
         },
     });
 
@@ -98,8 +96,11 @@ export function SignUp(props: SignUpProps) {
                                 onBlur={formik.handleBlur}
                                 value={formik.values.password}
                             />
-                            {formik.errors.password ? (
-                                <div>{formik.errors.password}</div>
+                            {formik.touched.password &&
+                            formik.errors.password ? (
+                                <div className={styles.formErrors}>
+                                    {formik.errors.password}
+                                </div>
                             ) : null}
                         </div>
                         <div className={textFieldStyles.textField}>
@@ -114,8 +115,11 @@ export function SignUp(props: SignUpProps) {
                                 onBlur={formik.handleBlur}
                                 value={formik.values.password_confirmation}
                             />
-                            {formik.errors.password_confirmation ? (
-                                <div>{formik.errors.password_confirmation}</div>
+                            {formik.touched.password_confirmation &&
+                            formik.errors.password_confirmation ? (
+                                <div className={styles.formErrors}>
+                                    {formik.errors.password_confirmation}
+                                </div>
                             ) : null}
                         </div>
                         <div className={styles.formButtonContainer}>
