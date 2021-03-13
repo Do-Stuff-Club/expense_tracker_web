@@ -1,6 +1,5 @@
 import axios from 'axios';
 import qs from 'qs';
-import { AuthHeaders } from '../../redux/user/types';
 import {
     AllCategoriesData,
     CreateCategoryParams,

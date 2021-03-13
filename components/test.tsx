@@ -1,8 +1,6 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../redux/store';
-
-import { UserState } from '../redux/user/types';
 
 const stateToProps = (state: RootState) => state.user;
 

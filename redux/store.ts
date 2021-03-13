@@ -1,6 +1,5 @@
 import {
     createStore,
-    AnyAction,
     applyMiddleware,
     combineReducers,
 } from 'redux';
@@ -9,8 +8,7 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import user, { defaultUserState } from './user/reducer';
-import { UserAction, UserActionTypes, UserState } from './user/types';
-import App from 'next/app';
+import { UserAction } from './user/types';
 import { TagAction } from './tags/types';
 import tag, { defaultTagState } from './tags/reducer';
 

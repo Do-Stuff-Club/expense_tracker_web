@@ -1,6 +1,7 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
+import React from 'react'
 import { Button, ButtonProps, makeStyles } from '@material-ui/core';
 
 // ===================================================================
@@ -23,7 +24,7 @@ const buttonStyling = makeStyles(
 // ===================================================================
 //                            Component
 // ===================================================================
-export default function FormButton(props: ButtonProps) {
+export default function FormButton(props: ButtonProps): JSX.Element {
     const buttonStyles = buttonStyling();
 
     return (

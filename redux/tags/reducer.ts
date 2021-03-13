@@ -1,5 +1,3 @@
-import { RootState } from '../store';
-import { defaultUserState } from '../user/reducer';
 import { TagAction, TagActionTypes, TagState } from './types';
 
 export const defaultTagState: TagState = {
@@ -16,12 +14,13 @@ export default function tag(
             return { categories: action.payload.categories };
         case TagActionTypes.UPDATE_ONE_CATEGORY:
             // Replace the edited category
-            const newCategories = state.categories.map((category) => {
-                if (category.id == action.payload.category.id)
-                    return action.payload.category;
-                else return category;
-            });
-            return { categories: newCategories };
+            return {
+                categories: state.categories.map((category) => {
+                    if (category.id == action.payload.category.id)
+                        return action.payload.category;
+                    else return category;
+                }),
+            };
         case TagActionTypes.CREATE_CATEGORY:
             return {
                 categories: [...state.categories, action.payload.category],

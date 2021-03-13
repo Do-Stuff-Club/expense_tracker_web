@@ -1,9 +1,8 @@
-import axios from 'axios';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { UserData } from '../../api/user/types';
 import { RootState } from '../store';
-import { UserActionTypes, UserLoginAction } from './types';
+import { UserActionTypes } from './types';
 
 // FIXME change Promise<any> to more restricted type
 export const loginAction = (

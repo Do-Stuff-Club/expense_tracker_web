@@ -1,11 +1,8 @@
-import { GetServerSideProps } from 'next';
-import Head from 'next/head';
 import Link from 'next/link';
 import { RootState } from '../../redux/store';
 import { connect, ConnectedProps } from 'react-redux';
-import { compose } from 'redux';
 import styles from '../../styles/Home.module.css';
-import withAuth, { AuthProps } from '../../components/withAuthentication';
+import withAuth from '../../components/withAuthentication';
 import React, { useEffect } from 'react';
 import { updateAllCategoriesAction } from '../../redux/tags/action';
 import { Button } from '@material-ui/core';
@@ -62,6 +59,7 @@ function Tag(props: TagProps) {
                 {props.tag.categories.map((category, i) => {
                     return (
                         <CategoryView
+                            key={i}
                             listKey={i}
                             category={category}
                             onDelete={() => onDelete(category.id)}

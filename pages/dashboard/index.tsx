@@ -1,7 +1,5 @@
-import { Button, Card, Grid, List, Switch, TextField } from '@material-ui/core';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import React, { ChangeEvent, useState } from 'react';
+import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
 import { RootState } from '../../redux/store';
@@ -20,7 +18,6 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type DashboardProps = ReduxProps;
 
 function Dashboard(props: DashboardProps) {
-    const router = useRouter();
 
     return (
         <PageLayout pageName='Dashboard'>

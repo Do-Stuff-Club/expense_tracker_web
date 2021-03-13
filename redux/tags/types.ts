@@ -1,4 +1,3 @@
-import { CreateTagParams } from '../../api/tag/types';
 import { AuthHeaders } from '../user/types';
 
 export interface Tag {
