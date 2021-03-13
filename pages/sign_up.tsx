@@ -27,12 +27,31 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type SignUpProps = ReduxProps;
 
 export function SignUp(props: SignUpProps): JSX.Element {
+    const validate = (values) => {
+        const errors = {};
+
+        if (!values.email.includes('@')) {
+            errors.email = 'Not a valid email address';
+        }
+
+        if (values.password.length < 6) {
+            errors.password = 'Password must be at least 6 characters long';
+        }
+
+        if (values.password != values.password_confirmation) {
+            errors.password_confirmation = "Passwords don't match";
+        }
+
+        return errors;
+    };
+
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
             password_confirmation: '',
         },
+        validate,
         onSubmit: (values) => {
             newUserCall(values).then(
                 (data) => {
@@ -43,8 +62,6 @@ export function SignUp(props: SignUpProps): JSX.Element {
                     console.log(error);
                 },
             );
-
-            //event.preventDefault();
         },
     });
 
@@ -56,7 +73,7 @@ export function SignUp(props: SignUpProps): JSX.Element {
                 <div className={styles.formText}>
                     <h1>Sign Up</h1>
                 </div>
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={formik.handleSubmit} noValidate>
                     <div className={styles.formContainer}>
                         <div className={textFieldStyles.textField}>
                             <div>
@@ -67,9 +84,15 @@ export function SignUp(props: SignUpProps): JSX.Element {
                                 name='email'
                                 type='email'
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 value={formik.values.email}
                             />
                         </div>
+                        {formik.touched.email && formik.errors.email ? (
+                            <div className={styles.formErrors}>
+                                {formik.errors.email}
+                            </div>
+                        ) : null}
                         <div className={textFieldStyles.textField}>
                             <div>
                                 <p>Password</p>
@@ -77,10 +100,17 @@ export function SignUp(props: SignUpProps): JSX.Element {
                             <input
                                 id='password'
                                 name='password'
-                                type='text'
+                                type='password'
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 value={formik.values.password}
                             />
+                            {formik.touched.password &&
+                            formik.errors.password ? (
+                                <div className={styles.formErrors}>
+                                    {formik.errors.password}
+                                </div>
+                            ) : null}
                         </div>
                         <div className={textFieldStyles.textField}>
                             <div>
@@ -89,10 +119,17 @@ export function SignUp(props: SignUpProps): JSX.Element {
                             <input
                                 id='password_confirmation'
                                 name='password_confirmation'
-                                type='text'
+                                type='password'
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 value={formik.values.password_confirmation}
                             />
+                            {formik.touched.password_confirmation &&
+                            formik.errors.password_confirmation ? (
+                                <div className={styles.formErrors}>
+                                    {formik.errors.password_confirmation}
+                                </div>
+                            ) : null}
                         </div>
                         <div className={styles.formButtonContainer}>
                             <FormButton href='/' name='Home' />

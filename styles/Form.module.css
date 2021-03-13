@@ -19,3 +19,9 @@
     padding: 4px;
     margin-top: 20px;
 }
+
+.formErrors {
+    display: block;
+    color: red;
+    font-size: 7px;
+}
