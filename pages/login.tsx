@@ -47,9 +47,6 @@ function Login(props: LoginProps) {
         },
     });
 
-    //TODO: add validation for pass
-    //const validation
-
     const router = useRouter();
 
     return (

@@ -27,12 +27,27 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type SignUpProps = ReduxProps;
 
 export function SignUp(props: SignUpProps) {
+    const validate = (values) => {
+        const errors = {};
+
+        if (values.password.length < 6) {
+            errors.password = 'Password must be at least 6 characters long';
+        }
+
+        if (values.password != values.password_confirmation) {
+            errors.password_confirmation = "Passwords don't match";
+        }
+
+        return errors;
+    };
+
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
             password_confirmation: '',
         },
+        validate,
         onSubmit: (values) => {
             newUserCall(values).then(
                 (data) => {
@@ -67,6 +82,7 @@ export function SignUp(props: SignUpProps) {
                                 name='email'
                                 type='email'
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 value={formik.values.email}
                             />
                         </div>
@@ -79,8 +95,12 @@ export function SignUp(props: SignUpProps) {
                                 name='password'
                                 type='text'
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 value={formik.values.password}
                             />
+                            {formik.errors.password ? (
+                                <div>{formik.errors.password}</div>
+                            ) : null}
                         </div>
                         <div className={textFieldStyles.textField}>
                             <div>
@@ -91,8 +111,12 @@ export function SignUp(props: SignUpProps) {
                                 name='password_confirmation'
                                 type='text'
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 value={formik.values.password_confirmation}
                             />
+                            {formik.errors.password_confirmation ? (
+                                <div>{formik.errors.password_confirmation}</div>
+                            ) : null}
                         </div>
                         <div className={styles.formButtonContainer}>
                             <FormButton href='/' name='Home' />
