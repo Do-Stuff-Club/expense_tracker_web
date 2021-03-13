@@ -3,16 +3,16 @@
 // ===================================================================
 import { useRouter } from 'next/router';
 
-import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
+import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import FormButton from '../components/formButton';
 
 import TestComponent from '../components/test';
 import PageLayout from '../components/pageLayout';
 import { newUserCall } from '../api/user/call';
-import { NewUserParams } from '../api/user/types';
 import { loginAction } from '../redux/user/action';
 
+import { useFormik } from 'formik';
 import styles from '../styles/Form.module.css';
 import textFieldStyles from '../styles/TextField.module.css';
 
@@ -27,36 +27,28 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type SignUpProps = ReduxProps;
 
 export function SignUp(props: SignUpProps) {
-    const [state, setState] = useState<NewUserParams>({
-        email: '',
-        password: '',
-        password_confirmation: '',
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+            password_confirmation: '',
+        },
+        onSubmit: (values) => {
+            newUserCall(values).then(
+                (data) => {
+                    props.loginAction(data);
+                    router.push('/dashboard');
+                },
+                (error) => {
+                    console.log(error);
+                },
+            );
+
+            //event.preventDefault();
+        },
     });
+
     const router = useRouter();
-
-    const handleChange = (
-        name: string,
-        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ) => {
-        const target = event.target;
-        setState({
-            ...state,
-            [name]: target.value,
-        });
-    };
-
-    const handleSubmit = (event: SyntheticEvent) => {
-        newUserCall(state).then(
-            (data) => {
-                props.loginAction(data);
-                router.push('/dashboard');
-            },
-            (error) => {
-                console.log(error);
-            },
-        );
-        event.preventDefault();
-    };
 
     return (
         <PageLayout pageName='Sign Up'>
@@ -64,15 +56,18 @@ export function SignUp(props: SignUpProps) {
                 <div className={styles.formText}>
                     <h1>Sign Up</h1>
                 </div>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={formik.handleSubmit}>
                     <div className={styles.formContainer}>
                         <div className={textFieldStyles.textField}>
                             <div>
                                 <p>Email</p>
                             </div>
                             <input
-                                type='text'
-                                onChange={(e) => handleChange('email', e)}
+                                id='email'
+                                name='email'
+                                type='email'
+                                onChange={formik.handleChange}
+                                value={formik.values.email}
                             />
                         </div>
                         <div className={textFieldStyles.textField}>
@@ -80,8 +75,11 @@ export function SignUp(props: SignUpProps) {
                                 <p>Password</p>
                             </div>
                             <input
+                                id='password'
+                                name='password'
                                 type='text'
-                                onChange={(e) => handleChange('password', e)}
+                                onChange={formik.handleChange}
+                                value={formik.values.password}
                             />
                         </div>
                         <div className={textFieldStyles.textField}>
@@ -89,10 +87,11 @@ export function SignUp(props: SignUpProps) {
                                 <p>Password Confirmation</p>
                             </div>
                             <input
+                                id='password_confirmation'
+                                name='password_confirmation'
                                 type='text'
-                                onChange={(e) =>
-                                    handleChange('password_confirmation', e)
-                                }
+                                onChange={formik.handleChange}
+                                value={formik.values.password_confirmation}
                             />
                         </div>
                         <div className={styles.formButtonContainer}>
