@@ -10,9 +10,8 @@ export interface Expense {
     tags: ReadonlyArray<Tag>
 }
 
-// TODO: figure out what to do for ExpenseState
 export interface ExpenseState {
-
+    expenses: ReadonlyArray<Expense>;
 }
 
 export enum ExpenseActionTypes {
