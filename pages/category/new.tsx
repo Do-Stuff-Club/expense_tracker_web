@@ -5,6 +5,10 @@ import React, { ChangeEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import TagItem from '../../components/tagItem';
 
+import FormButton from '../../components/formButton';
+import styles from '../../styles/Form.module.css';
+import textFieldStyles from '../../styles/TextField.module.css';
+
 import {
     createCategoryAction,
     updateAllCategoriesAction,
@@ -94,38 +98,46 @@ function NewCategory(props: NewCategoryProps) {
 
     return (
         <PageLayout pageName='Create Category'>
-            <Card>
-                <Grid
-                    container
-                    direction='column'
-                    justify='center'
-                    alignItems='center'
-                >
-                    <Grid>
-                        <TextField
-                            label='Name'
+            <div className={styles.outerContainer}>
+                <div className={styles.formText}>
+                    <h1>Create a New Category</h1>
+                </div>
+                <div className={styles.formContainer}>
+                    <div className={textFieldStyles.textField}>
+                        <div>
+                            <p>Name</p>
+                        </div>
+                        <input
+                            id='name'
+                            name='name'
+                            type='text'
                             onChange={handleChangeCategoryName}
-                        ></TextField>
+                        ></input>
                         <Switch
                             checked={required}
                             onChange={handleChangeRequired}
                         ></Switch>
-                    </Grid>
+                    </div>
                     <Grid>
-                        {newTagHasError ? (
-                            <TextField
-                                label='Tag Name'
-                                error
-                                helperText={newTagErrorMessage}
+                        <div className={textFieldStyles.textField}>
+                            <div>
+                                <p>Tag</p>
+                            </div>
+                            <input
+                                id='tag'
+                                name='tag'
+                                type='text'
                                 onChange={(e) => handleChangeNewTagName(e)}
-                            />
-                        ) : (
-                            <TextField
-                                label='Tag Name'
-                                onChange={(e) => handleChangeNewTagName(e)}
-                            />
-                        )}
-                        <Button onClick={addNewTag}>Add</Button>
+                            ></input>
+                            {newTagHasError ? (
+                                <div className={styles.formErrors}>
+                                    {newTagErrorMessage}
+                                </div>
+                            ) : null}
+                        </div>
+                        <div className={styles.formButtonContainer}>
+                            <FormButton onClick={addNewTag} name='Add' />
+                        </div>
                         <List>
                             {tagArray.map((tag, i) => {
                                 return (
@@ -137,12 +149,19 @@ function NewCategory(props: NewCategoryProps) {
                                 );
                             })}
                         </List>
-                        <Button onClick={submitCategory}>Save</Button>
-                        <Link href='/tag'>Cancel</Link>
+                        <div className={styles.formButtonContainer}>
+                            <FormButton href='/tags' name='Cancel' />
+                        </div>
+                        <div className={styles.formButtonContainer}>
+                            <FormButton
+                                onClick={submitCategory}
+                                name='Submit'
+                            />
+                        </div>
                     </Grid>
-                    <TestComponent></TestComponent>
-                </Grid>
-            </Card>
+                </div>
+            </div>
+            <TestComponent></TestComponent>
         </PageLayout>
     );
 }

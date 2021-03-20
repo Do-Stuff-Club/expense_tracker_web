@@ -34,6 +34,7 @@ export default function FormButton(props: ButtonProps): JSX.Element {
             variant='outlined'
             href={props.href ? props.href : ''}
             type={props.type ? props.type : 'button'}
+            onClick={props.onClick ? props.onClick : undefined}
         >
             {props.name}
         </Button>
