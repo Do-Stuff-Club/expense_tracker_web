@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { RootState } from '../redux/store';
-import { connect, ConnectedProps } from 'react-redux';
+import { connect } from 'react-redux';
 import styles from '../styles/Home.module.css';
 import React from 'react';
 import PageLayout from '../components/pageLayout';
@@ -9,10 +9,8 @@ import PageLayout from '../components/pageLayout';
 const stateToProps = (state: RootState) => state;
 
 const connector = connect(stateToProps, {});
-type ReduxProps = ConnectedProps<typeof connector>;
-type HomeProps = ReduxProps;
 
-function Home(props: HomeProps) {
+function Home() {
     return (
         <PageLayout pageName='Expense Tracker'>
             <Head>

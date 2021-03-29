@@ -48,7 +48,7 @@ const rootReducer = (state: RootState = defaultState, action: AppAction) => {
 };
 
 // create a makeStore function
-const makeStore: MakeStore<RootState, AppAction> = (context: Context) =>
+const makeStore: MakeStore<RootState, AppAction> = () =>
     createStore(rootReducer, composedEnhancer);
 
 // export an assembled wrapper
