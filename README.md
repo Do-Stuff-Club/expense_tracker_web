@@ -22,6 +22,8 @@ Other yarn scripts:
 
 | Name | Command | Description |
 | --- | --- | --- |
+| `yarn all_check` | `./git_hooks/pre-push` | Runs all code checks and prints summary at teh end. |
+| `yarn type_check` | `tsc ./` | Checks types |
 | `yarn lint_check` | `eslint ./` | Runs ESLint and prints any warnings or errors |
 | `yarn format_check` | `prettier --check ./` | Checks formatting using Prettier |
 | `yarn reformat` | `prettier --write ./` | Reformats files using Prettier |

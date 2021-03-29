@@ -6,9 +6,12 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
+        "test": "jest",
         "reformat": "prettier --write ./",
         "format_check": "prettier --check ./",
         "lint_check": "eslint ./",
+        "type_check": "tsc",
+        "all_check": "./git_hooks/pre-push",
         "preinstall": "git config core.hooksPath git_hooks"
     },
     "dependencies": {
