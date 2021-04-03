@@ -1,4 +1,4 @@
-import { Button, Card, Grid, List, Switch, TextField } from '@material-ui/core';
+import { Grid, List, Chip } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import React, { ChangeEvent, useState } from 'react';
@@ -113,10 +113,15 @@ function NewCategory(props: NewCategoryProps) {
                             type='text'
                             onChange={handleChangeCategoryName}
                         ></input>
-                        <Switch
-                            checked={required}
+                        <div>
+                            <p>Required</p>
+                        </div>
+                        <input
+                            id='required'
+                            name='required'
+                            type='checkbox'
                             onChange={handleChangeRequired}
-                        ></Switch>
+                        ></input>
                     </div>
                     <Grid>
                         <div className={textFieldStyles.textField}>
@@ -138,17 +143,20 @@ function NewCategory(props: NewCategoryProps) {
                         <div className={styles.formButtonContainer}>
                             <FormButton onClick={addNewTag} name='Add' />
                         </div>
-                        <List>
+                        <div>
                             {tagArray.map((tag, i) => {
                                 return (
-                                    <TagItem
-                                        name={tag}
-                                        key={i}
-                                        onDelete={() => deleteTag(i)}
-                                    />
+                                    <div className={styles.tagsContainer}>
+                                        <Chip
+                                            size='small'
+                                            label={tag}
+                                            key={i}
+                                            onDelete={() => deleteTag(i)}
+                                        />
+                                    </div>
                                 );
                             })}
-                        </List>
+                        </div>
                         <div className={styles.formButtonContainer}>
                             <FormButton href='/tags' name='Cancel' />
                         </div>
