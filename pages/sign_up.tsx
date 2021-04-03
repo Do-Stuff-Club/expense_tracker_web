@@ -26,9 +26,19 @@ const connector = connect(null, {
 type ReduxProps = ConnectedProps<typeof connector>;
 type SignUpProps = ReduxProps;
 
+type FormikFields = {
+    email: string;
+    password: string;
+    password_confirmation: string;
+};
+
 export function SignUp(props: SignUpProps): JSX.Element {
-    const validate = (values) => {
-        const errors = {};
+    const validate = (values: FormikFields) => {
+        const errors: {
+            email?: string;
+            password?: string;
+            password_confirmation?: string;
+        } = {};
 
         if (!values.email.includes('@')) {
             errors.email = 'Not a valid email address';

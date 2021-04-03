@@ -6,7 +6,7 @@ import { AllCategoriesData, OneCategoryData } from '../../api/tag/types';
 
 export const updateAllCategoriesAction = (
     data: AllCategoriesData,
-): ThunkAction<Promise<any>, RootState, unknown, Action<string>> => async (
+): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
     dispatch,
 ) => {
     dispatch({
@@ -20,7 +20,7 @@ export const updateAllCategoriesAction = (
 
 export const updateOneCategoryAction = (
     data: OneCategoryData,
-): ThunkAction<Promise<any>, RootState, unknown, Action<string>> => async (
+): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
     dispatch,
 ) => {
     dispatch({
@@ -34,7 +34,7 @@ export const updateOneCategoryAction = (
 
 export const createCategoryAction = (
     data: OneCategoryData,
-): ThunkAction<Promise<any>, RootState, unknown, Action<string>> => async (
+): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
     dispatch,
 ) => {
     dispatch({
