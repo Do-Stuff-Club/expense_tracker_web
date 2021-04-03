@@ -11,7 +11,7 @@ export interface AuthProps {
 export default function withAuth<BaseProps extends AuthProps>(
     WrappedComponent: React.ComponentType<BaseProps>,
 ) {
-    return (props: BaseProps) => {
+    return (props: BaseProps): JSX.Element => {
         const [cookies, setCookie, removeCookie] = useCookies();
 
         console.log('Cookies!');
