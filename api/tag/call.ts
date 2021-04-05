@@ -32,10 +32,12 @@ export async function getTagsCall(
         const categories: ReadonlyArray<Category> = response.data.map(
             (category: string) => {
                 const obj: CategoryResponse = JSON.parse(category);
-                const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
-                    id: tag.id,
-                    name: tag.name,
-                }));
+                const tags: ReadonlyArray<Tag> = obj.tags.map(
+                    (tag: TagResponse) => ({
+                        id: tag.id,
+                        name: tag.name,
+                    }),
+                );
                 return {
                     id: obj.id,
                     name: obj.name,
@@ -134,11 +136,13 @@ export async function deleteCategoryCall(
         });
         const categories: ReadonlyArray<Category> = response.data.map(
             (category: string) => {
-                const obj:CategoryResponse = JSON.parse(category);
-                const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
-                    id: tag.id,
-                    name: tag.name,
-                }));
+                const obj: CategoryResponse = JSON.parse(category);
+                const tags: ReadonlyArray<Tag> = obj.tags.map(
+                    (tag: TagResponse) => ({
+                        id: tag.id,
+                        name: tag.name,
+                    }),
+                );
                 return {
                     id: obj.id,
                     name: obj.name,
@@ -198,10 +202,12 @@ export async function updateCategoryCall(
         const categories: ReadonlyArray<Category> = response.data.map(
             (category: string) => {
                 const obj: CategoryResponse = JSON.parse(category);
-                const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
-                    id: tag.id,
-                    name: tag.name,
-                }));
+                const tags: ReadonlyArray<Tag> = obj.tags.map(
+                    (tag: TagResponse) => ({
+                        id: tag.id,
+                        name: tag.name,
+                    }),
+                );
                 return {
                     id: obj.id,
                     name: obj.name,

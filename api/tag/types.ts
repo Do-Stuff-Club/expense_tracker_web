@@ -54,17 +54,16 @@ export interface CategoryResponse {
         category_id: number;
         created_at: string;
         updated_at: string;
-    }>
+    }>;
 }
 
 export interface TagResponse {
-        id: number;
-        name: string;
-        category_id: number;
-        created_at: string;
-        updated_at: string;
+    id: number;
+    name: string;
+    category_id: number;
+    created_at: string;
+    updated_at: string;
 }
-
 
 export interface AllCategoriesData {
     authHeaders: AuthHeaders;

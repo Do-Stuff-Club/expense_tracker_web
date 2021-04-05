@@ -12,7 +12,6 @@ import React from 'react';
 import { Category } from '../redux/tags/types';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { useRouter } from 'next/router';
 
 export interface CategoryViewProps {
     listKey: number;
@@ -22,13 +21,11 @@ export interface CategoryViewProps {
 
 export default function CategoryView(props: CategoryViewProps): JSX.Element {
     const [open, setOpen] = React.useState(true);
-    const router = useRouter();
 
     const handleClick = () => {
         setOpen(!open);
     };
 
-    const onEdit = () => {};
     return (
         <>
             <ListItem divider button onClick={handleClick} key={props.listKey}>
