@@ -41,6 +41,31 @@ export interface UpdateTagParams {
     headers: AuthHeaders;
 }
 
+export interface CategoryResponse {
+    id: number;
+    name: string;
+    required: boolean;
+    created_at: string;
+    updated_at: string;
+    user_id: number;
+    tags: Array<{
+        id: number;
+        name: string;
+        category_id: number;
+        created_at: string;
+        updated_at: string;
+    }>
+}
+
+export interface TagResponse {
+        id: number;
+        name: string;
+        category_id: number;
+        created_at: string;
+        updated_at: string;
+}
+
+
 export interface AllCategoriesData {
     authHeaders: AuthHeaders;
     categories: ReadonlyArray<Category>;
