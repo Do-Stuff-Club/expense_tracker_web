@@ -59,7 +59,7 @@ fi
 
 if [ "$eslint_exit_code" != "0" ]; then
   echo -e "${YELLOW}ESLint ${RED}failed"
-  #exit_code=1 FIXME
+  exit_code=1
 else
   echo -e "${YELLOW}ESLint ${GREEN}passed"
 fi
