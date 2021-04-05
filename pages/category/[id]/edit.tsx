@@ -47,6 +47,10 @@ function EditCategory(props: EditCategoryProps) {
         (category) => category.id == parseInt(id), // FIXME handle issue where index is not found
     );
 
+    const handleIdError = () => {
+        return;
+    };
+
     const handleChangeNewTagName = (
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {

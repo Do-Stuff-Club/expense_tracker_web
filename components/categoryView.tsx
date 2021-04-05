@@ -26,6 +26,9 @@ export default function CategoryView(props: CategoryViewProps): JSX.Element {
         setOpen(!open);
     };
 
+    const onEdit = () => {
+        return;
+    };
     return (
         <>
             <ListItem divider button onClick={handleClick} key={props.listKey}>
