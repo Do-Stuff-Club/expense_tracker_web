@@ -1,6 +1,5 @@
-import { Button, Card, Grid, List, Switch, TextField } from '@material-ui/core';
+import { Grid, List, Switch } from '@material-ui/core';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import React, { ChangeEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import TagItem from '../../components/tagItem';
