@@ -1,8 +1,10 @@
-import { Grid, List, Switch } from '@material-ui/core';
+// ===================================================================
+//                             Imports
+// ===================================================================
+import { Chip } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import TagItem from '../../components/tagItem';
 
 import FormButton from '../../components/formButton';
 import styles from '../../styles/Form.module.css';
@@ -17,6 +19,10 @@ import withAuth from '../../components/withAuthentication';
 import TestComponent from '../../components/test';
 import PageLayout from '../../components/pageLayout';
 import { createCategoryCall } from '../../api/tag/call';
+
+// ===================================================================
+//                            Component
+// ===================================================================
 
 const stateToProps = (state: RootState) => ({
     auth: {
@@ -112,52 +118,55 @@ function NewCategory(props: NewCategoryProps) {
                             type='text'
                             onChange={handleChangeCategoryName}
                         ></input>
-                        <Switch
-                            checked={required}
+                        <div>
+                            <p>Required</p>
+                        </div>
+                        <input
+                            id='required'
+                            name='required'
+                            type='checkbox'
                             onChange={handleChangeRequired}
-                        ></Switch>
+                        ></input>
                     </div>
-                    <Grid>
-                        <div className={textFieldStyles.textField}>
-                            <div>
-                                <p>Tag</p>
+                    <div className={textFieldStyles.textField}>
+                        <div>
+                            <p>Tag</p>
+                        </div>
+                        <input
+                            id='tag'
+                            name='tag'
+                            type='text'
+                            onChange={(e) => handleChangeNewTagName(e)}
+                        ></input>
+                        {newTagHasError ? (
+                            <div className={styles.formErrors}>
+                                {newTagErrorMessage}
                             </div>
-                            <input
-                                id='tag'
-                                name='tag'
-                                type='text'
-                                onChange={(e) => handleChangeNewTagName(e)}
-                            ></input>
-                            {newTagHasError ? (
-                                <div className={styles.formErrors}>
-                                    {newTagErrorMessage}
-                                </div>
-                            ) : null}
-                        </div>
-                        <div className={styles.formButtonContainer}>
-                            <FormButton onClick={addNewTag} name='Add' />
-                        </div>
-                        <List>
-                            {tagArray.map((tag, i) => {
-                                return (
-                                    <TagItem
-                                        name={tag}
+                        ) : null}
+                    </div>
+                    <div className={styles.formButtonContainer}>
+                        <FormButton onClick={addNewTag} name='Add' />
+                    </div>
+                    <div>
+                        {tagArray.map((tag, i) => {
+                            return (
+                                <div className={styles.tagsContainer} key={i}>
+                                    <Chip
+                                        size='small'
+                                        label={tag}
                                         key={i}
                                         onDelete={() => deleteTag(i)}
                                     />
-                                );
-                            })}
-                        </List>
-                        <div className={styles.formButtonContainer}>
-                            <FormButton href='/tags' name='Cancel' />
-                        </div>
-                        <div className={styles.formButtonContainer}>
-                            <FormButton
-                                onClick={submitCategory}
-                                name='Submit'
-                            />
-                        </div>
-                    </Grid>
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <div className={styles.formButtonContainer}>
+                        <FormButton href='/tags' name='Cancel' />
+                    </div>
+                    <div className={styles.formButtonContainer}>
+                        <FormButton onClick={submitCategory} name='Submit' />
+                    </div>
                 </div>
             </div>
             <TestComponent></TestComponent>
