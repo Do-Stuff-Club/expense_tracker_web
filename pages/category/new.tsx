@@ -128,24 +128,26 @@ function NewCategory(props: NewCategoryProps) {
                             onChange={handleChangeRequired}
                         ></input>
                     </div>
-                    <div className={textFieldStyles.textField}>
-                        <div>
-                            <p>Tag</p>
-                        </div>
-                        <input
-                            id='tag'
-                            name='tag'
-                            type='text'
-                            onChange={(e) => handleChangeNewTagName(e)}
-                        ></input>
-                        {newTagHasError ? (
-                            <div className={styles.formErrors}>
-                                {newTagErrorMessage}
+                    <div style={{ display: 'flex' }}>
+                        <div className={textFieldStyles.textField}>
+                            <div>
+                                <p>Tag</p>
                             </div>
-                        ) : null}
-                    </div>
-                    <div className={styles.formButtonContainer}>
-                        <FormButton onClick={addNewTag} name='Add' />
+                            <input
+                                id='tag'
+                                name='tag'
+                                type='text'
+                                onChange={(e) => handleChangeNewTagName(e)}
+                            ></input>
+                            {newTagHasError ? (
+                                <div className={styles.formErrors}>
+                                    {newTagErrorMessage}
+                                </div>
+                            ) : null}
+                        </div>
+                        <div className={styles.formButtonContainer}>
+                            <FormButton onClick={addNewTag} name='Add' />
+                        </div>
                     </div>
                     <div>
                         {tagArray.map((tag, i) => {
