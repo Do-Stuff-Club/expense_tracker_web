@@ -7,7 +7,7 @@ import { UserActionTypes } from './types';
 // FIXME change Promise<any> to more restricted type
 export const loginAction = (
     data: UserData,
-): ThunkAction<Promise<any>, RootState, unknown, Action<string>> => async (
+): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
     dispatch,
 ) => {
     dispatch({

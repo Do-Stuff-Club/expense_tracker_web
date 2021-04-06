@@ -11,7 +11,7 @@ type TestProps = ReduxProps;
 const TestComponent: FC<TestProps> = (props) => {
     return (
         <>
-            <div>Props "{JSON.stringify(props)}"</div>
+            <div>Props &quot;{JSON.stringify(props)}&quot;</div>
         </>
     );
 };

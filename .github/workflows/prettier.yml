@@ -38,4 +38,10 @@ jobs:
               run: yarn install
 
             - name: Run prettier check
-              run: yarn run prettier --check ./
+              run: yarn format_check
+
+            - name: Run type check
+              run: yarn type_check
+
+            - name: Run lint check
+              run: yarn lint_check

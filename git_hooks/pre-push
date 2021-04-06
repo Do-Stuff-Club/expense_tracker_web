@@ -28,31 +28,42 @@ GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo "${YELLOW}Checking Prettier Formatting:"
-yarn run prettier --check ./
+echo -e "${YELLOW}Checking Prettier Formatting:"
+yarn format_check
 prettier_exit_code="$?"
 
-echo "${YELLOW}Checking ESLint rules:"
-yarn run eslint ./
+echo -e "${YELLOW}Checking Typescript:"
+yarn type_check
+typescript_exit_code="$?"
+
+echo -e "${YELLOW}Checking ESLint rules:"
+yarn lint_check
 eslint_exit_code="$?"
 
 # Print error messsages
-echo "${YELLOW}Summary:"
+echo -e "${YELLOW}Summary:"
 exit_code=0
 if [ "$prettier_exit_code" != "0" ]; then
-  echo "${YELLOW}Prettier: ${RED}failed"
+  echo -e "${YELLOW}Prettier: ${RED}failed"
   exit_code=1
 else
-  echo "${YELLOW}Prettier: ${GREEN}passed"
+  echo -e "${YELLOW}Prettier: ${GREEN}passed"
+fi
+
+if [ "$typescript_exit_code" != "0" ]; then
+  echo -e "${YELLOW}Typescript check ${RED}failed"
+  exit_code=1
+else
+  echo -e "${YELLOW}Typescript check ${GREEN}passed"
 fi
 
 if [ "$eslint_exit_code" != "0" ]; then
-  echo "${YELLOW}ESLint ${RED}failed"
-  #exit_code=1 FIXME
+  echo -e "${YELLOW}ESLint ${RED}failed"
+  exit_code=1
 else
-  echo "${YELLOW}ESLint ${GREEN}passed"
+  echo -e "${YELLOW}ESLint ${GREEN}passed"
 fi
 
-echo ${NC}
+echo -e ${NC}
 
 exit ${exit_code}

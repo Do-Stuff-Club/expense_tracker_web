@@ -5,6 +5,7 @@ import TagItem from './tagItem';
 
 import { createCategoryAction } from '../redux/tags/action';
 import { RootState } from '../redux/store';
+import { createCategoryCall } from '../api/tag/call';
 
 const stateToProps = (state: RootState) => ({
     ...state,
@@ -18,8 +19,8 @@ type CategoryCreatorProps = ReduxProps;
 export default function CategoryCreator(
     props: CategoryCreatorProps,
 ): JSX.Element {
-    const [categoryName, setCategoryName] = useState<string>('');
-    const [required, setRequired] = useState<boolean>(false);
+    const [categoryName] = useState<string>('');
+    const [required] = useState<boolean>(false);
     const [tagArray, setTagArray] = useState<Array<string>>([]);
     const [newTagName, setNewTagName] = useState<string>('');
     const [newTagHasError, setNewTagHasError] = useState<boolean>(false);
@@ -53,7 +54,7 @@ export default function CategoryCreator(
     };
 
     const submitCategory = () => {
-        props.newCategory({
+        createCategoryCall({
             name: categoryName,
             required: required,
             tags: tagArray,

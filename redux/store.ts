@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { MakeStore, createWrapper, Context, HYDRATE } from 'next-redux-wrapper';
+import { MakeStore, createWrapper, HYDRATE } from 'next-redux-wrapper';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -48,7 +48,7 @@ const rootReducer = (state: RootState = defaultState, action: AppAction) => {
 };
 
 // create a makeStore function
-const makeStore: MakeStore<RootState, AppAction> = (context: Context) =>
+const makeStore: MakeStore<RootState, AppAction> = () =>
     createStore(rootReducer, composedEnhancer);
 
 // export an assembled wrapper
