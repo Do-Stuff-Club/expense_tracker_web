@@ -1,6 +1,6 @@
 import { Expense } from '../../redux/expenses/types';
-import { Tag } from '../../redux/tags/types';
 import { AuthHeaders } from '../../redux/user/types';
+import { TagResponse } from '../tag/types';
 
 export interface GetExpenseParams {
     user_id: number;
@@ -12,7 +12,7 @@ export interface CreateExpenseParams {
     cost: number;
     date: string;
     link: string;
-    tags: ReadonlyArray<String>;
+    tags: ReadonlyArray<string>;
     headers: AuthHeaders;
 }
 
@@ -24,6 +24,20 @@ export interface DeleteExpenseParams {
 export interface UpdateExpenseParams {
     expense: Expense;
     headers: AuthHeaders;
+}
+
+export interface ExpenseResponse {
+    id: number;
+    name: string;
+    order_date: string;
+    created_at: string;
+    updated_at: string;
+    user_id: number;
+    cost: number;
+    quantity: number;
+    description: string;
+    link: string;
+    tags: Array<TagResponse>;
 }
 
 export interface AllExpensesData {
