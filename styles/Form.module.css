@@ -1,0 +1,27 @@
+.outerContainer {
+    display: block;
+    position: relative;
+    text-align: center;
+}
+
+.formText {
+    display: block;
+}
+
+.formContainer {
+    background-color: #4253b4;
+    padding: 10px;
+    display: inline-block;
+}
+
+.formButtonContainer {
+    display: inline-block;
+    padding: 4px;
+    margin-top: 20px;
+}
+
+.formErrors {
+    display: block;
+    color: red;
+    font-size: 7px;
+}

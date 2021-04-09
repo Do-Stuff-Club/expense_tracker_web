@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import axios from "axios";
 import qs from "qs";
 import { AllExpensesData, CreateExpenseParams, DeleteExpenseParams, GetExpenseParams, OneExpenseData, UpdateExpenseParams } from "./types";
@@ -214,3 +215,6 @@ export async function updateExpenseCall(params: UpdateExpenseParams): Promise<Al
         return Promise.reject(error)
     }
 }
+=======
+export {};
+>>>>>>> main
