@@ -16,14 +16,15 @@ export default function expense(
             return { expenses: action.payload.expenses };
         case ExpenseActionTypes.UPDATE_ONE_EXPENSE:
             // Replace the edited expense
-            const newExpenses = state.expenses.map((expense) => {
-                if (expense.id == action.payload.expense.id) {
-                    return action.payload.expense;
-                } else {
-                    return expense;
-                }
-            });
-            return { expenses: newExpenses };
+            return {
+                expenses: state.expenses.map((expense) => {
+                    if (expense.id == action.payload.expense.id) {
+                        return action.payload.expense;
+                    } else {
+                        return expense;
+                    }
+                }),
+            };
         default:
             return state;
     }

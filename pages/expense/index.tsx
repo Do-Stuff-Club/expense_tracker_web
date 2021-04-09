@@ -1,15 +1,6 @@
-import {
-    Button,
-    Card,
-    Grid,
-    List,
-    StylesProvider,
-    Switch,
-    TextField,
-} from '@material-ui/core';
-import { useRouter } from 'next/router';
+import { Button } from '@material-ui/core';
 import Link from 'next/link';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import styles from '../../styles/Home.module.css';
 import { RootState } from '../../redux/store';
@@ -17,8 +8,8 @@ import withAuth from '../../components/withAuthentication';
 import PageLayout from '../../components/pageLayout';
 import { updateAllExpensesAction } from '../../redux/expenses/action';
 import { deleteExpenseCall, getExpensesCall } from '../../api/expense/call';
-import { deleteCategoryCall } from '../../api/tag/call';
 import ExpenseView from '../../components/expenseView';
+import NavBreadcrumbs from '../../components/navBreadcrumbs';
 
 const stateToProps = (state: RootState) => ({
     auth: {
@@ -36,8 +27,6 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type ExpensesProps = ReduxProps;
 
 function Expenses(props: ExpensesProps) {
-    const router = useRouter();
-
     useEffect(() => {
         getExpensesCall({
             user_id: props.user.id,
@@ -62,6 +51,7 @@ function Expenses(props: ExpensesProps) {
         <PageLayout pageName='My Expenses'>
             Here be expenses
             <main>
+                <NavBreadcrumbs></NavBreadcrumbs>
                 <h1 className={styles.title}>Expenses!</h1>
                 <Link href='/expense/new' passHref>
                     <Button variant='contained'>New Expense</Button>
@@ -69,6 +59,7 @@ function Expenses(props: ExpensesProps) {
                 {props.expense.expenses.map((expense, i) => {
                     return (
                         <ExpenseView
+                            key={i}
                             listKey={i}
                             expense={expense}
                             onDelete={() => onDelete(expense.id)}

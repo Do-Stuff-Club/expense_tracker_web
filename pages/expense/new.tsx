@@ -2,17 +2,16 @@ import {
     Button,
     Card,
     Grid,
-    List,
     MenuItem,
     Select,
-    Switch,
     TextField,
 } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
+import { updateAllCategoriesAction } from '../../redux/tags/action';
 import {
     createExpenseAction,
     updateAllExpensesAction,
@@ -21,10 +20,8 @@ import { RootState } from '../../redux/store';
 import withAuth from '../../components/withAuthentication';
 import PageLayout from '../../components/pageLayout';
 import { createExpenseCall } from '../../api/expense/call';
-import { prependListener } from 'node:process';
 
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
 
 // Date Picker
 import 'date-fns';
@@ -33,6 +30,7 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { getTagsCall } from '../../api/tag/call';
 
 const stateToProps = (state: RootState) => ({
     auth: {
@@ -41,6 +39,7 @@ const stateToProps = (state: RootState) => ({
     ...state,
 });
 const connector = connect(stateToProps, {
+    updateAllCategoriesAction,
     updateAllExpensesAction,
     createExpenseAction,
 });
@@ -48,6 +47,15 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type NewExpenseProps = ReduxProps;
 
 function NewExpense(props: NewExpenseProps) {
+    useEffect(() => {
+        getTagsCall({
+            user_id: props.user.id,
+            headers: props.user.authHeaders,
+        }).then(
+            (data) => props.updateAllCategoriesAction(data),
+            (error) => console.log(error),
+        );
+    }, []); // Pass an empty array so it only fires once
     const router = useRouter();
 
     const [expenseName, setExpenseName] = useState<string>('');
@@ -88,8 +96,8 @@ function NewExpense(props: NewExpenseProps) {
             selectedDate == null
                 ? dateString
                 : `${
-                      selectedDate.getMonth()! + 1
-                  }/${selectedDate.getDate()!}/${selectedDate.getFullYear()!}`;
+                      selectedDate.getMonth() + 1
+                  }/${selectedDate.getDate()}/${selectedDate.getFullYear()}`;
         setDateString(newDateString);
     };
 

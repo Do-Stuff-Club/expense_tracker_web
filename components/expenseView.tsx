@@ -6,7 +6,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import {
     ListItem,
-    ListItemIcon,
     ListItemText,
     Collapse,
     List,
@@ -20,14 +19,16 @@ export interface ExpenseViewProps {
     onDelete: () => void;
 }
 
-export default function ExpenseView(props: ExpenseViewProps) {
+export default function ExpenseView(props: ExpenseViewProps): JSX.Element {
     const [open, setOpen] = React.useState(true);
 
     const handleClick = () => {
         setOpen(!open);
     };
 
-    const onEdit = () => {};
+    const onEdit = () => {
+        return;
+    };
     return (
         <>
             <ListItem divider button onClick={handleClick} key={props.listKey}>

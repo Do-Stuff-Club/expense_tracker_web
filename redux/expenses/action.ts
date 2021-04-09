@@ -6,7 +6,7 @@ import { AllExpensesData, OneExpenseData } from '../../api/expense/types';
 
 export const updateAllExpensesAction = (
     data: AllExpensesData,
-): ThunkAction<Promise<any>, RootState, unknown, Action<string>> => async (
+): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
     dispatch,
 ) => {
     dispatch({
@@ -20,7 +20,7 @@ export const updateAllExpensesAction = (
 
 export const updateOneExpenseAction = (
     data: OneExpenseData,
-): ThunkAction<Promise<any>, RootState, unknown, Action<string>> => async (
+): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
     dispatch,
 ) => {
     dispatch({
@@ -34,7 +34,7 @@ export const updateOneExpenseAction = (
 
 export const createExpenseAction = (
     data: OneExpenseData,
-): ThunkAction<Promise<any>, RootState, unknown, Action<string>> => async (
+): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
     dispatch,
 ) => {
     dispatch({

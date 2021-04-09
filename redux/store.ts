@@ -1,16 +1,10 @@
-import {
-    createStore,
-    AnyAction,
-    applyMiddleware,
-    combineReducers,
-} from 'redux';
-import { MakeStore, createWrapper, Context, HYDRATE } from 'next-redux-wrapper';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { MakeStore, createWrapper, HYDRATE } from 'next-redux-wrapper';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import user, { defaultUserState } from './user/reducer';
-import { UserAction, UserActionTypes, UserState } from './user/types';
-import App from 'next/app';
+import { UserAction } from './user/types';
 import { TagAction } from './tags/types';
 import { ExpenseAction } from './expenses/types';
 import tag, { defaultTagState } from './tags/reducer';
