@@ -1,6 +1,6 @@
-import { Expense } from "../../redux/expenses/types";
-import { Tag } from "../../redux/tags/types";
-import { AuthHeaders } from "../../redux/user/types";
+import { Expense } from '../../redux/expenses/types';
+import { Tag } from '../../redux/tags/types';
+import { AuthHeaders } from '../../redux/user/types';
 
 export interface GetExpenseParams {
     user_id: number;

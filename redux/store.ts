@@ -1,24 +1,28 @@
 import {
-  createStore,
-  AnyAction,
-  applyMiddleware,
-  combineReducers,
-} from "redux";
-import { MakeStore, createWrapper, Context, HYDRATE } from "next-redux-wrapper";
-import thunkMiddleware from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
+    createStore,
+    AnyAction,
+    applyMiddleware,
+    combineReducers,
+} from 'redux';
+import { MakeStore, createWrapper, Context, HYDRATE } from 'next-redux-wrapper';
+import thunkMiddleware from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-import user, { defaultUserState } from "./user/reducer";
-import { UserAction, UserActionTypes, UserState } from "./user/types";
-import App from "next/app";
-import { TagAction } from "./tags/types";
-import { ExpenseAction } from "./expenses/types";
-import tag, { defaultTagState } from "./tags/reducer";
-import expense, { defaultExpenseState } from "./expenses/reducer";
+import user, { defaultUserState } from './user/reducer';
+import { UserAction, UserActionTypes, UserState } from './user/types';
+import App from 'next/app';
+import { TagAction } from './tags/types';
+import { ExpenseAction } from './expenses/types';
+import tag, { defaultTagState } from './tags/reducer';
+import expense, { defaultExpenseState } from './expenses/reducer';
 
 const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
 
-const defaultState = { user: defaultUserState, tag: defaultTagState, expense: defaultExpenseState };
+const defaultState = {
+    user: defaultUserState,
+    tag: defaultTagState,
+    expense: defaultExpenseState,
+};
 
 type HydrateAction = {
     type: typeof HYDRATE;
