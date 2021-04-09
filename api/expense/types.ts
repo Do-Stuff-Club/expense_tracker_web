@@ -12,7 +12,7 @@ export interface CreateExpenseParams {
     cost: number;
     date: string;
     link: string;
-    tags: ReadonlyArray<Tag>;
+    tags: ReadonlyArray<String>;
     headers: AuthHeaders;
 }
 

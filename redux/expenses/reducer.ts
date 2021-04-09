@@ -12,7 +12,9 @@ export default function expense(
     switch (action.type) {
         case ExpenseActionTypes.CREATE_EXPENSE:
             return { expenses: [...state.expenses, action.payload.expense]};
-        case ExpenseActionTypes.UPDATE_EXPENSE:
+        case ExpenseActionTypes.UPDATE_ALL_EXPENSES:
+            return { expenses: action.payload.expenses };
+        case ExpenseActionTypes.UPDATE_ONE_EXPENSE:
             // Replace the edited expense
             const newExpenses = state.expenses.map((expense) => {
                 if (expense.id == action.payload.expense.id){

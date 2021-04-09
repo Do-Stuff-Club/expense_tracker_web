@@ -77,7 +77,7 @@ export async function createExpenseCall(params: CreateExpenseParams): Promise<On
                     cost: params.cost,
                     date: params.date,
                     link: params.link,
-                    tags_attributes = params.tags.map((tag) => ({ name: tag })),
+                    tags_attributes : params.tags.map((tag) => ({ name: tag })),
                 },
             },
             headers: params.headers,

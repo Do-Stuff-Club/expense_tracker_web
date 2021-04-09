@@ -16,11 +16,12 @@ export interface ExpenseState {
 
 export enum ExpenseActionTypes {
     CREATE_EXPENSE = "create_expense",
-    UPDATE_EXPENSE = "update_expense"
+    UPDATE_ALL_EXPENSES = "update_all_expenses",
+    UPDATE_ONE_EXPENSE = "update_one_expense"
     // DELETE_EXPENSE = why don't we need this?
 }
 
-export interface CreateExpense {
+export interface CreateExpenseAction {
     type: ExpenseActionTypes.CREATE_EXPENSE;
     payload: {
         expense: Expense;
@@ -28,8 +29,16 @@ export interface CreateExpense {
     };
 }
 
-export interface UpdateExpense {
-    type: ExpenseActionTypes.UPDATE_EXPENSE;
+export interface UpdateAllExpensesAction {
+    type: ExpenseActionTypes.UPDATE_ALL_EXPENSES;
+    payload: {
+        expenses: ReadonlyArray<Expense>;
+        authHeaders: AuthHeaders;
+    }
+}
+
+export interface UpdateOneExpenseAction {
+    type: ExpenseActionTypes.UPDATE_ONE_EXPENSE;
     payload: {
         expense: Expense;
         authHeaders: AuthHeaders;
@@ -37,5 +46,6 @@ export interface UpdateExpense {
 }
 
 export type ExpenseAction = 
-  | CreateExpense
-  | UpdateExpense
+  | CreateExpenseAction
+  | UpdateAllExpensesAction
+  | UpdateOneExpenseAction

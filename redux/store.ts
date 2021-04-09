@@ -12,20 +12,22 @@ import user, { defaultUserState } from "./user/reducer";
 import { UserAction, UserActionTypes, UserState } from "./user/types";
 import App from "next/app";
 import { TagAction } from "./tags/types";
+import { ExpenseAction } from "./expenses/types";
 import tag, { defaultTagState } from "./tags/reducer";
+import expense, { defaultExpenseState } from "./expenses/reducer";
 
 const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
 
-const defaultState = { user: defaultUserState, tag: defaultTagState };
+const defaultState = { user: defaultUserState, tag: defaultTagState, expense: defaultExpenseState };
 
 type HydrateAction = {
   type: typeof HYDRATE;
   payload: RootState;
 };
 
-type AppAction = HydrateAction | UserAction | TagAction;
+type AppAction = HydrateAction | UserAction | TagAction | ExpenseAction;
 
-const combinedReducer = combineReducers({ user, tag });
+const combinedReducer = combineReducers({ user, tag, expense });
 export type RootState = ReturnType<typeof combinedReducer>;
 
 // create your reducer
