@@ -1,5 +1,5 @@
-import { AuthHeaders } from "../user/types";
-import { Tag } from "../tags/types";
+import { AuthHeaders } from '../user/types';
+import { Tag } from '../tags/types';
 
 export interface Expense {
     name: string;
@@ -7,7 +7,7 @@ export interface Expense {
     cost: number;
     date: string;
     link: string;
-    tags: ReadonlyArray<Tag>
+    tags: ReadonlyArray<Tag>;
 }
 
 export interface ExpenseState {
@@ -15,9 +15,9 @@ export interface ExpenseState {
 }
 
 export enum ExpenseActionTypes {
-    CREATE_EXPENSE = "create_expense",
-    UPDATE_ALL_EXPENSES = "update_all_expenses",
-    UPDATE_ONE_EXPENSE = "update_one_expense"
+    CREATE_EXPENSE = 'create_expense',
+    UPDATE_ALL_EXPENSES = 'update_all_expenses',
+    UPDATE_ONE_EXPENSE = 'update_one_expense',
     // DELETE_EXPENSE = why don't we need this?
 }
 
@@ -34,7 +34,7 @@ export interface UpdateAllExpensesAction {
     payload: {
         expenses: ReadonlyArray<Expense>;
         authHeaders: AuthHeaders;
-    }
+    };
 }
 
 export interface UpdateOneExpenseAction {
@@ -42,10 +42,10 @@ export interface UpdateOneExpenseAction {
     payload: {
         expense: Expense;
         authHeaders: AuthHeaders;
-    }
+    };
 }
 
-export type ExpenseAction = 
-  | CreateExpenseAction
-  | UpdateAllExpensesAction
-  | UpdateOneExpenseAction
+export type ExpenseAction =
+    | CreateExpenseAction
+    | UpdateAllExpensesAction
+    | UpdateOneExpenseAction;

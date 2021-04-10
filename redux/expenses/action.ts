@@ -1,13 +1,13 @@
-import { Action } from "redux";
-import { ThunkAction } from "redux-thunk";
-import { RootState } from "../store";
-import { ExpenseActionTypes } from "./types";
-import { AllExpensesData, OneExpenseData } from "../../api/expense/types";
+import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from '../store';
+import { ExpenseActionTypes } from './types';
+import { AllExpensesData, OneExpenseData } from '../../api/expense/types';
 
 export const updateAllExpensesAction = (
-    data: AllExpensesData
-): ThunkAction<Promise<any>, RootState, unknown, Action<string>> => async (
-    dispatch
+    data: AllExpensesData,
+): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
+    dispatch,
 ) => {
     dispatch({
         type: ExpenseActionTypes.UPDATE_ALL_EXPENSES,
@@ -19,9 +19,9 @@ export const updateAllExpensesAction = (
 };
 
 export const updateOneExpenseAction = (
-    data: OneExpenseData
-): ThunkAction<Promise<any>, RootState, unknown, Action<string>> => async (
-    dispatch
+    data: OneExpenseData,
+): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
+    dispatch,
 ) => {
     dispatch({
         type: ExpenseActionTypes.UPDATE_ONE_EXPENSE,
@@ -30,12 +30,12 @@ export const updateOneExpenseAction = (
             authHeaders: data.authHeaders,
         },
     });
-  };
+};
 
 export const createExpenseAction = (
-    data: OneExpenseData
-): ThunkAction<Promise<any>, RootState, unknown, Action<string>> => async (
-    dispatch
+    data: OneExpenseData,
+): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
+    dispatch,
 ) => {
     dispatch({
         type: ExpenseActionTypes.CREATE_EXPENSE,

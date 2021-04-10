@@ -1,39 +1,26 @@
-import { connect, ConnectedProps, DispatchProp, Matching } from "react-redux";
-import { AnyAction, compose } from "redux";
-import { RootState, wrapper } from "../redux/store";
-import { ComponentType, useEffect } from "react";
-import { useRouter } from "next/router";
-import { useCookies } from "react-cookie";
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export interface AuthProps {
-  auth: {
-    loggedIn: boolean;
-  };
+    auth: {
+        loggedIn: boolean;
+    };
 }
 
 export default function withAuth<BaseProps extends AuthProps>(
-  WrappedComponent: React.ComponentType<BaseProps>
+    WrappedComponent: React.ComponentType<BaseProps>,
 ) {
-  return (props: BaseProps) => {
-    const [cookies, setCookie, removeCookie] = useCookies();
+    return (props: BaseProps): JSX.Element => {
+        console.log('Cookies!');
+        const router = useRouter();
+        useEffect(() => {
+            if (!props.auth.loggedIn) {
+                router.push('/login');
+            }
+        });
 
-    console.log("Cookies!")
-    console.log(cookies)
-    const router = useRouter();
-    useEffect(() => {
-      if (!props.auth.loggedIn) {
-        if (cookies.hasOwnProperty("authHeaders")) {
-          // Dispatch action to load authHeaders from cookie
-          //FIXME
-        }
-        else {
-          router.push("/login");
-        }
-      }
-    });
-
-    if (props.auth.loggedIn)
-      return <WrappedComponent {...(props as BaseProps)} />;
-    else return <div>You are not logged in. Redirecting to login...</div>;
-  };
+        if (props.auth.loggedIn)
+            return <WrappedComponent {...(props as BaseProps)} />;
+        else return <div>You are not logged in. Redirecting to login...</div>;
+    };
 }
