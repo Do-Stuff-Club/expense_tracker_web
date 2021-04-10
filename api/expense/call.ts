@@ -87,12 +87,12 @@ export async function createExpenseCall(
             baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
             url: '/purchases',
             params: {
-                expense: {
+                purchase: {
                     name: params.name,
-                    cost: params.cost,
-                    date: params.date,
-                    link: params.link,
-                    tags_attributes: params.tags.map((tag) => ({ name: tag })),
+                    // cost: params.cost,
+                    // order_date: params.date,
+                    // link: params.link,
+                    //tags_attributes: params.tags.map((tag) => ({ name: tag })),
                 },
             },
             headers: params.headers,
@@ -197,7 +197,7 @@ export async function updateExpenseCall(
             baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
             url: '/purchases',
             params: {
-                expense: {
+                purchase: {
                     name: params.expense.name,
                 },
             },
