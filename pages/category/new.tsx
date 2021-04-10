@@ -1,9 +1,14 @@
-import { Button, Card, Grid, List, Switch, TextField } from '@material-ui/core';
+// ===================================================================
+//                             Imports
+// ===================================================================
+import { Chip } from '@material-ui/core';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import React, { ChangeEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import TagItem from '../../components/tagItem';
+
+import FormButton from '../../components/formButton';
+import styles from '../../styles/Form.module.css';
+import textFieldStyles from '../../styles/TextField.module.css';
 
 import {
     createCategoryAction,
@@ -14,6 +19,10 @@ import withAuth from '../../components/withAuthentication';
 import TestComponent from '../../components/test';
 import PageLayout from '../../components/pageLayout';
 import { createCategoryCall } from '../../api/tag/call';
+
+// ===================================================================
+//                            Component
+// ===================================================================
 
 const stateToProps = (state: RootState) => ({
     auth: {
@@ -94,55 +103,79 @@ function NewCategory(props: NewCategoryProps) {
 
     return (
         <PageLayout pageName='Create Category'>
-            <Card>
-                <Grid
-                    container
-                    direction='column'
-                    justify='center'
-                    alignItems='center'
-                >
-                    <Grid>
-                        <TextField
-                            label='Name'
+            <div className={styles.outerContainer}>
+                <div className={styles.formText}>
+                    <h1>Create a New Category</h1>
+                </div>
+                <div className={styles.formContainer}>
+                    <div className={textFieldStyles.textField}>
+                        <div>
+                            <p>Name</p>
+                        </div>
+                        <input
+                            id='name'
+                            name='name'
+                            type='text'
                             onChange={handleChangeCategoryName}
-                        ></TextField>
-                        <Switch
-                            checked={required}
+                        ></input>
+                        <div>
+                            <p>Required</p>
+                        </div>
+                        <input
+                            id='required'
+                            name='required'
+                            type='checkbox'
                             onChange={handleChangeRequired}
-                        ></Switch>
-                    </Grid>
-                    <Grid>
-                        {newTagHasError ? (
-                            <TextField
-                                label='Tag Name'
-                                error
-                                helperText={newTagErrorMessage}
+                        ></input>
+                    </div>
+                    <div style={{ display: 'flex' }}>
+                        <div className={textFieldStyles.textField}>
+                            <div>
+                                <p>Tag</p>
+                            </div>
+                            <input
+                                id='tag'
+                                name='tag'
+                                type='text'
                                 onChange={(e) => handleChangeNewTagName(e)}
+                            ></input>
+                            {newTagHasError ? (
+                                <div className={styles.formErrors}>
+                                    {newTagErrorMessage}
+                                </div>
+                            ) : null}
+                        </div>
+                        <div className={styles.formButtonContainer}>
+                            <FormButton
+                                onClick={addNewTag}
+                                name='Add!'
+                                variant='text'
                             />
-                        ) : (
-                            <TextField
-                                label='Tag Name'
-                                onChange={(e) => handleChangeNewTagName(e)}
-                            />
-                        )}
-                        <Button onClick={addNewTag}>Add</Button>
-                        <List>
-                            {tagArray.map((tag, i) => {
-                                return (
-                                    <TagItem
-                                        name={tag}
+                        </div>
+                    </div>
+                    <div>
+                        {tagArray.map((tag, i) => {
+                            return (
+                                <div className={styles.tagsContainer} key={i}>
+                                    <Chip
+                                        size='small'
+                                        label={tag}
                                         key={i}
                                         onDelete={() => deleteTag(i)}
                                     />
-                                );
-                            })}
-                        </List>
-                        <Button onClick={submitCategory}>Save</Button>
-                        <Link href='/tag'>Cancel</Link>
-                    </Grid>
-                    <TestComponent></TestComponent>
-                </Grid>
-            </Card>
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <div className={styles.formButtonContainer}>
+                        <FormButton href='/category' name='Cancel' />
+                    </div>
+                    <div className={styles.formButtonContainer}>
+                        <FormButton onClick={submitCategory} name='Submit' />
+                    </div>
+                </div>
+            </div>
+            <TestComponent></TestComponent>
         </PageLayout>
     );
 }

@@ -1,9 +1,15 @@
-import { Button, Card, Grid, List, Switch, TextField } from '@material-ui/core';
+// ===================================================================
+//                             Imports
+// ===================================================================
+import { Grid, List } from '@material-ui/core';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import React, { ChangeEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import EditTagItem from '../../../components/editTagItem';
+
+import FormButton from '../../../components/formButton';
+import styles from '../../../styles/Form.module.css';
+import textFieldStyles from '../../../styles/TextField.module.css';
 
 import {
     updateOneCategoryAction,
@@ -19,6 +25,10 @@ import {
     updateCategoryCall,
     updateTagCall,
 } from '../../../api/tag/call';
+
+// ===================================================================
+//                            Component
+// ===================================================================
 
 const stateToProps = (state: RootState) => ({
     auth: {
@@ -147,39 +157,58 @@ function EditCategory(props: EditCategoryProps) {
         };
         return (
             <PageLayout pageName='Edit Category'>
-                <Card>
-                    <Grid
-                        container
-                        direction='column'
-                        justify='center'
-                        alignItems='center'
-                    >
-                        <Grid>
-                            <TextField
-                                label='Name'
+                <div className={styles.outerContainer}>
+                    <div className={styles.formText}>
+                        <h1>Edit Category</h1>
+                    </div>
+                    <div className={styles.formContainer}>
+                        <div className={textFieldStyles.textField}>
+                            <div>
+                                <p>Name</p>
+                            </div>
+                            <input
+                                id='name'
+                                name='name'
+                                type='text'
                                 onChange={handleChangeCategoryName}
                                 defaultValue={category.name}
-                            ></TextField>
-                            <Switch
-                                checked={category.required}
+                            ></input>
+                            <div>
+                                <p>Required</p>
+                            </div>
+                            <input
+                                id='required'
+                                name='required'
+                                type='checkbox'
                                 onChange={handleChangeRequired}
-                            ></Switch>
-                        </Grid>
+                            ></input>
+                        </div>
+                        <div style={{ display: 'flex' }}>
+                            <div className={textFieldStyles.textField}>
+                                <div>
+                                    <p>Tag</p>
+                                </div>
+                                <input
+                                    id='tag'
+                                    name='tag'
+                                    type='text'
+                                    onChange={(e) => handleChangeNewTagName(e)}
+                                ></input>
+                                {newTagHasError ? (
+                                    <div className={styles.formErrors}>
+                                        {newTagErrorMessage}
+                                    </div>
+                                ) : null}
+                            </div>
+                            <div className={styles.formButtonContainer}>
+                                <FormButton
+                                    onClick={addNewTag}
+                                    name='Add!'
+                                    variant='text'
+                                />
+                            </div>
+                        </div>
                         <Grid>
-                            {newTagHasError ? (
-                                <TextField
-                                    label='Tag Name'
-                                    error
-                                    helperText={newTagErrorMessage}
-                                    onChange={(e) => handleChangeNewTagName(e)}
-                                />
-                            ) : (
-                                <TextField
-                                    label='Tag Name'
-                                    onChange={(e) => handleChangeNewTagName(e)}
-                                />
-                            )}
-                            <Button onClick={addNewTag}>Add</Button>
                             <List>
                                 {category.tags.map((tag, i) => {
                                     return (
@@ -196,10 +225,15 @@ function EditCategory(props: EditCategoryProps) {
                                     );
                                 })}
                             </List>
-                            <Link href='/category'>Done Editing</Link>
+                            <div className={styles.formButtonContainer}>
+                                <FormButton
+                                    href='/category'
+                                    name='Done Editing'
+                                />
+                            </div>
                         </Grid>
-                    </Grid>
-                </Card>
+                    </div>
+                </div>
             </PageLayout>
         );
     }

@@ -17,6 +17,12 @@ const buttonStyling = makeStyles(
                 color: '#4253B4',
             },
         },
+        textPrimary: {
+            color: 'white',
+            '&:hover': {
+                color: 'black',
+            },
+        },
     },
     { name: 'MuiButton' },
 );
@@ -29,11 +35,16 @@ export default function FormButton(props: ButtonProps): JSX.Element {
 
     return (
         <Button
-            className={buttonStyles.outlinedPrimary}
+            className={
+                props.variant === 'text'
+                    ? buttonStyles.textPrimary
+                    : buttonStyles.outlinedPrimary
+            }
             color='primary'
-            variant='outlined'
+            variant={props.variant ? props.variant : 'outlined'}
             href={props.href ? props.href : ''}
             type={props.type ? props.type : 'button'}
+            onClick={props.onClick ? props.onClick : undefined}
         >
             {props.name}
         </Button>
