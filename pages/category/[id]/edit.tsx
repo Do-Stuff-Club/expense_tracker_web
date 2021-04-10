@@ -184,28 +184,30 @@ function EditCategory(props: EditCategoryProps) {
                                 onChange={handleChangeRequired}
                             ></input>
                         </div>
-                        <div className={textFieldStyles.textField}>
-                            <div>
-                                <p>Tag</p>
-                            </div>
-                            <input
-                                id='tag'
-                                name='tag'
-                                type='text'
-                                onChange={(e) => handleChangeNewTagName(e)}
-                            ></input>
-                            {newTagHasError ? (
-                                <div className={styles.formErrors}>
-                                    {newTagErrorMessage}
+                        <div style={{ display: 'flex' }}>
+                            <div className={textFieldStyles.textField}>
+                                <div>
+                                    <p>Tag</p>
                                 </div>
-                            ) : null}
-                        </div>
-                        <div className={styles.formButtonContainer}>
-                            <FormButton
-                                onClick={addNewTag}
-                                name='Add!'
-                                variant='text'
-                            />
+                                <input
+                                    id='tag'
+                                    name='tag'
+                                    type='text'
+                                    onChange={(e) => handleChangeNewTagName(e)}
+                                ></input>
+                                {newTagHasError ? (
+                                    <div className={styles.formErrors}>
+                                        {newTagErrorMessage}
+                                    </div>
+                                ) : null}
+                            </div>
+                            <div className={styles.formButtonContainer}>
+                                <FormButton
+                                    onClick={addNewTag}
+                                    name='Add!'
+                                    variant='text'
+                                />
+                            </div>
                         </div>
                         <Grid>
                             {/* {newTagHasError ? (
@@ -238,7 +240,12 @@ function EditCategory(props: EditCategoryProps) {
                                     );
                                 })}
                             </List>
-                            <Link href='/category'>Done Editing</Link>
+                            <div className={styles.formButtonContainer}>
+                                <FormButton
+                                    href='/category'
+                                    name='Done Editing'
+                                />
+                            </div>
                         </Grid>
                     </div>
                 </div>

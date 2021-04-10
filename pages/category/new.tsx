@@ -168,7 +168,7 @@ function NewCategory(props: NewCategoryProps) {
                         })}
                     </div>
                     <div className={styles.formButtonContainer}>
-                        <FormButton href='/tags' name='Cancel' />
+                        <FormButton href='/category' name='Cancel' />
                     </div>
                     <div className={styles.formButtonContainer}>
                         <FormButton onClick={submitCategory} name='Submit' />
