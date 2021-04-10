@@ -134,7 +134,7 @@ export async function deleteCategoryCall(
             url: '/categories/' + params.id,
             headers: params.headers,
         });
-        console.log(response)
+        console.log(response);
         const categories: ReadonlyArray<Category> = response.data.map(
             (category: string) => {
                 const obj: CategoryResponse = JSON.parse(category);

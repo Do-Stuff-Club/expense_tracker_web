@@ -102,9 +102,7 @@ function Expenses(props: ExpensesProps) {
                                         </Link>
                                         <IconButton
                                             aria-label='Delete'
-                                            onClick={() =>
-                                                onDelete(expense.id)
-                                            }
+                                            onClick={() => onDelete(expense.id)}
                                         >
                                             <DeleteIcon />
                                         </IconButton>
