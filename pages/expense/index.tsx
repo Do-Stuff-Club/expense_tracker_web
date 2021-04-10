@@ -8,7 +8,6 @@ import withAuth from '../../components/withAuthentication';
 import PageLayout from '../../components/pageLayout';
 import { updateAllExpensesAction } from '../../redux/expenses/action';
 import { deleteExpenseCall, getExpensesCall } from '../../api/expense/call';
-import ExpenseView from '../../components/expenseView';
 import NavBreadcrumbs from '../../components/navBreadcrumbs';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -77,7 +76,7 @@ function Expenses(props: ExpensesProps) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {props.expense.expenses.map((expense, i) => (
+                            {props.expense.expenses.map((expense) => (
                                 <TableRow key={expense.id}>
                                     <TableCell component='th' scope='row'>
                                         {expense.name}
