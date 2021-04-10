@@ -146,7 +146,11 @@ function NewCategory(props: NewCategoryProps) {
                             ) : null}
                         </div>
                         <div className={styles.formButtonContainer}>
-                            <FormButton onClick={addNewTag} name='Add' />
+                            <FormButton
+                                onClick={addNewTag}
+                                name='Add!'
+                                variant='text'
+                            />
                         </div>
                     </div>
                     <div>

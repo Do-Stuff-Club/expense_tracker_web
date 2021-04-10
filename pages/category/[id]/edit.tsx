@@ -201,7 +201,11 @@ function EditCategory(props: EditCategoryProps) {
                             ) : null}
                         </div>
                         <div className={styles.formButtonContainer}>
-                            <FormButton onClick={addNewTag} name='Add' />
+                            <FormButton
+                                onClick={addNewTag}
+                                name='Add!'
+                                variant='text'
+                            />
                         </div>
                         <Grid>
                             {/* {newTagHasError ? (
