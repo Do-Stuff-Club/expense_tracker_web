@@ -89,9 +89,9 @@ export async function createExpenseCall(
             params: {
                 purchase: {
                     name: params.name,
-                    // cost: params.cost,
-                    // order_date: params.date,
-                    // link: params.link,
+                    cost: params.cost,
+                    order_date: params.date,
+                    link: params.link,
                     //tags_attributes: params.tags.map((tag) => ({ name: tag })),
                 },
             },
