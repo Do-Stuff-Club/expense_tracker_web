@@ -72,6 +72,8 @@ function Expenses(props: ExpensesProps) {
                                 <TableCell>Expense</TableCell>
                                 <TableCell align='right'>Date</TableCell>
                                 <TableCell align='right'>Cost</TableCell>
+                                <TableCell align='right'>Link</TableCell>
+                                <TableCell align='left'>Tags</TableCell>
                                 <TableCell align='right'>Actions</TableCell>
                             </TableRow>
                         </TableHead>
@@ -86,6 +88,12 @@ function Expenses(props: ExpensesProps) {
                                     </TableCell>
                                     <TableCell align='right'>
                                         {JSON.stringify(expense.cost)}
+                                    </TableCell>
+                                    <TableCell align='right'>
+                                        {JSON.stringify(expense.link)}
+                                    </TableCell>
+                                    <TableCell align='left'>
+                                        {JSON.stringify(expense.tags)}
                                     </TableCell>
                                     <TableCell align='right'>
                                         <Link
