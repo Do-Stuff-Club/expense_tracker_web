@@ -210,20 +210,6 @@ function EditCategory(props: EditCategoryProps) {
                             </div>
                         </div>
                         <Grid>
-                            {/* {newTagHasError ? (
-                                <TextField
-                                    label='Tag Name'
-                                    error
-                                    helperText={newTagErrorMessage}
-                                    onChange={(e) => handleChangeNewTagName(e)}
-                                />
-                            ) : (
-                                <TextField
-                                    label='Tag Name'
-                                    onChange={(e) => handleChangeNewTagName(e)}
-                                />
-                            )} */}
-                            {/* <Button onClick={addNewTag}>Add</Button> */}
                             <List>
                                 {category.tags.map((tag, i) => {
                                     return (
