@@ -12,7 +12,8 @@ import { createExpenseCall } from "../../api/expense/call";
 import { prependListener } from "node:process";
 
 import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/InputLabel";
+import Input from "@material-ui/core/Input";
+import FormControl from '@material-ui/core/FormControl';
 
 // Date Picker
 import 'date-fns';
