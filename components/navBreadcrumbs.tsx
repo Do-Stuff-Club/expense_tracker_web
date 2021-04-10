@@ -5,6 +5,9 @@ import { Breadcrumbs } from '@material-ui/core';
 export default function NavBreadcrumbs(): JSX.Element {
     return (
         <Breadcrumbs>
+            <Link href='/dashboard'>
+                <a>Dashboard</a>
+            </Link>
             <Link href='/category'>
                 <a>Tags</a>
             </Link>
