@@ -2,12 +2,14 @@ import axios from 'axios';
 import qs from 'qs';
 import {
     AllCategoriesData,
+    CategoryResponse,
     CreateCategoryParams,
     CreateTagParams,
     DeleteCategoryParams,
     DeleteTagParams,
     GetTagParams,
     OneCategoryData,
+    TagResponse,
     UpdateCategoryParams,
     UpdateTagParams,
 } from './types';
@@ -28,12 +30,14 @@ export async function getTagsCall(
             headers: params.headers,
         });
         const categories: ReadonlyArray<Category> = response.data.map(
-            (category: any) => {
-                const obj = JSON.parse(category);
-                const tags: ReadonlyArray<Tag> = obj.tags.map((tag: any) => ({
-                    id: tag.id,
-                    name: tag.name,
-                }));
+            (category: string) => {
+                const obj: CategoryResponse = JSON.parse(category);
+                const tags: ReadonlyArray<Tag> = obj.tags.map(
+                    (tag: TagResponse) => ({
+                        id: tag.id,
+                        name: tag.name,
+                    }),
+                );
                 return {
                     id: obj.id,
                     name: obj.name,
@@ -92,8 +96,8 @@ export async function createCategoryCall(
             headers: params.headers,
         });
         console.log(response);
-        const obj = response.data;
-        const tags: ReadonlyArray<Tag> = obj.tags.map((tag: any) => ({
+        const obj: CategoryResponse = response.data;
+        const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
             id: tag.id,
             name: tag.name,
         }));
@@ -131,12 +135,14 @@ export async function deleteCategoryCall(
             headers: params.headers,
         });
         const categories: ReadonlyArray<Category> = response.data.map(
-            (category: any) => {
-                const obj = JSON.parse(category);
-                const tags: ReadonlyArray<Tag> = obj.tags.map((tag: any) => ({
-                    id: tag.id,
-                    name: tag.name,
-                }));
+            (category: string) => {
+                const obj: CategoryResponse = JSON.parse(category);
+                const tags: ReadonlyArray<Tag> = obj.tags.map(
+                    (tag: TagResponse) => ({
+                        id: tag.id,
+                        name: tag.name,
+                    }),
+                );
                 return {
                     id: obj.id,
                     name: obj.name,
@@ -194,12 +200,14 @@ export async function updateCategoryCall(
         });
 
         const categories: ReadonlyArray<Category> = response.data.map(
-            (category: any) => {
-                const obj = JSON.parse(category);
-                const tags: ReadonlyArray<Tag> = obj.tags.map((tag: any) => ({
-                    id: tag.id,
-                    name: tag.name,
-                }));
+            (category: string) => {
+                const obj: CategoryResponse = JSON.parse(category);
+                const tags: ReadonlyArray<Tag> = obj.tags.map(
+                    (tag: TagResponse) => ({
+                        id: tag.id,
+                        name: tag.name,
+                    }),
+                );
                 return {
                     id: obj.id,
                     name: obj.name,
@@ -254,8 +262,8 @@ export async function createTagCall(
             },
             headers: params.headers,
         });
-        const obj = response.data;
-        const tags: ReadonlyArray<Tag> = obj.tags.map((tag: any) => ({
+        const obj: CategoryResponse = response.data;
+        const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
             id: tag.id,
             name: tag.name,
         }));
@@ -307,8 +315,8 @@ export async function deleteTagCall(
             url: '/categories/' + params.category.id + '/tags/' + params.id,
             headers: params.headers,
         });
-        const obj = response.data;
-        const tags: ReadonlyArray<Tag> = obj.tags.map((tag: any) => ({
+        const obj: CategoryResponse = response.data;
+        const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
             id: tag.id,
             name: tag.name,
         }));
@@ -365,8 +373,8 @@ export async function updateTagCall(
             },
             headers: params.headers,
         });
-        const obj = response.data;
-        const tags: ReadonlyArray<Tag> = obj.tags.map((tag: any) => ({
+        const obj: CategoryResponse = response.data;
+        const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
             id: tag.id,
             name: tag.name,
         }));

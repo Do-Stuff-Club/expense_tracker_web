@@ -1,6 +1,5 @@
-import { useRouter } from 'next/router';
 import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { connect } from 'react-redux';
 
 import { RootState } from '../../redux/store';
 import withAuth from '../../components/withAuthentication';
@@ -13,12 +12,8 @@ const stateToProps = (state: RootState) => ({
     ...state,
 });
 const connector = connect(stateToProps, {});
-type ReduxProps = ConnectedProps<typeof connector>;
-type ExpensesProps = ReduxProps;
 
-function Expenses(props: ExpensesProps) {
-    const router = useRouter();
-
+function Expenses() {
     return <PageLayout pageName='Expenses'>Here be dragons</PageLayout>;
 }
 

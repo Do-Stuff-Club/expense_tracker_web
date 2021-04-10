@@ -45,7 +45,7 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type EditCategoryProps = ReduxProps;
 
 function EditCategory(props: EditCategoryProps) {
-    const [categoryName, setCategoryName] = useState<string>('');
+    const [, setCategoryName] = useState<string>('');
     const [newTagName, setNewTagName] = useState<string>('');
     const [newTagHasError, setNewTagHasError] = useState<boolean>(false);
     const [newTagErrorMessage, setNewTagErrorMessage] = useState<string>('');
@@ -58,7 +58,9 @@ function EditCategory(props: EditCategoryProps) {
         (category) => category.id == parseInt(id), // FIXME handle issue where index is not found
     );
 
-    const handleIdError = () => {};
+    const handleIdError = () => {
+        return;
+    };
 
     const handleChangeNewTagName = (
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
