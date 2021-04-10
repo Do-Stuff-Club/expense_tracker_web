@@ -8,8 +8,17 @@ import withAuth from '../../components/withAuthentication';
 import PageLayout from '../../components/pageLayout';
 import { updateAllExpensesAction } from '../../redux/expenses/action';
 import { deleteExpenseCall, getExpensesCall } from '../../api/expense/call';
-import ExpenseView from '../../components/expenseView';
 import NavBreadcrumbs from '../../components/navBreadcrumbs';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 
 const stateToProps = (state: RootState) => ({
     auth: {
@@ -56,16 +65,53 @@ function Expenses(props: ExpensesProps) {
                 <Link href='/expense/new' passHref>
                     <Button variant='contained'>New Expense</Button>
                 </Link>
-                {props.expense.expenses.map((expense, i) => {
-                    return (
-                        <ExpenseView
-                            key={i}
-                            listKey={i}
-                            expense={expense}
-                            onDelete={() => onDelete(expense.id)}
-                        ></ExpenseView>
-                    );
-                })}
+                <TableContainer component={Paper}>
+                    <Table aria-label='simple table'>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Expense</TableCell>
+                                <TableCell align='right'>Date</TableCell>
+                                <TableCell align='right'>Cost</TableCell>
+                                <TableCell align='right'>Actions</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {props.expense.expenses.map((expense) => (
+                                <TableRow key={expense.id}>
+                                    <TableCell component='th' scope='row'>
+                                        {expense.name}
+                                    </TableCell>
+                                    <TableCell align='right'>
+                                        {JSON.stringify(expense.date)}
+                                    </TableCell>
+                                    <TableCell align='right'>
+                                        {JSON.stringify(expense.cost)}
+                                    </TableCell>
+                                    <TableCell align='right'>
+                                        <Link
+                                            href={
+                                                '/expenses/' +
+                                                expense.id +
+                                                '/edit'
+                                            }
+                                            passHref
+                                        >
+                                            <IconButton aria-label='Edit'>
+                                                <EditIcon />
+                                            </IconButton>
+                                        </Link>
+                                        <IconButton
+                                            aria-label='Delete'
+                                            onClick={() => onDelete(expense.id)}
+                                        >
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </main>
         </PageLayout>
     );
