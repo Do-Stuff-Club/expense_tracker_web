@@ -23,7 +23,7 @@ export async function getExpensesCall(
         const response = await axios({
             method: 'get',
             baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-            url: '/expenses',
+            url: '/purchases',
             params: { user_id: params.user_id },
             headers: params.headers,
         });
@@ -85,7 +85,7 @@ export async function createExpenseCall(
         const response = await axios({
             method: 'post',
             baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-            url: '/expense',
+            url: '/purchases',
             params: {
                 expense: {
                     name: params.name,
@@ -135,7 +135,7 @@ export async function deleteExpenseCall(
         const response = await axios({
             method: 'delete',
             baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-            url: '/expenses/' + params.id,
+            url: '/purchases/' + params.id,
             headers: params.headers,
         });
         const expenses: ReadonlyArray<Expense> = response.data.map(
@@ -195,7 +195,7 @@ export async function updateExpenseCall(
         const response = await axios({
             method: 'post',
             baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-            url: '/expenses',
+            url: '/purchases',
             params: {
                 expense: {
                     name: params.expense.name,
