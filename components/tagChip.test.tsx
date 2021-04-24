@@ -1,19 +1,16 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import { Chip } from '@material-ui/core';
 import React from 'react';
+import TagChip from '../components/tagChip';
+import { shallow } from 'enzyme';
 
 // ===================================================================
-//                            Component
+//                              Tests
 // ===================================================================
 
-type TagChipProps = {
-    label: string;
-    key: number;
-    onDelete?: () => void;
-};
+test('TagChip label is correct', () => {
+    const tagChip = shallow(<TagChip key={0} label='hello' />);
 
-export default function TagChip(props: TagChipProps): JSX.Element {
-    return <Chip size='small' label={props.label} onDelete={props.onDelete} />;
-}
+    expect(tagChip.text()).toEqual('hello');
+});
