@@ -98,7 +98,7 @@ function Expenses(props: ExpensesProps) {
                                     <TableCell align='right'>
                                         <Link
                                             href={
-                                                '/expenses/' +
+                                                '/expense/' +
                                                 expense.id +
                                                 '/edit'
                                             }
