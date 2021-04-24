@@ -9,7 +9,7 @@ import React from 'react';
 // ===================================================================
 
 type TagChipProps = {
-    label: String;
+    label: string;
     key: number;
     onDelete: () => void;
 };
