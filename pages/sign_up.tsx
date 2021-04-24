@@ -32,6 +32,12 @@ type FormikFields = {
     password_confirmation: string;
 };
 
+/**
+ * Sign up page component. Contans a form for registering new users.
+ *
+ * @param {SignUpProps} props - Props from Redux state
+ * @returns {Element} Page element
+ */
 export function SignUp(props: SignUpProps): JSX.Element {
     const validate = (values: FormikFields) => {
         const errors: {

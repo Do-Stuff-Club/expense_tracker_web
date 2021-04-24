@@ -1,3 +1,6 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import Link from 'next/link';
 import { RootState } from '../../redux/store';
 import { connect, ConnectedProps } from 'react-redux';
@@ -20,6 +23,9 @@ import Paper from '@material-ui/core/Paper';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+// ===================================================================
+//                            Component
+// ===================================================================
 const stateToProps = (state: RootState) => ({
     auth: {
         loggedIn: state.user.loggedIn,
@@ -35,6 +41,12 @@ const connector = connect(stateToProps, dispatchToProps);
 type ReduxProps = ConnectedProps<typeof connector>;
 type TagProps = ReduxProps;
 
+/**
+ * Category Index Page. Displays all categories and their tags. Has links to create and edit categories.
+ *
+ * @param {TagProps} props - Props from Redux state
+ * @returns {Element} Page element
+ */
 function Tag(props: TagProps) {
     useEffect(() => {
         getTagsCall({

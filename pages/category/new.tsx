@@ -37,6 +37,12 @@ const connector = connect(stateToProps, {
 type ReduxProps = ConnectedProps<typeof connector>;
 type NewCategoryProps = ReduxProps;
 
+/**
+ * New Category page component. Has a form for creating new categories and tags.
+ *
+ * @param {NewCategoryProps} props - Props from Redux state
+ * @returns {Element} Page element
+ */
 function NewCategory(props: NewCategoryProps) {
     const [categoryName, setCategoryName] = useState<string>('');
     const [required, setRequired] = useState<boolean>(false);

@@ -1,3 +1,6 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import Head from 'next/head';
 import Link from 'next/link';
 import { RootState } from '../redux/store';
@@ -6,10 +9,18 @@ import styles from '../styles/Home.module.css';
 import React from 'react';
 import PageLayout from '../components/pageLayout';
 
+// ===================================================================
+//                            Component
+// ===================================================================
 const stateToProps = (state: RootState) => state;
 
 const connector = connect(stateToProps, {});
 
+/**
+ * Home Page. Has links to login and sign up.
+ *
+ * @returns {Element} Page element
+ */
 function Home() {
     return (
         <PageLayout pageName='Expense Tracker'>

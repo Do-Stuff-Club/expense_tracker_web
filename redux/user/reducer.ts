@@ -12,6 +12,14 @@ export const defaultUserState: UserState = {
     },
 };
 
+/**
+ * Redux reducer for user slice. Actions include:
+ * - Login a user and track their authentication info
+ *
+ * @param {UserState} state - the current user state in the Redux store
+ * @param {UserAction} action - the action object to execute
+ * @returns {UserState} the new user state
+ */
 export default function user(
     state = defaultUserState,
     action: UserAction,

@@ -1,12 +1,24 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import { AppBar, Box, Toolbar, Typography } from '@material-ui/core';
 import Head from 'next/head';
 import React from 'react';
+// ===================================================================
+//                            Component
+// ===================================================================
 
 export interface PageLayoutProps {
     pageName: string;
     children: React.ReactNode;
 }
 
+/**
+ * Higher-order component for basic page layouts
+ *
+ * @param {PageLayoutProps} props - Props containing children nodes and the name of the page being rendered
+ * @returns {Element} page layout
+ */
 export default function PageLayout(props: PageLayoutProps): JSX.Element {
     return (
         <>
