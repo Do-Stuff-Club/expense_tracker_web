@@ -62,14 +62,21 @@ function NewExpense(props: NewExpenseProps) {
     const [price, setPrice] = useState<number>(0.0);
     const currentDate = new Date();
     const [dateString, setDateString] = useState<string>(
-        `${currentDate.getDate()}/${
+        `${
             currentDate.getMonth() + 1
-        }/${currentDate.getFullYear()}`,
+        }/${currentDate.getDay()}/${currentDate.getFullYear()}`,
     );
-    const [selectedDate, setDate] = useState<Date | null>(currentDate);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(currentDate);
     const [link, setLink] = useState<string>('');
-    const [tagArray, setTagArray] = useState<Array<string>>([]);
-    const currentTags = props.tag.categories.map((category) => category.name);
+    // Tags
+    const [currentTagArray, setCurrentTagArray] = useState<Array<string>>([]);
+    const [selectedTagArray, setSelectedTagArray] = useState<Array<string>>([]);
+
+    // Categories
+    const [selectedCategory, setSelectedCategory] = useState<Array<string>>([]);
+    const currentCategoryArray = Array.from(
+        new Set(props.tag.categories.map((category) => category.name)),
+    );
     // const [newTagName, setNewTagName] = useState<string>("");
     // const [newTagHasError, setNewTagHasError] = useState<boolean>(false);
     // const [newTagErrorMessage, setNewTagErrorMessage] = useState<string>("");
@@ -91,7 +98,7 @@ function NewExpense(props: NewExpenseProps) {
 
     // TODO: date validation
     const handleChangeDate = (date: Date | null) => {
-        setDate(date);
+        setSelectedDate(date);
         const newDateString =
             selectedDate == null
                 ? dateString
@@ -111,12 +118,29 @@ function NewExpense(props: NewExpenseProps) {
     const handleChangeTags = (event: React.ChangeEvent<{ value: unknown }>) => {
         const { options } = event.target as HTMLSelectElement;
         const value: string[] = [];
+        if (options != null) {
+            for (let i = 0, l = options.length; i < l; i += 1) {
+                if (options[i].selected) {
+                    value.push(options[i].value);
+                }
+            }
+        } else {
+            console.log('Options is null');
+        }
+        setSelectedTagArray(value);
+    };
+
+    const handleChangeCategories = (
+        event: React.ChangeEvent<{ value: unknown }>,
+    ) => {
+        const { options } = event.target as HTMLSelectElement;
+        const value: string[] = [];
         for (let i = 0, l = options.length; i < l; i += 1) {
             if (options[i].selected) {
                 value.push(options[i].value);
             }
         }
-        setTagArray(value);
+        setSelectedCategory(value);
     };
 
     const submitExpense = () => {
@@ -125,7 +149,7 @@ function NewExpense(props: NewExpenseProps) {
             cost: price,
             date: dateString,
             link: link,
-            tags: tagArray,
+            tags: selectedTagArray,
             headers: props.user.authHeaders,
         }).then(
             (data) => {
@@ -173,14 +197,28 @@ function NewExpense(props: NewExpenseProps) {
                             onChange={handleChangeLink}
                         ></TextField>
                         <Select
+                            labelId='category-select-label'
+                            id='category-select'
+                            multiple
+                            value={selectedCategory}
+                            onChange={handleChangeCategories}
+                            input={<Input />}
+                        >
+                            {currentCategoryArray.map((category) => (
+                                <MenuItem key={category} value={category}>
+                                    {category}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                        <Select
                             labelId='tag-select-label'
                             id='tag-select'
                             multiple
-                            value={tagArray}
+                            value={currentTagArray}
                             onChange={handleChangeTags}
                             input={<Input />}
                         >
-                            {currentTags.map((tag) => (
+                            {currentTagArray.map((tag) => (
                                 <MenuItem key={tag} value={tag}>
                                     {tag}
                                 </MenuItem>
