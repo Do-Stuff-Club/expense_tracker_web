@@ -1,3 +1,6 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import axios from 'axios';
 import qs from 'qs';
 import {
@@ -14,9 +17,26 @@ import {
     UpdateTagParams,
 } from './types';
 import { Category, Tag } from '../../redux/tags/types';
+// ===================================================================
+//                       Helper Functions
+// ===================================================================
+function categoryFromResponse(resp: CategoryResponse): Category {
+    const tags: ReadonlyArray<Tag> = resp.tags.map((tag: TagResponse) => ({
+        id: tag.id,
+        name: tag.name,
+        category_id: resp.id,
+    }));
+    return {
+        id: resp.id,
+        name: resp.name,
+        required: resp.required,
+        tags: tags,
+    };
+}
 
-//==================================================
-// Export functions
+// ===================================================================
+//                       Export Functions
+// ===================================================================
 
 export async function getTagsCall(
     params: GetTagParams,
@@ -31,19 +51,8 @@ export async function getTagsCall(
         });
         const categories: ReadonlyArray<Category> = response.data.map(
             (category: string) => {
-                const obj: CategoryResponse = JSON.parse(category);
-                const tags: ReadonlyArray<Tag> = obj.tags.map(
-                    (tag: TagResponse) => ({
-                        id: tag.id,
-                        name: tag.name,
-                    }),
-                );
-                return {
-                    id: obj.id,
-                    name: obj.name,
-                    required: obj.required,
-                    tags: tags,
-                };
+                const resp: CategoryResponse = JSON.parse(category);
+                return categoryFromResponse(resp);
             },
         );
         return Promise.resolve({
@@ -100,6 +109,7 @@ export async function createCategoryCall(
         const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
             id: tag.id,
             name: tag.name,
+            category_id: obj.id,
         }));
         const category = {
             id: obj.id,
@@ -141,6 +151,7 @@ export async function deleteCategoryCall(
                     (tag: TagResponse) => ({
                         id: tag.id,
                         name: tag.name,
+                        category_id: obj.id,
                     }),
                 );
                 return {
@@ -201,19 +212,8 @@ export async function updateCategoryCall(
 
         const categories: ReadonlyArray<Category> = response.data.map(
             (category: string) => {
-                const obj: CategoryResponse = JSON.parse(category);
-                const tags: ReadonlyArray<Tag> = obj.tags.map(
-                    (tag: TagResponse) => ({
-                        id: tag.id,
-                        name: tag.name,
-                    }),
-                );
-                return {
-                    id: obj.id,
-                    name: obj.name,
-                    required: obj.required,
-                    tags: tags,
-                };
+                const resp: CategoryResponse = JSON.parse(category);
+                return categoryFromResponse(resp);
             },
         );
         return Promise.resolve({
@@ -262,17 +262,8 @@ export async function createTagCall(
             },
             headers: params.headers,
         });
-        const obj: CategoryResponse = response.data;
-        const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
-            id: tag.id,
-            name: tag.name,
-        }));
-        const category = {
-            id: obj.id,
-            name: obj.name,
-            required: obj.required,
-            tags: tags,
-        };
+        const resp: CategoryResponse = response.data;
+        const category = categoryFromResponse(resp);
 
         return Promise.resolve({
             authHeaders: {
@@ -315,17 +306,8 @@ export async function deleteTagCall(
             url: '/categories/' + params.category.id + '/tags/' + params.id,
             headers: params.headers,
         });
-        const obj: CategoryResponse = response.data;
-        const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
-            id: tag.id,
-            name: tag.name,
-        }));
-        const category = {
-            id: obj.id,
-            name: obj.name,
-            required: obj.required,
-            tags: tags,
-        };
+        const resp: CategoryResponse = response.data;
+        const category = categoryFromResponse(resp);
 
         return Promise.resolve({
             authHeaders: {
@@ -373,17 +355,8 @@ export async function updateTagCall(
             },
             headers: params.headers,
         });
-        const obj: CategoryResponse = response.data;
-        const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
-            id: tag.id,
-            name: tag.name,
-        }));
-        const category = {
-            id: obj.id,
-            name: obj.name,
-            required: obj.required,
-            tags: tags,
-        };
+        const resp: CategoryResponse = response.data;
+        const category = categoryFromResponse(resp);
 
         return Promise.resolve({
             authHeaders: {

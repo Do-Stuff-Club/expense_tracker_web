@@ -3,6 +3,7 @@ import { AuthHeaders } from '../user/types';
 export interface Tag {
     name: string;
     id: number;
+    category_id: number; // ID of its parent category
 }
 
 export interface Category {
