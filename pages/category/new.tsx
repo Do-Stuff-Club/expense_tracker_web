@@ -16,7 +16,7 @@ import {
 } from '../../redux/tags/action';
 import { RootState } from '../../redux/store';
 import withAuth from '../../components/withAuthentication';
-import TestComponent from '../../components/test';
+import TestComponent from '../../components/debug';
 import PageLayout from '../../components/pageLayout';
 import { createCategoryCall } from '../../api/tag/call';
 
