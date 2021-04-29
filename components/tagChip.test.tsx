@@ -10,7 +10,7 @@ import { shallow } from 'enzyme';
 // ===================================================================
 
 test('TagChip label is correct', () => {
-    const tagChip = shallow(<TagChip key={0} label='hello' />);
+    const tagChip = <TagChip key={0} label='hello' />;
 
-    expect(tagChip.text()).toEqual('hello');
+    expect(tagChip.props.label).toEqual('hello');
 });
