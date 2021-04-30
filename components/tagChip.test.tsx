@@ -3,7 +3,7 @@
 // ===================================================================
 import React from 'react';
 import TagChip from '../components/tagChip';
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react';
 
 // ===================================================================
 //                              Tests
@@ -16,6 +16,6 @@ test('TagChip label is correct', () => {
 });
 
 test('TagChip renders its label', () => {
-    render(<TagChip key={0} label='hello'/>);
+    render(<TagChip key={0} label='hello' />);
     expect(screen.getByText('hello')).toBeInTheDocument();
 });
