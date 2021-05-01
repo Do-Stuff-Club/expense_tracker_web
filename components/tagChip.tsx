@@ -16,10 +16,10 @@ import { alea } from 'seedrandom';
  *
  * Credit to https://gist.github.com/mjackson/5311256
  *
- * @param   Number  h       The hue
- * @param   Number  s       The saturation
- * @param   Number  l       The lightness
- * @return  Array           The RGB representation
+ * @param {number} h - The hue
+ * @param {number} s - The saturation
+ * @param {number} l - The lightness
+ * @returns {Array<number>} The RGB representation
  */
 function hslToRgb(h: number, s: number, l: number) {
     let r, g, b;
@@ -53,8 +53,8 @@ function hslToRgb(h: number, s: number, l: number) {
  * Based off this excellent blog post:
  * https://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/
  *
- * @param label - input string to hash
- * @returns CSS color string in RGB format
+ * @param {string} label - input string to hash
+ * @returns {string} CSS color string in RGB format
  */
 function randomColorFromLabel(label: string): string {
     const generator = alea(label);
@@ -80,6 +80,15 @@ type TagChipProps = {
     color?: string;
 };
 
+/**
+ * Chip component based off MUI that has an optionally specified background color.
+ * If the color is not specified, the TagChip will have a randomly-generated color
+ * based on the string label. The color generation is deterministic with respect to
+ * the label string.
+ *
+ * @param {TagChipProps} props - for the component
+ * @returns {Element} TagChip element
+ */
 export default function TagChip(props: TagChipProps): JSX.Element {
     let color;
     if (props.color === undefined) {

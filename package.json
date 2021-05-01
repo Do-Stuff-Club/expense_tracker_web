@@ -9,7 +9,7 @@
         "test": "jest",
         "reformat": "prettier --write ./",
         "format_check": "prettier --check ./",
-        "lint_check": "eslint ./",
+        "lint_check": "eslint --max-warnings 0 ./",
         "type_check": "tsc",
         "all_check": "./git_hooks/pre-push",
         "preinstall": "git config core.hooksPath git_hooks"
