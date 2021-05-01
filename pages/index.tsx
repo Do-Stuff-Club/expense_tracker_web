@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import styles from '../styles/Home.module.css';
 import React from 'react';
 import PageLayout from '../components/pageLayout';
-import TagChip from '../components/tagChip';
 
 // ===================================================================
 //                            Component
