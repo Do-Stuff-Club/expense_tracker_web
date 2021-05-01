@@ -7,7 +7,7 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import FormButton from '../components/formButton';
 
-import TestComponent from '../components/test';
+import TestComponent from '../components/debug';
 import PageLayout from '../components/pageLayout';
 import { newUserCall } from '../api/user/call';
 import { loginAction } from '../redux/user/action';
