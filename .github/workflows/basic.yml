@@ -45,3 +45,6 @@ jobs:
 
             - name: Run lint check
               run: yarn lint_check
+
+            - name: Run tests
+              run: yarn test
