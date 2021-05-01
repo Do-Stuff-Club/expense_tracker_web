@@ -30,6 +30,13 @@ const buttonStyling = makeStyles(
 // ===================================================================
 //                            Component
 // ===================================================================
+
+/**
+ * Styled button for use in forms
+ *
+ * @param {ButtonProps} props - standard Material UI Button Props
+ * @returns {Element} Button element
+ */
 export default function FormButton(props: ButtonProps): JSX.Element {
     const buttonStyles = buttonStyling();
 

@@ -1,8 +1,19 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import axios from 'axios';
 import { LoginParams, NewUserParams, UserData } from './types';
 
-//==================================================
+// ===================================================================
+//                             API Calls
+// ===================================================================
 
+/**
+ * API call to create a new user.
+ *
+ * @param {NewUserParams} params - input parameters from the page.
+ * @returns {Promise<UserData>} promise with data to send to Redux, if successful.
+ */
 export async function newUserCall(params: NewUserParams): Promise<UserData> {
     try {
         const response = await axios({
@@ -42,8 +53,12 @@ export async function newUserCall(params: NewUserParams): Promise<UserData> {
     }
 }
 
-//==================================================
-
+/**
+ * API call to log in a user.
+ *
+ * @param {LoginParams} params - input parameters from the page.
+ * @returns {Promise<UserData>} promise with data to send to Redux, if successful.
+ */
 export async function loginCall(params: LoginParams): Promise<UserData> {
     try {
         const response = await axios({

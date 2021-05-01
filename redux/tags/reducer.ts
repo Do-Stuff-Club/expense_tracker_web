@@ -4,6 +4,16 @@ export const defaultTagState: TagState = {
     categories: [],
 };
 
+/**
+ * Redux reducer for tag slice. Actions include:
+ * - Updating all categories in the store
+ * - Updating one category in the store
+ * - Creating a new category in the store
+ *
+ * @param {TagState} state - the current tag state in the Redux store
+ * @param {TagAction} action - the action object to execute
+ * @returns {TagState} the new tag state
+ */
 export default function tag(
     state = defaultTagState,
     action: TagAction,

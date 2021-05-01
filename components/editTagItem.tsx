@@ -1,3 +1,6 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import {
     IconButton,
     ListItemSecondaryAction,
@@ -10,6 +13,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import React, { ChangeEvent, useState } from 'react';
 
+// ===================================================================
+//                            Component
+// ===================================================================
+
 type EditTagItemProps = {
     name: string;
     id: number;
@@ -18,6 +25,12 @@ type EditTagItemProps = {
     onRename: (newName: string) => void;
 };
 
+/**
+ * Helper function component for an editable tag display
+ *
+ * @param {EditTagItemProps} props - props with tag name, tag id, and event handler functions for modifying the tags
+ * @returns {Element} Edit tag element
+ */
 export default function EditTagItem(props: EditTagItemProps): JSX.Element {
     const [text, setText] = useState<string>(props.name);
     const [editing, setEditing] = useState<boolean>(false);

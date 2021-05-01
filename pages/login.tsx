@@ -31,6 +31,12 @@ type FormikState = {
     password: string;
 };
 
+/**
+ * Login page component. Contains a form for logging in.
+ *
+ * @param {LoginProps} props - Props from Redux state
+ * @returns {Element} Page element
+ */
 function Login(props: LoginProps) {
     const validate = (values: FormikState) => {
         const errors: {

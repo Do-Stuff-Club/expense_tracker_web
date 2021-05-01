@@ -1,3 +1,6 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import { Button, Card, Grid, List, TextField } from '@material-ui/core';
 import React, { ChangeEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
@@ -7,6 +10,9 @@ import { createCategoryAction } from '../redux/tags/action';
 import { RootState } from '../redux/store';
 import { createCategoryCall } from '../api/tag/call';
 
+// ===================================================================
+//                            Component
+// ===================================================================
 const stateToProps = (state: RootState) => ({
     ...state,
 });
@@ -16,6 +22,12 @@ const connector = connect(stateToProps, {
 type ReduxProps = ConnectedProps<typeof connector>;
 type CategoryCreatorProps = ReduxProps;
 
+/**
+ * Form component for creating Categories
+ *
+ * @param {CategoryCreatorProps} props - properties are loaded from Redux store
+ * @returns {Element} Form
+ */
 export default function CategoryCreator(
     props: CategoryCreatorProps,
 ): JSX.Element {

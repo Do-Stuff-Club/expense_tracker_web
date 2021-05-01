@@ -43,6 +43,12 @@ const connector = connect(stateToProps, {
 type ReduxProps = ConnectedProps<typeof connector>;
 type EditCategoryProps = ReduxProps;
 
+/**
+ * Edit Category page component. Has a form for editing an individual category
+ *
+ * @param {EditCategoryProps} props - Props from Redux state
+ * @returns {Element} Page element
+ */
 function EditCategory(props: EditCategoryProps) {
     const [, setCategoryName] = useState<string>('');
     const [newTagName, setNewTagName] = useState<string>('');
