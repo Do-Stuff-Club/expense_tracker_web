@@ -11,7 +11,7 @@ import { newUserCall } from './call';
 jest.mock('axios', () => jest.fn());
 const mockedAxios = axios as jest.MockedFunction<typeof axios>;
 
-test('newUserCall successfully creates a user', async () => {
+test('newUserCall() successfully creates a user', async () => {
     const testParams: NewUserParams = {
         email: 'test@domain.com',
         password: 'super_secret',
