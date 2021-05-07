@@ -1,6 +1,12 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import user, { defaultUserState } from './reducer';
 import { UserAction, UserActionTypes, UserState } from './types';
 
+// ===================================================================
+//                              Tests
+// ===================================================================
 describe('user reducer', () => {
     it('should update the state on LOGIN action', () => {
         const initalState: UserState = defaultUserState;
