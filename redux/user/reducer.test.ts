@@ -1,10 +1,3 @@
-import { AnyAction } from 'redux';
-import configureMockStore from 'redux-mock-store';
-import thunk, { ThunkDispatch } from 'redux-thunk';
-import { UserData } from '../../api/user/types';
-import { RootState } from '../store';
-import { defaultTagState } from '../tags/reducer';
-import { loginAction } from './action';
 import user, { defaultUserState } from './reducer';
 import { UserAction, UserActionTypes, UserState } from './types';
 
