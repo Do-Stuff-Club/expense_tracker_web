@@ -1,7 +1,6 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import { Chip } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
@@ -9,6 +8,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import FormButton from '../../components/formButton';
 import styles from '../../styles/Form.module.css';
 import textFieldStyles from '../../styles/TextField.module.css';
+import TagChip from '../../components/tagChip';
 
 import {
     createCategoryAction,
@@ -163,8 +163,7 @@ function NewCategory(props: NewCategoryProps) {
                         {tagArray.map((tag, i) => {
                             return (
                                 <div className={styles.tagsContainer} key={i}>
-                                    <Chip
-                                        size='small'
+                                    <TagChip
                                         label={tag}
                                         key={i}
                                         onDelete={() => deleteTag(i)}
