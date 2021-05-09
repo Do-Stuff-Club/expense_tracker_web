@@ -51,7 +51,7 @@ describe('loginAction', () => {
             user: defaultUserState,
             tag: defaultTagState,
         });
-        store.dispatch(loginAction(testInput)).then(() => {
+        return store.dispatch(loginAction(testInput)).then(() => {
             expect(store.getActions()).toEqual(expectedActions);
         });
     });
