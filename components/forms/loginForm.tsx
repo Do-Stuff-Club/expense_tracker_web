@@ -1,17 +1,17 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import { useFormik } from 'formik';
+import { Form, Formik } from 'formik';
 import React from 'react';
-import styles from 'Form.module.css';
-import textFieldStyles from '../styles/TextField.module.css';
+import styles from './Form.module.css';
 import { FormProps } from './utils';
 import FormButton from '../formButton';
+import TextField from './TextField';
 
 // ===================================================================
 //                         Helper Functions
 // ===================================================================
-type LoginFormState = {
+export type LoginFormState = {
     email: string;
     password: string;
 };
@@ -50,56 +50,31 @@ type LoginFormProps = FormProps<LoginFormState>;
  * @returns {Element} LoginForm element
  */
 export default function LoginForm(props: LoginFormProps): JSX.Element {
-    const formik = useFormik({
-        initialValues: props.initialState,
-        validate,
-        onSubmit: props.onSubmit,
-    });
     return (
-        <div className={styles.outerContainer}>
-            <div className={styles.formText}>
-                <h1>Log In</h1>
-            </div>
-            <div className={styles.formContainer}>
-                <form onSubmit={formik.handleSubmit} noValidate>
-                    <div className={textFieldStyles.textField}>
-                        <div>
-                            <p>Email</p>
-                        </div>
-                        <input
-                            id='email'
-                            name='email'
-                            type='email'
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.email}
-                        ></input>
-                    </div>
-                    {formik.touched.email && formik.errors.email ? (
-                        <div className={styles.formErrors}>
-                            {formik.errors.email}
-                        </div>
-                    ) : null}
-                    <div className={textFieldStyles.textField}>
-                        <div>
-                            <p>Password</p>
-                        </div>
-                        <input
-                            id='password'
-                            name='password'
-                            type='password'
-                            onChange={formik.handleChange}
-                            value={formik.values.password}
-                        ></input>
-                    </div>
-                    <div className={styles.formButtonContainer}>
+        <Formik
+            initialValues={props.initialState}
+            validate={validate}
+            onSubmit={props.onSubmit}
+        >
+            <div className={styles.outerContainer}>
+                <div className={styles.formText}>
+                    <h1>Log In</h1>
+                </div>
+                <Form noValidate className={styles.formContainer}>
+                    <TextField name='email' label='Email' />
+                    <TextField name='password' label='Password' />
+                    <div
+                        className={`${styles.formButtonContainer} ${styles.homeButton}`}
+                    >
                         <FormButton href='/' name='Home' />
                     </div>
-                    <div className={styles.formButtonContainer}>
+                    <div
+                        className={`${styles.formButtonContainer} ${styles.submitButton}`}
+                    >
                         <FormButton type='submit' name='Log In' />
                     </div>
-                </form>
+                </Form>
             </div>
-        </div>
+        </Formik>
     );
 }

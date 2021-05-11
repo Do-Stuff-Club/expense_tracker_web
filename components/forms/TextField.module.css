@@ -1,5 +1,13 @@
-.textField p {
-    text-align: left;
+.textField {
+    grid-column: 1 / 3;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    row-gap: 1em;
+    column-gap: 10px;
+}
+
+.textField label {
+    text-align: right;
     color: white;
 }
 
