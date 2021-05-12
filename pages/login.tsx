@@ -1,7 +1,6 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import React from 'react';
@@ -52,9 +51,7 @@ function Login(props: LoginProps) {
 
     return (
         <PageLayout pageName='Expense Tracker Login'>
-            <Head>
-                <title>Create Next App</title>
-            </Head>
+            <h1>Log In</h1>
             <LoginForm initialState={initialState} onSubmit={onSubmit} />
             <TestComponent></TestComponent>
         </PageLayout>

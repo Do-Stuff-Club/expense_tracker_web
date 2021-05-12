@@ -56,33 +56,28 @@ export default function LoginForm(props: LoginFormProps): JSX.Element {
             validate={validate}
             onSubmit={props.onSubmit}
         >
-            <div className={styles.outerContainer}>
-                <div className={styles.formText}>
-                    <h1>Log In</h1>
+            <Form noValidate className={styles.formContainer}>
+                <TextField
+                    name='email'
+                    label='Email'
+                    className={styles.textField}
+                />
+                <TextField
+                    name='password'
+                    label='Password'
+                    className={styles.textField}
+                />
+                <div
+                    className={`${styles.formButtonContainer} ${styles.homeButton}`}
+                >
+                    <FormButton href='/' name='Home' />
                 </div>
-                <Form noValidate className={styles.formContainer}>
-                    <TextField
-                        name='email'
-                        label='Email'
-                        className={styles.textField}
-                    />
-                    <TextField
-                        name='password'
-                        label='Password'
-                        className={styles.textField}
-                    />
-                    <div
-                        className={`${styles.formButtonContainer} ${styles.homeButton}`}
-                    >
-                        <FormButton href='/' name='Home' />
-                    </div>
-                    <div
-                        className={`${styles.formButtonContainer} ${styles.submitButton}`}
-                    >
-                        <FormButton type='submit' name='Log In' />
-                    </div>
-                </Form>
-            </div>
+                <div
+                    className={`${styles.formButtonContainer} ${styles.submitButton}`}
+                >
+                    <FormButton type='submit' name='Log In' />
+                </div>
+            </Form>
         </Formik>
     );
 }

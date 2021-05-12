@@ -1,9 +1,10 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import { AppBar, Box, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import Head from 'next/head';
 import React from 'react';
+import styles from './pageLayout.module.css';
 // ===================================================================
 //                            Component
 // ===================================================================
@@ -34,7 +35,11 @@ export default function PageLayout(props: PageLayoutProps): JSX.Element {
                     <Typography variant='h6'>Expense Tracker</Typography>
                 </Toolbar>
             </AppBar>
-            <Box>{props.children}</Box>
+            <div className={styles.outerContainer}>
+                <div></div>
+                <div className={styles.mainColumn}>{props.children}</div>
+                <div></div>
+            </div>
             <footer></footer>
         </>
     );
