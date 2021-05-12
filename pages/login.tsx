@@ -35,7 +35,6 @@ function Login(props: LoginProps) {
     };
 
     const onSubmit = (values: LoginFormState) => {
-        console.log('onSubmit!');
         loginCall(values).then(
             (data) => {
                 props.loginAction(data);
