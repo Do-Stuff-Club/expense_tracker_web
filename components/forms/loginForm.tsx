@@ -5,8 +5,8 @@ import { Form, Formik } from 'formik';
 import React from 'react';
 import styles from './Form.module.css';
 import { FormProps } from './utils';
-import FormButton from '../formButton';
-import TextField from './building_blocks/TextField';
+import FormButton from './building_blocks/formButton';
+import TextField from './building_blocks/textField';
 
 // ===================================================================
 //                         Helper Functions

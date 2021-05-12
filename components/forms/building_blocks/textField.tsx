@@ -3,8 +3,7 @@
 // ===================================================================
 import { useField } from 'formik';
 import React from 'react';
-import styles from './Form.module.css';
-import textFieldStyles from './TextField.module.css';
+import textFieldStyles from './textField.module.css';
 
 // ===================================================================
 //                            Component
@@ -36,7 +35,9 @@ export default function TextField({
                 <label htmlFor={props.name}>{props.label}</label>
                 <input {...field} {...props}></input>
                 {meta.touched && meta.error ? (
-                    <div className={styles.formErrors}>{meta.error}</div>
+                    <div className={textFieldStyles.formErrors}>
+                        {meta.error}
+                    </div>
                 ) : (
                     <div />
                 )}

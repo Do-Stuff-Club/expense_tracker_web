@@ -27,3 +27,9 @@
 .textField input:focus {
     border: 2px solid #98a5f3;
 }
+
+.formErrors {
+    display: block;
+    color: red;
+    font-size: 7px;
+}

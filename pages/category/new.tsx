@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import React, { ChangeEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
-import FormButton from '../../components/formButton';
+import FormButton from '../../components/forms/building_blocks/formButton';
 import styles from '../../styles/Form.module.css';
 import textFieldStyles from '../../styles/TextField.module.css';
 import TagChip from '../../components/tagChip';

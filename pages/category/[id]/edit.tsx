@@ -7,7 +7,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import EditTagItem from '../../../components/editTagItem';
 
-import FormButton from '../../../components/formButton';
+import FormButton from '../../../components/forms/building_blocks/formButton';
 import styles from '../../../styles/Form.module.css';
 import textFieldStyles from '../../../styles/TextField.module.css';
 

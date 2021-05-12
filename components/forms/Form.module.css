@@ -26,18 +26,14 @@
     grid-column: 1;
     grid-row: 3;
     text-align: right;
+    margin: 4px;
 }
 
 .submitButton {
     grid-column: 2;
     grid-row: 3;
     text-align: left;
-}
-
-.formButtonContainer {
-    display: inline-block;
-    padding: 4px;
-    margin-top: 20px;
+    margin: 4px;
 }
 
 .formErrors {
