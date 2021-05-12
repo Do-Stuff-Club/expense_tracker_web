@@ -15,7 +15,7 @@
 .formContainer {
     background-color: #4253b4;
     padding: 10px;
-    display: grid;
+    display: inline-grid;
 }
 
 .textField {

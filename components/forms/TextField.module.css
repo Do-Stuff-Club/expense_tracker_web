@@ -1,13 +1,12 @@
 .textField {
     grid-column: 1 / 3;
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    row-gap: 1em;
-    column-gap: 10px;
+    grid-template-columns: 1fr;
+    row-gap: 0.5em;
 }
 
 .textField label {
-    text-align: right;
+    text-align: left;
     color: white;
 }
 
@@ -23,6 +22,7 @@
     -webkit-transition: 0.5s;
     transition: 0.5s;
     outline: none;
+    text-align: center;
 }
 
 .textField input:focus {
