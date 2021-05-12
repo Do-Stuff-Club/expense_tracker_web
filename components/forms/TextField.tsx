@@ -12,6 +12,7 @@ import textFieldStyles from './TextField.module.css';
 type TextFieldProps = {
     name: string;
     label: string;
+    className?: string;
 };
 
 /**
@@ -21,11 +22,12 @@ type TextFieldProps = {
  * @param {TextField} props - for the component
  * @returns {Element} TextField element
  */
-export default function TextField(props: TextFieldProps): JSX.Element {
+export default function TextField({className, ...props}: TextFieldProps): JSX.Element {
     const [field, meta] = useField<string>(props.name);
+    const styleClasses = className ? [textFieldStyles.textField, className].join(' ') : textFieldStyles.textField;
     return (
         <>
-            <div className={textFieldStyles.textField}>
+            <div className={styleClasses}>
                 <label htmlFor={props.name}>{props.label}</label>
                 <input {...field} {...props}></input>
                 {meta.touched && meta.error ? (
