@@ -40,6 +40,10 @@ echo -e "${YELLOW}Checking ESLint rules:"
 yarn lint_check
 eslint_exit_code="$?"
 
+echo -e "${YELLOW}Running Jest unit tests:"
+yarn test
+jest_exit_code="$?"
+
 # Print error messsages
 echo -e "${YELLOW}Summary:"
 exit_code=0
@@ -62,6 +66,13 @@ if [ "$eslint_exit_code" != "0" ]; then
   exit_code=1
 else
   echo -e "${YELLOW}ESLint ${GREEN}passed"
+fi
+
+if [ "$jest_exit_code" != "0" ]; then
+  echo -e "${YELLOW}Jest tests ${RED}failed"
+  exit_code=1
+else
+  echo -e "${YELLOW}Jest tests ${GREEN}passed"
 fi
 
 echo -e ${NC}
