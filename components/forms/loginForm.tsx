@@ -6,7 +6,7 @@ import React from 'react';
 import styles from './Form.module.css';
 import { FormProps } from './utils';
 import FormButton from '../formButton';
-import TextField from './TextField';
+import TextField from './building_blocks/TextField';
 
 // ===================================================================
 //                         Helper Functions
@@ -61,8 +61,16 @@ export default function LoginForm(props: LoginFormProps): JSX.Element {
                     <h1>Log In</h1>
                 </div>
                 <Form noValidate className={styles.formContainer}>
-                    <TextField name='email' label='Email' className={styles.textField} />
-                    <TextField name='password' label='Password' className={styles.textField} />
+                    <TextField
+                        name='email'
+                        label='Email'
+                        className={styles.textField}
+                    />
+                    <TextField
+                        name='password'
+                        label='Password'
+                        className={styles.textField}
+                    />
                     <div
                         className={`${styles.formButtonContainer} ${styles.homeButton}`}
                     >
