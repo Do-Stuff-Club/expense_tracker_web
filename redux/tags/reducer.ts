@@ -18,7 +18,6 @@ export default function tag(
     state = defaultTagState,
     action: TagAction,
 ): TagState {
-    console.log('In Tag Reducer!');
     switch (action.type) {
         case TagActionTypes.UPDATE_ALL_CATEGORIES:
             return { categories: action.payload.categories };
