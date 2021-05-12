@@ -33,7 +33,7 @@ export default function TextField({
         <>
             <div className={styleClasses}>
                 <label htmlFor={props.name}>{props.label}</label>
-                <input {...field} {...props}></input>
+                <input id={props.name} {...field} {...props}></input>
                 {meta.touched && meta.error ? (
                     <div className={textFieldStyles.formErrors}>
                         {meta.error}
