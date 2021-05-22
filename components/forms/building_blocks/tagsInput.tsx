@@ -48,12 +48,12 @@ export default function TagsInput({
         };
         setValue([...value, newTag]);
     };
-    // const styleClasses = className
+    const styleClasses = className;
     //     ? [textFieldStyles.textField, className].join(' ')
     //     : textFieldStyles.textField;
     return (
         <>
-            <div /*className={styleClasses}*/>
+            <div className={styleClasses}>
                 <label htmlFor='new_tag'>Add a new tag:</label>
                 <input
                     id='new_tag'
