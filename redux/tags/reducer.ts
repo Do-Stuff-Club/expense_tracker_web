@@ -1,8 +1,8 @@
-import { TagAction, TagActionTypes, TagState } from './types';
+import { TagState, MapTagState } from './state';
+import { TagAction, TagActionTypes } from './types';
 
-export const defaultTagState: TagState = {
-    categories: [],
-};
+export const defaultTagState: TagState = new MapTagState()
+
 
 /**
  * Redux reducer for tag slice. Actions include:
@@ -18,23 +18,15 @@ export default function tag(
     state = defaultTagState,
     action: TagAction,
 ): TagState {
-    console.log('In Tag Reducer!');
     switch (action.type) {
-        case TagActionTypes.UPDATE_ALL_CATEGORIES:
-            return { categories: action.payload.categories };
-        case TagActionTypes.UPDATE_ONE_CATEGORY:
-            // Replace the edited category
-            return {
-                categories: state.categories.map((category) => {
-                    if (category.id == action.payload.category.id)
-                        return action.payload.category;
-                    else return category;
-                }),
-            };
-        case TagActionTypes.CREATE_CATEGORY:
-            return {
-                categories: [...state.categories, action.payload.category],
-            };
+        case TagActionTypes.FETCH_TAGS:
+            return state.fromTags(action.payload.tags);
+        case TagActionTypes.CREATE_TAG:
+            return state.addTag(action.payload.newTag, state)
+        case TagActionTypes.UPDATE_TAG:
+            return state.updateTag(action.payload.tag, state)
+        case TagActionTypes.DELETE_TAG:
+            return state.deleteTag(action.payload.tag, state)
         default:
             return state;
     }

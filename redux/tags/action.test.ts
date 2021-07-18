@@ -4,14 +4,12 @@
 import { AnyAction } from 'redux';
 import configureMockStore from 'redux-mock-store';
 import thunk, { ThunkDispatch } from 'redux-thunk';
-import { AllCategoriesData, OneCategoryData } from '../../api/tag/types';
+import { AllTagsData, OneTagData } from '../../api/tag/types';
 import { RootState } from '../store';
 import { defaultTagState } from '../tags/reducer';
 import { defaultUserState } from '../user/reducer';
 import {
-    updateAllCategoriesAction,
-    updateOneCategoryAction,
-    createCategoryAction,
+    createTagAction, deleteTagAction, fetchTagsAction, updateTagAction,
 } from './action';
 import { TagActionTypes } from './types';
 
@@ -28,10 +26,10 @@ const mockStore = configureMockStore<RootState, DispatchExtensions>(
 // ===================================================================
 //                              Tests
 // ===================================================================
-describe('updateAllCategoriesAction()', () => {
-    it('creates a single UPDATE_ALL_CATEGORIES action when it resolves', () => {
-        const testInput: AllCategoriesData = {
-            categories: [],
+describe('fetchTagsAction()', () => {
+    it('creates a single FETCH_TAGS action when it resolves', () => {
+        const testInput: AllTagsData = {
+            tags: [],
             authHeaders: {
                 'access-token': '-MW9nVhXviMt83nlYQU9yw',
                 'token-type': 'Bearer',
@@ -42,9 +40,9 @@ describe('updateAllCategoriesAction()', () => {
         };
         const expectedActions = [
             {
-                type: TagActionTypes.UPDATE_ALL_CATEGORIES,
+                type: TagActionTypes.FETCH_TAGS,
                 payload: {
-                    categories: testInput.categories,
+                    tags: testInput.tags,
                     authHeaders: testInput.authHeaders,
                 },
             },
@@ -54,20 +52,18 @@ describe('updateAllCategoriesAction()', () => {
             user: defaultUserState,
             tag: defaultTagState,
         });
-        return store.dispatch(updateAllCategoriesAction(testInput)).then(() => {
+        return store.dispatch(fetchTagsAction(testInput)).then(() => {
             expect(store.getActions()).toEqual(expectedActions);
         });
     });
 });
 
-describe('updateOneCategoryAction()', () => {
-    it('creates a single UPDATE_ONE_CATEGORY action when it resolves', () => {
-        const testInput: OneCategoryData = {
-            category: {
-                name: 'test category',
-                id: 42,
-                required: false,
-                tags: [],
+describe('createTagAction()', () => {
+    it('creates a single CREATE_TAG action when it resolves', () => {
+        const testInput: OneTagData = {
+            tag: {
+            name: 'test tag',
+            id: 42,
             },
             authHeaders: {
                 'access-token': '-MW9nVhXviMt83nlYQU9yw',
@@ -79,9 +75,9 @@ describe('updateOneCategoryAction()', () => {
         };
         const expectedActions = [
             {
-                type: TagActionTypes.UPDATE_ONE_CATEGORY,
+                type: TagActionTypes.CREATE_TAG,
                 payload: {
-                    category: testInput.category,
+                    tag: testInput.tag,
                     authHeaders: testInput.authHeaders,
                 },
             },
@@ -91,20 +87,18 @@ describe('updateOneCategoryAction()', () => {
             user: defaultUserState,
             tag: defaultTagState,
         });
-        return store.dispatch(updateOneCategoryAction(testInput)).then(() => {
+        return store.dispatch(createTagAction(testInput)).then(() => {
             expect(store.getActions()).toEqual(expectedActions);
         });
     });
 });
 
-describe('createOneCategoryAction()', () => {
-    it('creates a single CREATE_CATEGORY action when it resolves', () => {
-        const testInput: OneCategoryData = {
-            category: {
-                name: 'test category',
+describe('updateTagAction()', () => {
+    it('creates a single UPDATE_TAG action when it resolves', () => {
+        const testInput: OneTagData = {
+            tag: {
+                name: 'test tag',
                 id: 42,
-                required: false,
-                tags: [],
             },
             authHeaders: {
                 'access-token': '-MW9nVhXviMt83nlYQU9yw',
@@ -116,9 +110,9 @@ describe('createOneCategoryAction()', () => {
         };
         const expectedActions = [
             {
-                type: TagActionTypes.CREATE_CATEGORY,
+                type: TagActionTypes.UPDATE_TAG,
                 payload: {
-                    category: testInput.category,
+                    tag: testInput.tag,
                     authHeaders: testInput.authHeaders,
                 },
             },
@@ -128,7 +122,42 @@ describe('createOneCategoryAction()', () => {
             user: defaultUserState,
             tag: defaultTagState,
         });
-        return store.dispatch(createCategoryAction(testInput)).then(() => {
+        return store.dispatch(updateTagAction(testInput)).then(() => {
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
+});
+
+describe('deleteTagAction()', () => {
+    it('creates a single DELETE_TAG action when it resolves', () => {
+        const testInput: OneTagData = {
+            tag: {
+                name: 'test tag',
+                id: 42,
+            },
+            authHeaders: {
+                'access-token': '-MW9nVhXviMt83nlYQU9yw',
+                'token-type': 'Bearer',
+                client: 'VZ6QbHPUroBvLnVcKQGYkw',
+                expiry: '1618718924',
+                uid: 'test@test.org',
+            },
+        };
+        const expectedActions = [
+            {
+                type: TagActionTypes.DELETE_TAG,
+                payload: {
+                    tag: testInput.tag,
+                    authHeaders: testInput.authHeaders,
+                },
+            },
+        ];
+
+        const store = mockStore({
+            user: defaultUserState,
+            tag: defaultTagState,
+        });
+        return store.dispatch(deleteTagAction(testInput)).then(() => {
             expect(store.getActions()).toEqual(expectedActions);
         });
     });

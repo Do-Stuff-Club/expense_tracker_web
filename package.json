@@ -21,6 +21,7 @@
         "@types/seedrandom": "^3.0.0",
         "axios": "^0.21.1",
         "formik": "^2.2.6",
+        "immutable": "^4.0.0-rc.14",
         "j-toker": "^0.0.10-beta3",
         "jquery": "^3.5.1",
         "jquery-deparam": "^0.5.3",
