@@ -12,7 +12,7 @@ import {
     TagResponse,
     UpdateTagParams,
 } from './types';
-import {  Tag } from '../../redux/tags/state';
+import { Tag } from '../../redux/tags/state';
 // ===================================================================
 //                       Helper Functions
 // ===================================================================
@@ -27,7 +27,7 @@ function tagFromResponse(resp: TagResponse): Tag {
     return {
         id: resp.id,
         name: resp.name,
-        parentId: resp.parent_id
+        parentId: resp.parent_id,
     };
 }
 
@@ -41,9 +41,7 @@ function tagFromResponse(resp: TagResponse): Tag {
  * @param {GetTagParams} params - input parameters from the page
  * @returns {Promise<AllCategoriesData>} promise with data to send to Redux, if successful.
  */
-export async function getTagsCall(
-    params: GetTagParams,
-): Promise<AllTagsData> {
+export async function getTagsCall(params: GetTagParams): Promise<AllTagsData> {
     try {
         const response = await axios({
             method: 'get',
@@ -51,12 +49,10 @@ export async function getTagsCall(
             url: '/tags',
             headers: params.headers,
         });
-        const tags: ReadonlyArray<Tag> = response.data.map(
-            (tag: string) => {
-                const resp: TagResponse = JSON.parse(tag);
-                return tagFromResponse(resp);
-            },
-        );
+        const tags: ReadonlyArray<Tag> = response.data.map((tag: string) => {
+            const resp: TagResponse = JSON.parse(tag);
+            return tagFromResponse(resp);
+        });
         return Promise.resolve({
             authHeaders: {
                 client: response.headers['client'],
@@ -96,11 +92,11 @@ export async function createTagCall(
 
             return config;
         });
-        const reqParams: {name: string, parent_id?: number} = {
-            name: params.name
-        }
-        if(params.parent_id) {
-            reqParams.parent_id = params.parent_id
+        const reqParams: { name: string; parent_id?: number } = {
+            name: params.name,
+        };
+        if (params.parent_id) {
+            reqParams.parent_id = params.parent_id;
         }
         const response = await axios({
             method: 'post',
@@ -151,11 +147,11 @@ export async function updateTagCall(
 
             return config;
         });
-        const reqParams: {name: string, parent_id?: number} = {
-            name: params.name
-        }
-        if(params.parent_id) {
-            reqParams.parent_id = params.parent_id
+        const reqParams: { name: string; parent_id?: number } = {
+            name: params.name,
+        };
+        if (params.parent_id) {
+            reqParams.parent_id = params.parent_id;
         }
         const response = await axios({
             method: 'patch',

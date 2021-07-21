@@ -9,7 +9,10 @@ import { RootState } from '../store';
 import { defaultTagState } from '../tags/reducer';
 import { defaultUserState } from '../user/reducer';
 import {
-    createTagAction, deleteTagAction, fetchTagsAction, updateTagAction,
+    createTagAction,
+    deleteTagAction,
+    fetchTagsAction,
+    updateTagAction,
 } from './action';
 import { TagActionTypes } from './types';
 
@@ -62,8 +65,8 @@ describe('createTagAction()', () => {
     it('creates a single CREATE_TAG action when it resolves', () => {
         const testInput: OneTagData = {
             tag: {
-            name: 'test tag',
-            id: 42,
+                name: 'test tag',
+                id: 42,
             },
             authHeaders: {
                 'access-token': '-MW9nVhXviMt83nlYQU9yw',

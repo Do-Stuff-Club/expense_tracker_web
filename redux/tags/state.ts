@@ -16,9 +16,9 @@ export interface Tag {
 export interface TagState {
     // Basic construction functions
     fromTags: (tags: ReadonlyArray<Tag>) => TagState;
-    addTag: (tag: Tag, state: TagState) => TagState;
-    updateTag: (tag: Tag, state: TagState) => TagState;
-    deleteTag: (tag: Tag, state: TagState) => TagState;
+    addTag: (tag: Tag, state: TagState) => TagState; // Adds new tag if given tag is not in TagState
+    updateTag: (tag: Tag, state: TagState) => TagState; // Updates if given tag is in TagState
+    deleteTag: (tag: Tag, state: TagState) => TagState; // Deletes if given tag is in TagState
     // Lookup functions
     getTagById: (id: number, state: TagState) => Tag | undefined;
 }
@@ -31,14 +31,14 @@ export class MapTagState implements TagState {
     private rootTags: Set<number>;
 
     constructor();
-    constructor(map: Map<number, Tag>, rootTags: Set<number>); 
+    constructor(map: Map<number, Tag>, rootTags: Set<number>);
     constructor(map?: Map<number, Tag>, rootTags?: Set<number>) {
-        if(map === undefined && rootTags === undefined) {
+        if (map === undefined && rootTags === undefined) {
             this.map = Map<number, Tag>();
             this.rootTags = Set<number>();
-        } else if (map !== undefined && rootTags !== undefined){
-            this.map = map
-            this.rootTags = rootTags
+        } else if (map !== undefined && rootTags !== undefined) {
+            this.map = map;
+            this.rootTags = rootTags;
         } else {
             //FIXME throw error
             this.map = Map<number, Tag>();
@@ -52,9 +52,8 @@ export class MapTagState implements TagState {
 
         tags.forEach((tag) => {
             newMap = newMap.set(tag.id, tag);
-            if(tag.parentId)
-            newRoots = newRoots.add(tag.id)
-        })
+            if (tag.parentId) newRoots = newRoots.add(tag.id);
+        });
 
         return new MapTagState(newMap, newRoots);
     }
@@ -63,6 +62,10 @@ export class MapTagState implements TagState {
         // Do a cast since typescript does not have abstract types
         // Lint wants us to cast to unkown before MapTagState
         const castState = (state as unknown) as MapTagState;
+
+        // Return unchanged state if ID is in tagstate
+        if(castState.getTagById(tag.id) != undefined)
+            return state
 
         const newMap = castState.map.set(tag.id, tag);
         const newRoots = tag.parentId
@@ -76,6 +79,10 @@ export class MapTagState implements TagState {
         // Do a cast since typescript does not have abstract types
         // Lint wants us to cast to unkown before MapTagState
         const castState = (state as unknown) as MapTagState;
+
+        // Return unchanged state if ID is not in tagstate
+        if(castState.getTagById(tag.id) == undefined)
+            return state
 
         const newMap = castState.map.set(tag.id, tag);
 
@@ -102,7 +109,7 @@ export class MapTagState implements TagState {
         return new MapTagState(newMap, newRoots);
     }
 
-    getTagById(id:  number) :Tag | undefined {
+    getTagById(id: number): Tag | undefined {
         return this.map.get(id);
     }
 }

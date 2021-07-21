@@ -25,7 +25,7 @@ export type FetchTagsAction = {
 export type CreateTagAction = {
     type: TagActionTypes.CREATE_TAG;
     payload: {
-        newTag: Tag;
+        tag: Tag;
         authHeaders: AuthHeaders;
     };
 };

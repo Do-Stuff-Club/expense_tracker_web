@@ -2,53 +2,75 @@
 //                             Imports
 // ===================================================================
 import tag, { defaultTagState } from './reducer';
-import { TagAction, TagActionTypes, TagState } from './types';
+import { Tag, TagState } from './state';
+import { TagAction, TagActionTypes } from './types';
+import isEqual from 'lodash/isEqual'
 // ===================================================================
 //                           Test Setup
 // ===================================================================
-const testState: TagState = {
-    categories: [
-        {
-            name: 'test category 0',
-            id: 0,
-            required: false,
-            tags: [],
-        },
-        {
-            name: 'test category 1',
-            id: 1,
-            required: true,
-            tags: [],
-        },
-        {
-            name: 'test category 2',
-            id: 2,
-            required: false,
-            tags: [],
-        },
-    ],
-};
+        const testState: TagState = defaultTagState;
+
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    namespace jest {
+        interface Matchers<R> {
+            toHaveTags(expectedTags: ReadonlyArray<Tag>): R;
+        }
+    }
+}
+
+function toHaveTags(
+    received: TagState,
+    expectedTags: ReadonlyArray<Tag>,
+): jest.CustomMatcherResult {
+    let mismatchedInReceieved: ReadonlyArray<[Tag, Tag]> = [];
+    let missingInReceived: ReadonlyArray<Tag> = [];
+    expectedTags.forEach((tag) => {
+        const tagOrUndefined = received.getTagById(tag.id, received);
+        if (tagOrUndefined == undefined)
+            missingInReceived = [...missingInReceived, tag];
+        else {
+            if (!isEqual(tag , tagOrUndefined) ){
+                mismatchedInReceieved = [
+                    ...mismatchedInReceieved,
+                    [tag, tagOrUndefined],
+                ];
+            }
+        }
+    });
+
+    if (mismatchedInReceieved.length == 0 && missingInReceived.length == 0) {
+        return {
+            pass: true,
+            message: () =>
+                `expected state to not contain all of ${JSON.stringify(expectedTags)}`,
+        };
+    } else {
+        return {
+            pass: false,
+            message: () =>
+                `state was missing ${JSON.stringify(missingInReceived)}, and had mismatched values for ${JSON.stringify(mismatchedInReceieved)}`,
+        };
+    }
+}
+expect.extend({ toHaveTags });
 
 // ===================================================================
 //                              Tests
 // ===================================================================
 describe('tag reducer', () => {
-    it('should replace all categories on UPDATE_ONE_CATEGORY action', () => {
+    it('should initialize all tags on FETCH_TAGS action', () => {
         const testAction: TagAction = {
-            type: TagActionTypes.UPDATE_ALL_CATEGORIES,
+            type: TagActionTypes.FETCH_TAGS,
             payload: {
-                categories: [
+                tags: [
                     {
                         name: 'New Category 0',
                         id: 42,
-                        required: true,
-                        tags: [],
                     },
                     {
                         name: 'New Category 1',
                         id: 256,
-                        required: true,
-                        tags: [],
                     },
                 ],
                 authHeaders: {
@@ -61,35 +83,28 @@ describe('tag reducer', () => {
             },
         };
 
-        const expectedState: TagState = {
-            categories: [
-                {
-                    name: 'New Category 0',
-                    id: 42,
-                    required: true,
-                    tags: [],
-                },
-                {
-                    name: 'New Category 1',
-                    id: 256,
-                    required: true,
-                    tags: [],
-                },
-            ],
-        };
+        const expectedTags: ReadonlyArray<Tag> = [
+            {
+                name: 'New Category 0',
+                id: 42,
+            },
+            {
+                name: 'New Category 1',
+                id: 256,
+            },
+        ];
 
-        expect(tag(testState, testAction)).toEqual(expectedState);
+        expect(tag(testState, testAction)).toHaveTags(expectedTags);
     });
 
-    it('should update an existing category on UPDATE_ONE_CATEGORY action', () => {
+    it('should add new tag on CREATE_TAG action', () => {
+
         const testAction: TagAction = {
-            type: TagActionTypes.UPDATE_ONE_CATEGORY,
+            type: TagActionTypes.CREATE_TAG,
             payload: {
-                category: {
+                tag: {
                     name: 'New Name',
                     id: 2,
-                    required: true,
-                    tags: [],
                 },
                 authHeaders: {
                     'access-token': '-MW9nVhXviMt83nlYQU9yw',
@@ -101,41 +116,58 @@ describe('tag reducer', () => {
             },
         };
 
-        const expectedState: TagState = {
-            categories: [
-                {
-                    name: 'test category 0',
-                    id: 0,
-                    required: false,
-                    tags: [],
-                },
-                {
-                    name: 'test category 1',
-                    id: 1,
-                    required: true,
-                    tags: [],
-                },
-                {
+        const expectedTags: ReadonlyArray<Tag> =   [ 
+            {
                     name: 'New Name',
                     id: 2,
-                    required: true,
-                    tags: [],
                 },
-            ],
-        };
+            ];
 
-        expect(tag(testState, testAction)).toEqual(expectedState);
+        expect(tag(testState, testAction)).toHaveTags(expectedTags);
     });
 
-    it('should return an unchanged state on UPDATE_ONE_CATEGORY action with a non-existent ID', () => {
+    it('should have an updated tag on UPDATE_TAG action with valid ID', () => {
+        const testTag = {
+            id: 42,
+            name: 'Boring name'
+        }
+        const updateTestState = testState.addTag(testTag, testState)
+
         const testAction: TagAction = {
-            type: TagActionTypes.UPDATE_ONE_CATEGORY,
+            type: TagActionTypes.UPDATE_TAG,
             payload: {
-                category: {
+                tag: {
+                    name: 'Cool Name!',
+                    id: 42,
+                    parentId: 9001
+                },
+                authHeaders: {
+                    'access-token': '-MW9nVhXviMt83nlYQU9yw',
+                    'token-type': 'Bearer',
+                    client: 'VZ6QbHPUroBvLnVcKQGYkw',
+                    expiry: '1618718924',
+                    uid: 'test@test.org',
+                },
+            },
+        };
+
+        const expectedTags: ReadonlyArray<Tag> = [{
+            id: 42,
+            name: 'Cool Name!',
+            parentId: 9001
+        }];
+
+        expect(tag(updateTestState, testAction)).toHaveTags(expectedTags);
+    });
+
+    it('should return an unchanged state on UPDATE_TAG action with a non-existent ID', () => {
+        const testAction: TagAction = {
+            type: TagActionTypes.UPDATE_TAG,
+            payload: {
+                tag: {
                     name: 'New Name',
                     id: 42, // Doesn't exist in testState
-                    required: true,
-                    tags: [],
+                    parentId: 9001
                 },
                 authHeaders: {
                     'access-token': '-MW9nVhXviMt83nlYQU9yw',
@@ -152,16 +184,16 @@ describe('tag reducer', () => {
         expect(tag(testState, testAction)).toEqual(expectedState);
     });
 
-    it('should append a category on CREATE_CATEGORY action', () => {
+    it('should remove a tag on DELETE_TAG action with valid ID', () => {
+        const testTag = {
+            id: 42,
+            name: 'Delete me!'
+        }
+        const deleteTestState = testState.addTag(testTag, testState)
         const testAction: TagAction = {
-            type: TagActionTypes.CREATE_CATEGORY,
+            type: TagActionTypes.DELETE_TAG,
             payload: {
-                category: {
-                    name: 'test category',
-                    id: 42,
-                    required: false,
-                    tags: [],
-                },
+                tag: testTag,
                 authHeaders: {
                     'access-token': '-MW9nVhXviMt83nlYQU9yw',
                     'token-type': 'Bearer',
@@ -171,50 +203,18 @@ describe('tag reducer', () => {
                 },
             },
         };
-
-        const expectedState: TagState = {
-            categories: [
-                {
-                    name: 'test category 0',
-                    id: 0,
-                    required: false,
-                    tags: [],
-                },
-                {
-                    name: 'test category 1',
-                    id: 1,
-                    required: true,
-                    tags: [],
-                },
-                {
-                    name: 'test category 2',
-                    id: 2,
-                    required: false,
-                    tags: [],
-                },
-                {
-                    name: 'test category',
-                    id: 42,
-                    required: false,
-                    tags: [],
-                },
-            ],
-        };
-
-        expect(tag(testState, testAction)).toEqual(expectedState);
+        expect(tag(deleteTestState, testAction)).toEqual(defaultTagState);
     });
 
     it('should return an unchanged state on an unknown action', () => {
         const initalState: TagState = defaultTagState;
 
         const testAction: TagAction = {
-            type: 'unknown' as TagActionTypes.UPDATE_ONE_CATEGORY,
+            type: 'unknown' as TagActionTypes.UPDATE_TAG,
             payload: {
-                category: {
+                tag: {
                     name: 'bad',
                     id: 42,
-                    required: false,
-                    tags: [],
                 },
                 authHeaders: {
                     'access-token': '-MW9nVhXviMt83nlYQU9yw',
@@ -226,20 +226,16 @@ describe('tag reducer', () => {
             },
         };
 
-        const expectedState: TagState = initalState;
-
-        expect(tag(initalState, testAction)).toEqual(expectedState);
+        expect(tag(initalState, testAction)).toEqual(initalState);
     });
 
     it('should default to using the defaultTagState if no input state is provided', () => {
         const testAction: TagAction = {
-            type: 'unknown' as TagActionTypes.UPDATE_ONE_CATEGORY,
+            type: 'unknown' as TagActionTypes.UPDATE_TAG,
             payload: {
-                category: {
+                tag: {
                     name: 'bad',
                     id: 42,
-                    required: false,
-                    tags: [],
                 },
                 authHeaders: {
                     'access-token': '-MW9nVhXviMt83nlYQU9yw',

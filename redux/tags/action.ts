@@ -22,7 +22,7 @@ export const fetchTagsAction = (
             authHeaders: data.authHeaders,
         },
     });
-}
+};
 
 export const createTagAction = (
     data: OneTagData,
