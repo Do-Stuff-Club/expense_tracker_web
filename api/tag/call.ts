@@ -39,7 +39,7 @@ function tagFromResponse(resp: TagResponse): Tag {
  * API call to fetch all tag information.
  *
  * @param {GetTagParams} params - input parameters from the page
- * @returns {Promise<AllCategoriesData>} promise with data to send to Redux, if successful.
+ * @returns {Promise<AllTagsData>} promise with data to send to Redux, if successful.
  */
 export async function getTagsCall(params: GetTagParams): Promise<AllTagsData> {
     try {

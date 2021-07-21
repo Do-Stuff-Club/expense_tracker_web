@@ -4,11 +4,11 @@
 import tag, { defaultTagState } from './reducer';
 import { Tag, TagState } from './state';
 import { TagAction, TagActionTypes } from './types';
-import isEqual from 'lodash/isEqual'
+import isEqual from 'lodash/isEqual';
 // ===================================================================
 //                           Test Setup
 // ===================================================================
-        const testState: TagState = defaultTagState;
+const testState: TagState = defaultTagState;
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -19,6 +19,13 @@ declare global {
     }
 }
 
+/**
+ * Helper function that checks that all tags in an array are in the state
+ *
+ * @param {TagState} received - The received test state
+ * @param {ReadonlyArray<Tag>} expectedTags - The tags to check for in the test state
+ * @returns {jest.CustomMatcherResult} - Matcher result for Jest
+ */
 function toHaveTags(
     received: TagState,
     expectedTags: ReadonlyArray<Tag>,
@@ -30,7 +37,7 @@ function toHaveTags(
         if (tagOrUndefined == undefined)
             missingInReceived = [...missingInReceived, tag];
         else {
-            if (!isEqual(tag , tagOrUndefined) ){
+            if (!isEqual(tag, tagOrUndefined)) {
                 mismatchedInReceieved = [
                     ...mismatchedInReceieved,
                     [tag, tagOrUndefined],
@@ -43,13 +50,19 @@ function toHaveTags(
         return {
             pass: true,
             message: () =>
-                `expected state to not contain all of ${JSON.stringify(expectedTags)}`,
+                `expected state to not contain all of ${JSON.stringify(
+                    expectedTags,
+                )}`,
         };
     } else {
         return {
             pass: false,
             message: () =>
-                `state was missing ${JSON.stringify(missingInReceived)}, and had mismatched values for ${JSON.stringify(mismatchedInReceieved)}`,
+                `state was missing ${JSON.stringify(
+                    missingInReceived,
+                )}, and had mismatched values for ${JSON.stringify(
+                    mismatchedInReceieved,
+                )}`,
         };
     }
 }
@@ -98,7 +111,6 @@ describe('tag reducer', () => {
     });
 
     it('should add new tag on CREATE_TAG action', () => {
-
         const testAction: TagAction = {
             type: TagActionTypes.CREATE_TAG,
             payload: {
@@ -116,12 +128,12 @@ describe('tag reducer', () => {
             },
         };
 
-        const expectedTags: ReadonlyArray<Tag> =   [ 
+        const expectedTags: ReadonlyArray<Tag> = [
             {
-                    name: 'New Name',
-                    id: 2,
-                },
-            ];
+                name: 'New Name',
+                id: 2,
+            },
+        ];
 
         expect(tag(testState, testAction)).toHaveTags(expectedTags);
     });
@@ -129,9 +141,9 @@ describe('tag reducer', () => {
     it('should have an updated tag on UPDATE_TAG action with valid ID', () => {
         const testTag = {
             id: 42,
-            name: 'Boring name'
-        }
-        const updateTestState = testState.addTag(testTag, testState)
+            name: 'Boring name',
+        };
+        const updateTestState = testState.addTag(testTag, testState);
 
         const testAction: TagAction = {
             type: TagActionTypes.UPDATE_TAG,
@@ -139,7 +151,7 @@ describe('tag reducer', () => {
                 tag: {
                     name: 'Cool Name!',
                     id: 42,
-                    parentId: 9001
+                    parentId: 9001,
                 },
                 authHeaders: {
                     'access-token': '-MW9nVhXviMt83nlYQU9yw',
@@ -151,11 +163,13 @@ describe('tag reducer', () => {
             },
         };
 
-        const expectedTags: ReadonlyArray<Tag> = [{
-            id: 42,
-            name: 'Cool Name!',
-            parentId: 9001
-        }];
+        const expectedTags: ReadonlyArray<Tag> = [
+            {
+                id: 42,
+                name: 'Cool Name!',
+                parentId: 9001,
+            },
+        ];
 
         expect(tag(updateTestState, testAction)).toHaveTags(expectedTags);
     });
@@ -167,7 +181,7 @@ describe('tag reducer', () => {
                 tag: {
                     name: 'New Name',
                     id: 42, // Doesn't exist in testState
-                    parentId: 9001
+                    parentId: 9001,
                 },
                 authHeaders: {
                     'access-token': '-MW9nVhXviMt83nlYQU9yw',
@@ -187,9 +201,9 @@ describe('tag reducer', () => {
     it('should remove a tag on DELETE_TAG action with valid ID', () => {
         const testTag = {
             id: 42,
-            name: 'Delete me!'
-        }
-        const deleteTestState = testState.addTag(testTag, testState)
+            name: 'Delete me!',
+        };
+        const deleteTestState = testState.addTag(testTag, testState);
         const testAction: TagAction = {
             type: TagActionTypes.DELETE_TAG,
             payload: {

@@ -30,5 +30,7 @@ pkgs.mkShell {
         nodejs
         yarn
         vscodium-with-extensions
+        python
+        inotify-tools
     ];
 }

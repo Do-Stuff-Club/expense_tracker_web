@@ -64,8 +64,7 @@ export class MapTagState implements TagState {
         const castState = (state as unknown) as MapTagState;
 
         // Return unchanged state if ID is in tagstate
-        if(castState.getTagById(tag.id) != undefined)
-            return state
+        if (castState.getTagById(tag.id) != undefined) return state;
 
         const newMap = castState.map.set(tag.id, tag);
         const newRoots = tag.parentId
@@ -81,8 +80,7 @@ export class MapTagState implements TagState {
         const castState = (state as unknown) as MapTagState;
 
         // Return unchanged state if ID is not in tagstate
-        if(castState.getTagById(tag.id) == undefined)
-            return state
+        if (castState.getTagById(tag.id) == undefined) return state;
 
         const newMap = castState.map.set(tag.id, tag);
 
