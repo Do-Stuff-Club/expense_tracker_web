@@ -7,14 +7,15 @@ import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import * as TagData from '../temp_data/tree';
-import { TagState, TagTree } from '../temp_data/tree';
+import { TagTree } from '../temp_data/tree'; //add TagState back in
 
 /**
  *
  * @returns {Element} A Tree view of all tags
  */
 export default function Tags(): JSX.Element {
-    const [tagState, setTagState] = useState<TagState>(TagData.dummyTree);
+    //const [tagState, setTagState] = useState<TagState>(TagData.dummyTree);
+    const tagState = TagData.dummyTree;
 
     const renderTree = (nodes: TagTree) => (
         <TreeItem
