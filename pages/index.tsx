@@ -9,6 +9,8 @@ import styles from '../styles/Home.module.css';
 import React from 'react';
 import PageLayout from '../components/pageLayout';
 
+import Tags from '../components/tags';
+
 // ===================================================================
 //                            Component
 // ===================================================================
@@ -38,6 +40,8 @@ function Home() {
                     <a>Sign Up</a>
                 </Link>
             </main>
+
+            <Tags />
         </PageLayout>
     );
 }
