@@ -6,7 +6,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import user, { defaultUserState } from './user/reducer';
 import { UserAction } from './user/types';
 import { TagAction } from './tags/types';
-import tag, { defaultTagState } from './tags/reducer';
+import tag from './tags/reducer';
+import { defaultTagState } from './tags/state';
 
 const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
 

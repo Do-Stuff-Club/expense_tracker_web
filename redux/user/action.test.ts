@@ -6,7 +6,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 import { UserData } from '../../api/user/types';
 import { RootState } from '../store';
-import { defaultTagState } from '../tags/reducer';
+import { defaultTagState } from '../tags/state';
 import { loginAction } from './action';
 import { defaultUserState } from './reducer';
 import { UserActionTypes } from './types';

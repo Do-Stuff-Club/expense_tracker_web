@@ -12,7 +12,7 @@ import {
     TagResponse,
     UpdateTagParams,
 } from './types';
-import { Tag } from '../../redux/tags/state';
+import { Tag } from '../../redux/tags/types';
 // ===================================================================
 //                       Helper Functions
 // ===================================================================

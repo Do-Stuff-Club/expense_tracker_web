@@ -1,4 +1,4 @@
-import { Tag } from '../../redux/tags/state';
+import { Tag } from '../../redux/tags/types';
 import { AuthHeaders } from '../../redux/user/types';
 
 export type GetTagParams = {

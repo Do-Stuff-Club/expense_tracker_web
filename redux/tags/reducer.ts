@@ -1,7 +1,10 @@
-import { TagState, MapTagState } from './state';
-import { TagAction, TagActionTypes } from './types';
-
-export const defaultTagState: TagState = new MapTagState();
+import {
+    containsId,
+    defaultTagState,
+    removeTagInState,
+    setTagInState,
+} from './state';
+import { TagState, TagAction, TagActionTypes } from './types';
 
 /**
  * Redux reducer for tag slice. Actions include:
@@ -19,13 +22,17 @@ export default function tag(
 ): TagState {
     switch (action.type) {
         case TagActionTypes.FETCH_TAGS:
-            return state.fromTags(action.payload.tags);
+            return action.payload.tags.reduce(setTagInState, defaultTagState);
         case TagActionTypes.CREATE_TAG:
-            return state.addTag(action.payload.tag, state);
+            if (!containsId(state, action.payload.tag.id))
+                return setTagInState(state, action.payload.tag);
+            else return state;
         case TagActionTypes.UPDATE_TAG:
-            return state.updateTag(action.payload.tag, state);
+            if (containsId(state, action.payload.tag.id))
+                return setTagInState(state, action.payload.tag);
+            else return state;
         case TagActionTypes.DELETE_TAG:
-            return state.deleteTag(action.payload.tag, state);
+            return removeTagInState(state, action.payload.tag);
         default:
             return state;
     }

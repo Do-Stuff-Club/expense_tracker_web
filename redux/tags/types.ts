@@ -2,7 +2,21 @@
 //                             Imports
 // ===================================================================
 import { AuthHeaders } from '../user/types';
-import { Tag } from './state';
+
+// ===================================================================
+//                              State
+// ===================================================================
+export type Tag = {
+    readonly name: string;
+    readonly id: number;
+    readonly parentId?: number;
+    readonly childIds?: ReadonlyArray<number>;
+};
+
+export type TagState = {
+    readonly map: Record<number, Tag>;
+    readonly rootIds: ReadonlyArray<number>;
+};
 
 // ===================================================================
 //                             Actions
