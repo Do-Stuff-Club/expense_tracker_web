@@ -1,7 +1,7 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import TreeItem from '@material-ui/lab/TreeItem';
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -17,7 +17,7 @@ import { TextField, Button } from '@material-ui/core';
  */
 export default function Tags(): JSX.Element {
     const [tagState, setTagState] = useState<TagState>(TagData.dummyTree);
-    // const [currentSelection, setCurrentSelection] = useState<string>('');
+    const [currentSelection, setCurrentSelection] = useState<string>('');
     const [newTagName, setNewTagName] = useState<string>('');
     // const tagState = TagData.dummyTree;
 
@@ -38,15 +38,41 @@ export default function Tags(): JSX.Element {
 
     const addNode = (nodeName: string) => {
         const newId = tagState.map.size;
-        const newNode: TagTree = {
-            name: nodeName,
-            id: newId,
-        };
+        let newNode: TagTree;
+        if (currentSelection == '') {
+            newNode = {
+                name: nodeName,
+                id: newId,
+            };
+            setTagState({
+                map: tagState.map.set(newId, newNode),
+                rootIds: [...tagState.rootIds, ...[newId]],
+            });
+        } else {
+            const currentSelectionInt = parseInt(currentSelection);
+            newNode = {
+                name: nodeName,
+                id: newId,
+                parentId: currentSelectionInt,
+            };
 
-        setTagState({
-            map: tagState.map.set(newId, newNode),
-            rootIds: [...tagState.rootIds, ...[newId]],
-        });
+            const parent = tagState.map.get(currentSelectionInt);
+            const updatedParent: TagTree = {
+                name: (parent as TagTree).name,
+                id: (parent as TagTree).id,
+                childrenIds: [
+                    ...((parent as TagTree)
+                        .childrenIds as ReadonlyArray<number>),
+                    ...[newId],
+                ],
+            };
+            setTagState({
+                map: tagState.map
+                    .set(currentSelectionInt, updatedParent)
+                    .set(newId, newNode),
+                rootIds: tagState.rootIds,
+            });
+        }
 
         setNewTagName('');
     };
@@ -68,6 +94,10 @@ export default function Tags(): JSX.Element {
             <TreeView
                 defaultCollapseIcon={<ExpandMoreIcon />}
                 defaultExpandIcon={<ChevronRightIcon />}
+                selected={currentSelection}
+                onNodeSelect={(_0: unknown, value: string) =>
+                    setCurrentSelection(value)
+                }
             >
                 {tagState.rootIds.map((id) => {
                     console.log(tagState.map.get(id));
