@@ -7,7 +7,7 @@ import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import * as TagData from '../temp_data/tree';
-import { TagTree, TagState } from '../temp_data/tree'; //add TagState back in
+import { TagTree, TagState } from '../temp_data/tree';
 import { TextField, Button } from '@material-ui/core';
 // import FormButton from './formButton';
 
@@ -19,7 +19,6 @@ export default function Tags(): JSX.Element {
     const [tagState, setTagState] = useState<TagState>(TagData.dummyTree);
     const [currentSelection, setCurrentSelection] = useState<string>('');
     const [newTagName, setNewTagName] = useState<string>('');
-    // const tagState = TagData.dummyTree;
 
     const renderTree = (nodes: TagTree) => (
         <TreeItem
@@ -27,7 +26,7 @@ export default function Tags(): JSX.Element {
             nodeId={nodes.id.toString()}
             label={nodes.name}
         >
-            {console.log(nodes.name)}
+            {/* {console.log(nodes.name)} */}
             {Array.isArray(nodes.childrenIds)
                 ? nodes.childrenIds.map((childrenId) =>
                       renderTree(tagState.map.get(childrenId) as TagTree),
@@ -61,8 +60,10 @@ export default function Tags(): JSX.Element {
                 name: (parent as TagTree).name,
                 id: (parent as TagTree).id,
                 childrenIds: [
-                    ...((parent as TagTree)
-                        .childrenIds as ReadonlyArray<number>),
+                    ...((parent as TagTree).childrenIds
+                        ? ((parent as TagTree)
+                              .childrenIds as ReadonlyArray<number>)
+                        : []),
                     ...[newId],
                 ],
             };
