@@ -10,7 +10,7 @@ export type Tag = {
     readonly name: string;
     readonly id: number;
     readonly parentId?: number;
-    readonly childIds?: ReadonlyArray<number>;
+    readonly childIds: ReadonlyArray<number>;
 };
 
 export type TagState = {

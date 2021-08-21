@@ -15,7 +15,8 @@ import {
     updateTagAction,
     deleteTagAction,
 } from '../../redux/tags/action';
-import Tags from '../../components/tags';
+import TagTreeView from '../../components/tags/tagTreeView';
+import TagActionPanel from '../../components/tags/tagActionPanel';
 
 // ===================================================================
 //                            Component
@@ -69,7 +70,8 @@ function Tag(props: TagProps) {
             <NavBreadcrumbs></NavBreadcrumbs>
             <main>
                 <h1 className={styles.title}>Tags!</h1>
-                <Tags></Tags>
+                <TagTreeView tags={props.tag}></TagTreeView>
+                <TagActionPanel tags={props.tag}></TagActionPanel>
             </main>
         </PageLayout>
     );

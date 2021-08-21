@@ -28,6 +28,7 @@ function tagFromResponse(resp: TagResponse): Tag {
         id: resp.id,
         name: resp.name,
         parentId: resp.parent_id,
+        childIds: [], // FIXME
     };
 }
 
