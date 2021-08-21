@@ -67,6 +67,7 @@ describe('createTagAction()', () => {
             tag: {
                 name: 'test tag',
                 id: 42,
+                childIds: [],
             },
             authHeaders: {
                 'access-token': '-MW9nVhXviMt83nlYQU9yw',
@@ -102,6 +103,7 @@ describe('updateTagAction()', () => {
             tag: {
                 name: 'test tag',
                 id: 42,
+                childIds: [],
             },
             authHeaders: {
                 'access-token': '-MW9nVhXviMt83nlYQU9yw',
@@ -137,6 +139,7 @@ describe('deleteTagAction()', () => {
             tag: {
                 name: 'test tag',
                 id: 42,
+                childIds: [],
             },
             authHeaders: {
                 'access-token': '-MW9nVhXviMt83nlYQU9yw',

@@ -21,10 +21,12 @@ describe('tag reducer', () => {
                     {
                         name: 'New Category 0',
                         id: 42,
+                        childIds: [],
                     },
                     {
                         name: 'New Category 1',
                         id: 256,
+                        childIds: [],
                     },
                 ],
                 authHeaders: {
@@ -42,10 +44,12 @@ describe('tag reducer', () => {
                 '42': {
                     name: 'New Category 0',
                     id: 42,
+                    childIds: [],
                 },
                 '256': {
                     name: 'New Category 1',
                     id: 256,
+                    childIds: [],
                 },
             },
             rootIds: [42, 256],
@@ -61,6 +65,7 @@ describe('tag reducer', () => {
                 tag: {
                     name: 'New Name',
                     id: 2,
+                    childIds: [],
                 },
                 authHeaders: {
                     'access-token': '-MW9nVhXviMt83nlYQU9yw',
@@ -77,6 +82,7 @@ describe('tag reducer', () => {
                 '2': {
                     name: 'New Name',
                     id: 2,
+                    childIds: [],
                 },
             },
             rootIds: [2],
@@ -91,6 +97,7 @@ describe('tag reducer', () => {
                 '42': {
                     id: 42,
                     name: 'Boring name',
+                    childIds: [],
                 },
             },
             rootIds: [42],
@@ -103,6 +110,7 @@ describe('tag reducer', () => {
                     name: 'Cool Name!',
                     id: 42,
                     parentId: 9001,
+                    childIds: [],
                 },
                 authHeaders: {
                     'access-token': '-MW9nVhXviMt83nlYQU9yw',
@@ -120,6 +128,7 @@ describe('tag reducer', () => {
                     name: 'Cool Name!',
                     id: 42,
                     parentId: 9001,
+                    childIds: [],
                 },
             },
             rootIds: [],
@@ -136,6 +145,7 @@ describe('tag reducer', () => {
                     name: 'New Name',
                     id: 42, // Doesn't exist in testState
                     parentId: 9001,
+                    childIds: [],
                 },
                 authHeaders: {
                     'access-token': '-MW9nVhXviMt83nlYQU9yw',
@@ -158,6 +168,7 @@ describe('tag reducer', () => {
                 '42': {
                     id: 42,
                     name: 'Delete me',
+                    childIds: [],
                 },
             },
             rootIds: [42],
@@ -169,6 +180,7 @@ describe('tag reducer', () => {
                 tag: {
                     id: 42,
                     name: 'Delete me',
+                    childIds: [],
                 },
                 authHeaders: {
                     'access-token': '-MW9nVhXviMt83nlYQU9yw',
@@ -191,6 +203,7 @@ describe('tag reducer', () => {
                 tag: {
                     name: 'bad',
                     id: 42,
+                    childIds: [],
                 },
                 authHeaders: {
                     'access-token': '-MW9nVhXviMt83nlYQU9yw',
@@ -212,6 +225,7 @@ describe('tag reducer', () => {
                 tag: {
                     name: 'bad',
                     id: 42,
+                    childIds: [],
                 },
                 authHeaders: {
                     'access-token': '-MW9nVhXviMt83nlYQU9yw',

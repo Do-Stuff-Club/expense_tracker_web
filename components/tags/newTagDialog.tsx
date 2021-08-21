@@ -12,9 +12,7 @@ import {
 } from '@material-ui/core';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
-import { Tag, TagState } from '../../redux/tags/types';
 import * as Yup from 'yup';
-import { createTagCall } from '../../api/tag/call';
 
 // ===================================================================
 //                            Component
@@ -33,7 +31,7 @@ type NewTagDialogProps = {
  */
 export default function NewTagDialog(props: NewTagDialogProps): JSX.Element {
     const [open, setOpen] = useState<boolean>(false);
-    const [tagName, setTagName] = useState<string>('');
+    //const [tagName, setTagName] = useState<string>('');
 
     const handleClose = () => {
         setOpen(false);
