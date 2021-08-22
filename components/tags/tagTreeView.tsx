@@ -30,7 +30,7 @@ function renderTagTree(tag: Tag, state: TagState): JSX.Element {
 // ===================================================================
 type TagTreeViewProps = {
     tags: TagState;
-    onSelect?: (tag: Tag) => void;
+    onSelect?: (tag?: Tag) => void;
 };
 
 /**
@@ -50,8 +50,23 @@ export default function TagTreeView(props: TagTreeViewProps): JSX.Element {
     ) => {
         const tag = props.tags.map[parseInt(nodeIds)];
         if (tag != undefined) {
-            if (props.onSelect != undefined) props.onSelect(tag);
-            setSelectedTag(tag);
+            let nextTag: Tag | undefined;
+
+            // Compute next tag
+            if (selectedTag && tag.id == selectedTag.id) {
+                // Unselect tag if it's already selected
+                nextTag = undefined;
+            } else {
+                // Otherwise, use found tag
+                nextTag = tag;
+            }
+
+            setSelectedTag(nextTag);
+
+            // If onSelect is provided, call it
+            if (props.onSelect) props.onSelect(nextTag);
+        } else {
+            //FIXME throw error
         }
     };
     return (

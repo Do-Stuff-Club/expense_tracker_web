@@ -5,7 +5,7 @@ import { RootState } from '../../redux/store';
 import { connect, ConnectedProps } from 'react-redux';
 import styles from '../../styles/Home.module.css';
 import withAuth from '../../components/withAuthentication';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PageLayout from '../../components/pageLayout';
 import NavBreadcrumbs from '../../components/navBreadcrumbs';
 import { getTagsCall } from '../../api/tag/call';
@@ -17,6 +17,8 @@ import {
 } from '../../redux/tags/action';
 import TagTreeView from '../../components/tags/tagTreeView';
 import TagActionPanel from '../../components/tags/tagActionPanel';
+import { Tag } from '../../redux/tags/types';
+import Debug from '../../components/debug';
 
 // ===================================================================
 //                            Component
@@ -37,7 +39,7 @@ const dispatchToProps = {
 
 const connector = connect(stateToProps, dispatchToProps);
 type ReduxProps = ConnectedProps<typeof connector>;
-type TagProps = ReduxProps;
+export type TagProps = ReduxProps;
 
 /**
  * Tag Index Page. Displays all categories and their tags. Has links to create and edit categories.
@@ -45,7 +47,7 @@ type TagProps = ReduxProps;
  * @param {TagProps} props - Props from Redux state
  * @returns {Element} Page element
  */
-function Tag(props: TagProps) {
+function TagIndex(props: TagProps) {
     useEffect(() => {
         getTagsCall({
             headers: props.user.authHeaders,
@@ -55,26 +57,28 @@ function Tag(props: TagProps) {
         );
     }, []); // Pass an empty array so it only fires once
 
-    // const onDelete = (id: number) => {
-    //     deleteTagCall({
-    //         id: id,
-    //         headers: props.user.authHeaders,
-    //     }).then(
-    //         (data) => props.deleteTagAction(data),
-    //         (error) => console.log(error),
-    //     );
-    // };
+    const [selectedTag, setSelectedTag] = useState<Tag | undefined>(undefined);
 
     return (
         <PageLayout pageName='My Tags'>
             <NavBreadcrumbs></NavBreadcrumbs>
             <main>
                 <h1 className={styles.title}>Tags!</h1>
-                <TagTreeView tags={props.tag}></TagTreeView>
-                <TagActionPanel tags={props.tag}></TagActionPanel>
+                <TagTreeView
+                    tags={props.tag}
+                    onSelect={(tag) => {
+                        console.log(tag);
+                        setSelectedTag(tag);
+                    }}
+                ></TagTreeView>
+                <TagActionPanel
+                    selectedTag={selectedTag}
+                    {...props}
+                ></TagActionPanel>
+                <Debug />
             </main>
         </PageLayout>
     );
 }
 
-export default connector(withAuth(Tag));
+export default connector(withAuth(TagIndex));

@@ -26,6 +26,7 @@ export type TagResponse = {
     parent_id?: number;
     created_at: string;
     updated_at: string;
+    children_ids: ReadonlyArray<number>;
 };
 
 export type AllTagsData = {

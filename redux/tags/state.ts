@@ -24,6 +24,15 @@ export const setTagInState = produce((draft: TagState, tag: Tag) => {
     const castedDraft = castDraft(draft);
     castedDraft.map[tag.id] = castDraft(tag);
 
+    // FIXME clean up this mess
+    if (
+        tag.parentId && // Check that tag has parent
+        castedDraft.map[tag.parentId] && // Check that parent is not null (due to bug in server closure_tree plugin)
+        !castedDraft.map[tag.parentId].childIds.includes(tag.id) // Check to update the parent when creating a child tag
+    ) {
+        castedDraft.map[tag.parentId].childIds.push(tag.id);
+    }
+
     if (tag.parentId == undefined && !castedDraft.rootIds.includes(tag.id)) {
         castedDraft.rootIds.push(tag.id);
     }

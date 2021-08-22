@@ -28,7 +28,7 @@ function tagFromResponse(resp: TagResponse): Tag {
         id: resp.id,
         name: resp.name,
         parentId: resp.parent_id,
-        childIds: [], // FIXME
+        childIds: resp.children_ids ? resp.children_ids : [],
     };
 }
 
@@ -120,7 +120,7 @@ export async function createTagCall(
             tag: tag,
         });
     } catch (error) {
-        return Promise.resolve(error);
+        return Promise.reject(error);
     }
 }
 
