@@ -1,4 +1,10 @@
-.textField p {
+.textField {
+    display: inline-grid;
+    grid-template-columns: 1fr;
+    row-gap: 0.5em;
+}
+
+.textField label {
     text-align: left;
     color: white;
 }
@@ -15,8 +21,15 @@
     -webkit-transition: 0.5s;
     transition: 0.5s;
     outline: none;
+    text-align: center;
 }
 
 .textField input:focus {
     border: 2px solid #98a5f3;
+}
+
+.formErrors {
+    display: block;
+    color: red;
+    font-size: 7px;
 }
