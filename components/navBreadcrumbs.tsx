@@ -20,10 +20,10 @@ export default function NavBreadcrumbs(): JSX.Element {
             <Link href='/dashboard'>
                 <a>Dashboard</a>
             </Link>
-            <Link href='/category'>
+            <Link href='/tags'>
                 <a>Tags</a>
             </Link>
-            <Link href='/expense'>
+            <Link href='/expenses'>
                 <a>Expenses</a>
             </Link>
         </Breadcrumbs>

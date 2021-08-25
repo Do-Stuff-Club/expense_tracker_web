@@ -1,53 +1,67 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import { AuthHeaders } from '../user/types';
 
-export interface Tag {
-    name: string;
-    id: number;
-    category_id: number; // ID of its parent category
-}
+// ===================================================================
+//                              State
+// ===================================================================
+export type Tag = {
+    readonly name: string;
+    readonly id: number;
+    readonly parentId?: number;
+    readonly childIds: ReadonlyArray<number>;
+};
 
-export interface Category {
-    name: string;
-    id: number;
-    required: boolean;
-    tags: ReadonlyArray<Tag>;
-}
+export type TagState = {
+    readonly map: Record<number, Tag>;
+    readonly rootIds: ReadonlyArray<number>;
+};
 
-export interface TagState {
-    categories: ReadonlyArray<Category>;
-}
-
+// ===================================================================
+//                             Actions
+// ===================================================================
 export enum TagActionTypes {
-    UPDATE_ALL_CATEGORIES = 'update_all_categories',
-    UPDATE_ONE_CATEGORY = 'update_one_category',
-    CREATE_CATEGORY = 'create_category',
+    FETCH_TAGS = 'fetch_tags',
+    CREATE_TAG = 'create_tag',
+    UPDATE_TAG = 'update_tag',
+    DELETE_TAG = 'delete_tag',
 }
 
-export interface UpdateAllCategoriesAction {
-    type: TagActionTypes.UPDATE_ALL_CATEGORIES;
+export type FetchTagsAction = {
+    type: TagActionTypes.FETCH_TAGS;
     payload: {
-        categories: ReadonlyArray<Category>;
+        tags: ReadonlyArray<Tag>;
         authHeaders: AuthHeaders;
     };
-}
+};
 
-export interface UpdateOneCategoryAction {
-    type: TagActionTypes.UPDATE_ONE_CATEGORY;
+export type CreateTagAction = {
+    type: TagActionTypes.CREATE_TAG;
     payload: {
-        category: Category;
+        tag: Tag;
         authHeaders: AuthHeaders;
     };
-}
+};
 
-export interface CreateCategoryAction {
-    type: TagActionTypes.CREATE_CATEGORY;
+export type UpdateTagAction = {
+    type: TagActionTypes.UPDATE_TAG;
     payload: {
-        category: Category;
+        tag: Tag;
         authHeaders: AuthHeaders;
     };
-}
+};
+
+export type DeleteTagAction = {
+    type: TagActionTypes.DELETE_TAG;
+    payload: {
+        tag: Tag;
+        authHeaders: AuthHeaders;
+    };
+};
 
 export type TagAction =
-    | UpdateAllCategoriesAction
-    | UpdateOneCategoryAction
-    | CreateCategoryAction;
+    | FetchTagsAction
+    | CreateTagAction
+    | UpdateTagAction
+    | DeleteTagAction;

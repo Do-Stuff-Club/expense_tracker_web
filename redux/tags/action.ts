@@ -1,46 +1,66 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../store';
 import { TagActionTypes } from './types';
-import { AllCategoriesData, OneCategoryData } from '../../api/tag/types';
+import { AllTagsData, OneTagData } from '../../api/tag/types';
 
-export const updateAllCategoriesAction = (
-    data: AllCategoriesData,
+// ===================================================================
+//                             Actions
+// ===================================================================
+export const fetchTagsAction = (
+    data: AllTagsData,
 ): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
     dispatch,
 ) => {
     dispatch({
-        type: TagActionTypes.UPDATE_ALL_CATEGORIES,
+        type: TagActionTypes.FETCH_TAGS,
         payload: {
-            categories: data.categories,
+            tags: data.tags,
             authHeaders: data.authHeaders,
         },
     });
 };
 
-export const updateOneCategoryAction = (
-    data: OneCategoryData,
+export const createTagAction = (
+    data: OneTagData,
 ): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
     dispatch,
 ) => {
     dispatch({
-        type: TagActionTypes.UPDATE_ONE_CATEGORY,
+        type: TagActionTypes.CREATE_TAG,
         payload: {
-            category: data.category,
+            tag: data.tag,
             authHeaders: data.authHeaders,
         },
     });
 };
 
-export const createCategoryAction = (
-    data: OneCategoryData,
+export const updateTagAction = (
+    data: OneTagData,
 ): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
     dispatch,
 ) => {
     dispatch({
-        type: TagActionTypes.CREATE_CATEGORY,
+        type: TagActionTypes.UPDATE_TAG,
         payload: {
-            category: data.category,
+            tag: data.tag,
+            authHeaders: data.authHeaders,
+        },
+    });
+};
+
+export const deleteTagAction = (
+    data: OneTagData,
+): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
+    dispatch,
+) => {
+    dispatch({
+        type: TagActionTypes.DELETE_TAG,
+        payload: {
+            tag: data.tag,
             authHeaders: data.authHeaders,
         },
     });

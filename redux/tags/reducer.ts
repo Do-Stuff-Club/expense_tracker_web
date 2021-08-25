@@ -1,8 +1,10 @@
-import { TagAction, TagActionTypes, TagState } from './types';
-
-export const defaultTagState: TagState = {
-    categories: [],
-};
+import {
+    containsId,
+    defaultTagState,
+    removeTagInState,
+    setTagInState,
+} from './state';
+import { TagState, TagAction, TagActionTypes } from './types';
 
 /**
  * Redux reducer for tag slice. Actions include:
@@ -19,21 +21,18 @@ export default function tag(
     action: TagAction,
 ): TagState {
     switch (action.type) {
-        case TagActionTypes.UPDATE_ALL_CATEGORIES:
-            return { categories: action.payload.categories };
-        case TagActionTypes.UPDATE_ONE_CATEGORY:
-            // Replace the edited category
-            return {
-                categories: state.categories.map((category) => {
-                    if (category.id == action.payload.category.id)
-                        return action.payload.category;
-                    else return category;
-                }),
-            };
-        case TagActionTypes.CREATE_CATEGORY:
-            return {
-                categories: [...state.categories, action.payload.category],
-            };
+        case TagActionTypes.FETCH_TAGS:
+            return action.payload.tags.reduce(setTagInState, defaultTagState);
+        case TagActionTypes.CREATE_TAG:
+            if (!containsId(state, action.payload.tag.id))
+                return setTagInState(state, action.payload.tag);
+            else return state;
+        case TagActionTypes.UPDATE_TAG:
+            if (containsId(state, action.payload.tag.id))
+                return setTagInState(state, action.payload.tag);
+            else return state;
+        case TagActionTypes.DELETE_TAG:
+            return removeTagInState(state, action.payload.tag);
         default:
             return state;
     }
