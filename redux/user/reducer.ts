@@ -24,12 +24,10 @@ export default function user(
     state = defaultUserState,
     action: UserAction,
 ): UserState {
-    console.log('In User Reducer');
     switch (action.type) {
         case UserActionTypes.LOGIN:
             return action.payload;
         default:
-            console.log(action);
             return state;
     }
 }

@@ -3,6 +3,7 @@
 // ===================================================================
 import React from 'react';
 import { Button, ButtonProps, makeStyles } from '@material-ui/core';
+import styles from './formButton.module.css';
 
 // ===================================================================
 //                             Styling
@@ -40,13 +41,16 @@ const buttonStyling = makeStyles(
 export default function FormButton(props: ButtonProps): JSX.Element {
     const buttonStyles = buttonStyling();
 
+    const classes = [styles.formButton];
+
+    if (props.variant === 'text') classes.push(buttonStyles.textPrimary);
+    else classes.push(buttonStyles.outlinedPrimary);
+
+    if (props.className) classes.push(props.className);
+
     return (
         <Button
-            className={
-                props.variant === 'text'
-                    ? buttonStyles.textPrimary
-                    : buttonStyles.outlinedPrimary
-            }
+            className={classes.join(' ')}
             color='primary'
             variant={props.variant ? props.variant : 'outlined'}
             href={props.href ? props.href : ''}
