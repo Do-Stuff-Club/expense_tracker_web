@@ -7,7 +7,7 @@ import {
 import { RootState } from '../../../redux/store';
 import { connect, ConnectedProps } from 'react-redux';
 import PageLayout from '../../../components/pageLayout';
-import { Button, Card, Grid, List, Switch, TextField } from '@material-ui/core';
+import { Card, Grid, TextField } from '@material-ui/core';
 import withAuth from '../../../components/withAuthentication';
 
 // Date Picker
@@ -31,6 +31,12 @@ const connector = connect(stateToProps, {
 type ReduxProps = ConnectedProps<typeof connector>;
 type EditExpenseProps = ReduxProps;
 
+/**
+ * Expense Edit Page. Lets users edit an individual expense.
+ *
+ * @param {EditExpenseProps} props - Props from Redux state
+ * @returns {Element} Page element
+ */
 function EditExpense(props: EditExpenseProps) {
     const [, setExpenseName] = useState<string>('');
     const [, setExpenseCost] = useState<number>(0.0);

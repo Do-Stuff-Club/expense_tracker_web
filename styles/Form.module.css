@@ -4,6 +4,10 @@
     text-align: center;
 }
 
+.tagsContainer {
+    padding: 3px;
+}
+
 .formText {
     display: block;
 }

@@ -4,6 +4,14 @@ export const defaultExpenseState: ExpenseState = {
     expenses: [],
 };
 
+/**
+ * Redux reducer for expense slice. Actions include:
+ * FIXME
+ *
+ * @param {ExpenseState} state - the current tag state in the Redux store
+ * @param {ExpenseAction} action - the action object to execute
+ * @returns {ExpenseState} the new expense state
+ */
 export default function expense(
     state = defaultExpenseState,
     action: ExpenseAction,

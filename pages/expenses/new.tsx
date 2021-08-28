@@ -11,7 +11,6 @@ import Link from 'next/link';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
-import { updateAllCategoriesAction } from '../../redux/tags/action';
 import {
     createExpenseAction,
     updateAllExpensesAction,
@@ -31,7 +30,11 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 import { getTagsCall } from '../../api/tag/call';
+import { fetchTagsAction } from '../../redux/tags/action';
 
+// ===================================================================
+//                            Component
+// ===================================================================
 const stateToProps = (state: RootState) => ({
     auth: {
         loggedIn: state.user.loggedIn,
@@ -39,20 +42,25 @@ const stateToProps = (state: RootState) => ({
     ...state,
 });
 const connector = connect(stateToProps, {
-    updateAllCategoriesAction,
+    fetchTagsAction,
     updateAllExpensesAction,
     createExpenseAction,
 });
 type ReduxProps = ConnectedProps<typeof connector>;
 type NewExpenseProps = ReduxProps;
 
+/**
+ * New Expense Page. Lets users create new expenses.
+ *
+ * @param {NewExpenseProps} props - Props from Redux state
+ * @returns {Element} Page element
+ */
 function NewExpense(props: NewExpenseProps) {
     useEffect(() => {
         getTagsCall({
-            user_id: props.user.id,
             headers: props.user.authHeaders,
         }).then(
-            (data) => props.updateAllCategoriesAction(data),
+            (data) => props.fetchTagsAction(data),
             (error) => console.log(error),
         );
     }, []); // Pass an empty array so it only fires once
@@ -69,14 +77,15 @@ function NewExpense(props: NewExpenseProps) {
     const [selectedDate, setSelectedDate] = useState<Date | null>(currentDate);
     const [link, setLink] = useState<string>('');
     // Tags
-    const [currentTagArray, setCurrentTagArray] = useState<Array<string>>([]);
+    const [currentTagArray] = useState<Array<string>>([]);
     const [selectedTagArray, setSelectedTagArray] = useState<Array<string>>([]);
 
     // Categories
     const [selectedCategory, setSelectedCategory] = useState<Array<string>>([]);
-    const currentCategoryArray = Array.from(
-        new Set(props.tag.categories.map((category) => category.name)),
-    );
+    const currentCategoryArray: Array<string> = [];
+    // const currentCategoryArray = Array.from(
+    //     new Set(props.tag.categories.map((category) => category.name)),
+    // );
     // const [newTagName, setNewTagName] = useState<string>("");
     // const [newTagHasError, setNewTagHasError] = useState<boolean>(false);
     // const [newTagErrorMessage, setNewTagErrorMessage] = useState<string>("");

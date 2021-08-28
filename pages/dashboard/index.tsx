@@ -1,3 +1,6 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -6,6 +9,9 @@ import withAuth from '../../components/withAuthentication';
 import PageLayout from '../../components/pageLayout';
 import NavBreadcrumbs from '../../components/navBreadcrumbs';
 
+// ===================================================================
+//                            Component
+// ===================================================================
 const stateToProps = (state: RootState) => ({
     auth: {
         loggedIn: state.user.loggedIn,
@@ -14,6 +20,11 @@ const stateToProps = (state: RootState) => ({
 });
 const connector = connect(stateToProps, {});
 
+/**
+ * Dashboard page component. Has helpful displays for various stats
+ *
+ * @returns {Element} Page element
+ */
 function Dashboard() {
     return (
         <PageLayout pageName='Dashboard'>

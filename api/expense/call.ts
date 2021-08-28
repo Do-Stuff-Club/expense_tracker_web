@@ -16,6 +16,12 @@ import { TagResponse } from '../tag/types';
 //====================================================
 // Export Functions
 
+/**
+ * API call to fetch all expense information.
+ *
+ * @param {GetExpenseParams} params - input parameters from the page
+ * @returns {Promise<AllExpensesData>} promise with data to send to Redux, if successful.
+ */
 export async function getExpensesCall(
     params: GetExpenseParams,
 ): Promise<AllExpensesData> {
@@ -34,6 +40,7 @@ export async function getExpensesCall(
                     (tag: TagResponse) => ({
                         id: tag.id,
                         name: tag.name,
+                        childIds: [],
                     }),
                 );
                 return {
@@ -61,8 +68,12 @@ export async function getExpensesCall(
     }
 }
 
-//===========================================================
-
+/**
+ * API call to create a new expense.
+ *
+ * @param {CreateExpenseParams} params - input parameters from the page
+ * @returns {Promise<OneExpenseData>} promise with data to send to Redux, if successful.
+ */
 export async function createExpenseCall(
     params: CreateExpenseParams,
 ): Promise<OneExpenseData> {
@@ -102,6 +113,7 @@ export async function createExpenseCall(
         const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
             id: tag.id,
             name: tag.name,
+            childIds: [],
         }));
         const expense = {
             id: obj.id,
@@ -126,8 +138,12 @@ export async function createExpenseCall(
     }
 }
 
-//=======================================================
-
+/**
+ * API call to delete an expense.
+ *
+ * @param {DeleteExpenseParams} params - input parameters from the page
+ * @returns {Promise<AllExpensesData>} promise with data to send to Redux, if successful.
+ */
 export async function deleteExpenseCall(
     params: DeleteExpenseParams,
 ): Promise<AllExpensesData> {
@@ -145,6 +161,7 @@ export async function deleteExpenseCall(
                     (tag: TagResponse) => ({
                         id: tag.id,
                         name: tag.name,
+                        childIds: [],
                     }),
                 );
                 return {
@@ -172,8 +189,12 @@ export async function deleteExpenseCall(
     }
 }
 
-//========================================
-
+/**
+ * API call to update an expense.
+ *
+ * @param {UpdateExpenseParams} params - input parameters from the page
+ * @returns {Promise<AllExpensesData>} promise with data to send to Redux, if successful.
+ */
 export async function updateExpenseCall(
     params: UpdateExpenseParams,
 ): Promise<AllExpensesData> {
@@ -211,6 +232,7 @@ export async function updateExpenseCall(
                     (tag: TagResponse) => ({
                         id: tag.id,
                         name: tag.name,
+                        childIds: [],
                     }),
                 );
                 return {

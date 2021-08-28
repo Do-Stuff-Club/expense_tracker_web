@@ -7,7 +7,7 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import FormButton from '../components/formButton';
 
-import TestComponent from '../components/test';
+import TestComponent from '../components/debug';
 import PageLayout from '../components/pageLayout';
 import { newUserCall } from '../api/user/call';
 import { loginAction } from '../redux/user/action';
@@ -32,6 +32,12 @@ type FormikFields = {
     password_confirmation: string;
 };
 
+/**
+ * Sign up page component. Contans a form for registering new users.
+ *
+ * @param {SignUpProps} props - Props from Redux state
+ * @returns {Element} Page element
+ */
 export function SignUp(props: SignUpProps): JSX.Element {
     const validate = (values: FormikFields) => {
         const errors: {

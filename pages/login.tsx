@@ -9,7 +9,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import FormButton from '../components/formButton';
 
 import { loginAction } from '../redux/user/action';
-import TestComponent from '../components/test';
+import TestComponent from '../components/debug';
 import PageLayout from '../components/pageLayout';
 import { loginCall } from '../api/user/call';
 import styles from '../styles/Form.module.css';
@@ -31,6 +31,12 @@ type FormikState = {
     password: string;
 };
 
+/**
+ * Login page component. Contains a form for logging in.
+ *
+ * @param {LoginProps} props - Props from Redux state
+ * @returns {Element} Page element
+ */
 function Login(props: LoginProps) {
     const validate = (values: FormikState) => {
         const errors: {

@@ -19,6 +19,14 @@ export interface ExpenseViewProps {
     onDelete: () => void;
 }
 
+/**
+ * React component that renders Expenses.
+ *
+ * FIXME add a bit more detail as needed as you develop this
+ *
+ * @param {ExpenseViewProps} props - React properties for ExpenseView
+ * @returns {Element} a list view of all tags
+ */
 export default function ExpenseView(props: ExpenseViewProps): JSX.Element {
     const [open, setOpen] = React.useState(true);
 

@@ -1,15 +1,14 @@
+import { Button } from '@material-ui/core';
 import Link from 'next/link';
-import { RootState } from '../../redux/store';
+import React, { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import styles from '../../styles/Home.module.css';
+import { RootState } from '../../redux/store';
 import withAuth from '../../components/withAuthentication';
-import React, { useEffect } from 'react';
-import { updateAllCategoriesAction } from '../../redux/tags/action';
-import { Button } from '@material-ui/core';
 import PageLayout from '../../components/pageLayout';
+import { updateAllExpensesAction } from '../../redux/expenses/action';
+import { deleteExpenseCall, getExpensesCall } from '../../api/expense/call';
 import NavBreadcrumbs from '../../components/navBreadcrumbs';
-import IconButton from '@material-ui/core/IconButton';
-import { deleteCategoryCall, getTagsCall } from '../../api/tag/call';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -19,7 +18,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 
+// ===================================================================
+//                            Component
+// ===================================================================
 const stateToProps = (state: RootState) => ({
     auth: {
         loggedIn: state.user.loggedIn,
@@ -28,69 +31,84 @@ const stateToProps = (state: RootState) => ({
 });
 
 const dispatchToProps = {
-    updateAllCategoriesAction,
+    updateAllExpensesAction,
 };
 
 const connector = connect(stateToProps, dispatchToProps);
 type ReduxProps = ConnectedProps<typeof connector>;
-type TagProps = ReduxProps;
+type ExpensesProps = ReduxProps;
 
-function Tag(props: TagProps) {
+/**
+ * Expense Index Page. Displays all expenses. Has links to create and edit expenses.
+ *
+ * @param {ExpensesProps} props - Props from Redux state
+ * @returns {Element} Page element
+ */
+function Expenses(props: ExpensesProps) {
     useEffect(() => {
-        getTagsCall({
+        getExpensesCall({
             user_id: props.user.id,
             headers: props.user.authHeaders,
         }).then(
-            (data) => props.updateAllCategoriesAction(data),
+            (data) => props.updateAllExpensesAction(data),
             (error) => console.log(error),
         );
-    }, []); // Pass an empty array so it only fires once
+    }, []); // Empty array so only fires once
 
     const onDelete = (id: number) => {
-        deleteCategoryCall({
+        deleteExpenseCall({
             id: id,
             headers: props.user.authHeaders,
         }).then(
-            (data) => props.updateAllCategoriesAction(data),
+            (data) => props.updateAllExpensesAction(data),
             (error) => console.log(error),
         );
     };
 
     return (
-        <PageLayout pageName='My Tags'>
-            <NavBreadcrumbs></NavBreadcrumbs>
+        <PageLayout pageName='My Expenses'>
+            Here be expenses
             <main>
-                <h1 className={styles.title}>Tags!</h1>
-                <Link href='/category/new' passHref>
-                    <Button variant='contained'>New Category</Button>
+                <NavBreadcrumbs></NavBreadcrumbs>
+                <h1 className={styles.title}>Expenses!</h1>
+                <Link href='/expense/new' passHref>
+                    <Button variant='contained'>New Expense</Button>
                 </Link>
                 <TableContainer component={Paper}>
                     <Table aria-label='simple table'>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Category</TableCell>
-                                <TableCell align='right'>Required?</TableCell>
+                                <TableCell>Expense</TableCell>
+                                <TableCell align='right'>Date</TableCell>
+                                <TableCell align='right'>Cost</TableCell>
+                                <TableCell align='right'>Link</TableCell>
                                 <TableCell align='left'>Tags</TableCell>
                                 <TableCell align='right'>Actions</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {props.tag.categories.map((category) => (
-                                <TableRow key={category.id}>
+                            {props.expense.expenses.map((expense) => (
+                                <TableRow key={expense.id}>
                                     <TableCell component='th' scope='row'>
-                                        {category.name}
+                                        {expense.name}
                                     </TableCell>
                                     <TableCell align='right'>
-                                        {JSON.stringify(category.required)}
+                                        {JSON.stringify(expense.date)}
+                                    </TableCell>
+                                    <TableCell align='right'>
+                                        {JSON.stringify(expense.cost)}
+                                    </TableCell>
+                                    <TableCell align='right'>
+                                        {JSON.stringify(expense.link)}
                                     </TableCell>
                                     <TableCell align='left'>
-                                        {JSON.stringify(category.tags)}
+                                        {JSON.stringify(expense.tags)}
                                     </TableCell>
                                     <TableCell align='right'>
                                         <Link
                                             href={
-                                                '/category/' +
-                                                category.id +
+                                                '/expense/' +
+                                                expense.id +
                                                 '/edit'
                                             }
                                             passHref
@@ -101,9 +119,7 @@ function Tag(props: TagProps) {
                                         </Link>
                                         <IconButton
                                             aria-label='Delete'
-                                            onClick={() =>
-                                                onDelete(category.id)
-                                            }
+                                            onClick={() => onDelete(expense.id)}
                                         >
                                             <DeleteIcon />
                                         </IconButton>
@@ -118,4 +134,4 @@ function Tag(props: TagProps) {
     );
 }
 
-export default connector(withAuth(Tag));
+export default connector(withAuth(Expenses));

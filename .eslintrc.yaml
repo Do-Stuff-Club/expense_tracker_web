@@ -1,9 +1,11 @@
 env:
     browser: true
     es2021: true
+    jest: true
 extends:
     - 'eslint:recommended'
     - 'plugin:react/recommended'
+    - 'plugin:jsdoc/recommended'
     - 'plugin:@typescript-eslint/recommended'
     - 'prettier'
 parser: '@typescript-eslint/parser'
@@ -14,4 +16,5 @@ parserOptions:
     sourceType: module
 plugins:
     - react
+    - jsdoc
     - '@typescript-eslint'
