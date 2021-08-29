@@ -11,6 +11,7 @@ import TestComponent from '../components/debug';
 import PageLayout from '../components/pageLayout';
 import { loginCall } from '../api/user/call';
 import LoginForm, { LoginFormState } from '../components/forms/loginForm';
+import styles from '../styles/Home.module.css';
 
 // ===================================================================
 //                            Component
@@ -49,8 +50,8 @@ function Login(props: LoginProps) {
     const router = useRouter();
 
     return (
-        <PageLayout pageName='Expense Tracker Login'>
-            <h1>Log In</h1>
+        <PageLayout pageName='Expense Tracker Login' center={true}>
+            <h1 className={styles.title}>Log In</h1>
             <LoginForm initialState={initialState} onSubmit={onSubmit} />
             <TestComponent></TestComponent>
         </PageLayout>

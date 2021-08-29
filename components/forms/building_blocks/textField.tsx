@@ -12,6 +12,7 @@ type TextFieldProps = {
     name: string;
     label: string;
     className?: string;
+    type?: string;
 };
 
 /**
