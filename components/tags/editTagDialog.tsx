@@ -8,7 +8,7 @@ import {
     DialogActions,
     Button,
 } from '@material-ui/core';
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 
@@ -20,11 +20,11 @@ type EditTagDialogProps = {
     name: string;
     handleClose: () => void;
     handleSubmit: (name: string) => void; //FIXME return error messages
-}
+};
 
 /**
- * React component for editing an existing tag. 
- * 
+ * React component for editing an existing tag.
+ *
  * @param {EditTagDialogProps} props - React properties for EditTagDialog
  * @returns {Element} a dialog box that lets you edit a single tag
  */
@@ -38,7 +38,7 @@ export default function EditTagDialog(props: EditTagDialogProps): JSX.Element {
             <DialogTitle id='form-dialog-title'>Edit Tag</DialogTitle>
             <DialogContent>
                 <Formik
-                    initialValues={{ name: props.name}}
+                    initialValues={{ name: props.name }}
                     validationSchema={Yup.object({
                         name: Yup.string().required('Name cannot be empty'),
                     })}
@@ -62,5 +62,5 @@ export default function EditTagDialog(props: EditTagDialogProps): JSX.Element {
                 </Button>
             </DialogActions>
         </Dialog>
-    )
+    );
 }

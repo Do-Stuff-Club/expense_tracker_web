@@ -11,7 +11,11 @@ import MoveIcon from '@material-ui/icons/ImportExport';
 import EditIcon from '@material-ui/icons/Edit';
 import NewTagDialog from './newTagDialog';
 import EditTagDialog from './editTagDialog';
-import { createTagCall, updateTagCall, deleteTagCall } from '../../api/tag/call';
+import {
+    createTagCall,
+    updateTagCall,
+    deleteTagCall,
+} from '../../api/tag/call';
 import { TagProps } from '../../pages/tags';
 
 // ===================================================================
@@ -76,7 +80,7 @@ export default function TagActionPanel(
                 <IconButton onClick={newTagHandleOpen}>
                     <AddIcon />
                 </IconButton>
-                <IconButton 
+                <IconButton
                     disabled={props.selectedTag == undefined}
                     onClick={editTagHandleOpen}
                 >
@@ -119,7 +123,7 @@ export default function TagActionPanel(
                 }}
             ></NewTagDialog>
             <EditTagDialog
-                name={ props.selectedTag ? props.selectedTag?.name : ""}
+                name={props.selectedTag ? props.selectedTag?.name : ''}
                 open={editTagOpen}
                 handleClose={editTagHandleClose}
                 handleSubmit={(name) => {
@@ -134,9 +138,8 @@ export default function TagActionPanel(
                         }).then(
                             (data) => props.updateTagAction(data),
                             (err) => console.log(err), //FIXME
-                        )
+                        );
                     }
-                    
                 }}
             ></EditTagDialog>
         </>
