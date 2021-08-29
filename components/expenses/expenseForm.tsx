@@ -3,65 +3,64 @@
 // ===================================================================
 import { Form, Formik } from 'formik';
 import React from 'react';
-import styles from './Form.module.css';
-import { FormProps } from './utils';
-import FormButton from './building_blocks/formButton';
-import TextField from './building_blocks/textField';
+import styles from '../forms/Form.module.css';
+import { FormProps } from '../forms/utils';
+import FormButton from '../forms/building_blocks/formButton';
+import TextField from '../forms/building_blocks/textField';
+import { Tag } from '../../redux/tags/types';
+import * as Yup from 'yup';
+import FormDatePicker from '../forms/building_blocks/datePicker';
 
 // ===================================================================
 //                         Helper Functions
 // ===================================================================
-export type LoginFormState = {
-    email: string;
-    password: string;
+export type ExpenseFormState = {
+    name: string;
+    price: number;
+    date: Date;
+    link: string;
+    tags: ReadonlyArray<Tag>;
 };
 
-type LoginFormErrors = Partial<LoginFormState>;
-
-/**
- * Helper function that analyzes the form's current state and returns a
- * formik errors object
- *
- * @param {LoginFormState} values - form's current state
- * @returns {LoginFormErrors} formik error object
- */
-function validate(values: LoginFormState): LoginFormErrors {
-    const errors: LoginFormErrors = {};
-
-    if (!values.email.includes('@')) {
-        errors.email = 'Not a valid email address';
-    }
-
-    return errors;
-}
 // ===================================================================
 //                            Component
 // ===================================================================
-type LoginFormProps = FormProps<LoginFormState>;
+type ExpenseFormProps = FormProps<ExpenseFormState>;
 
 /**
- * Login Form for use on the login page. Users login using their email
- * and password.
+ * Expense Form for creating/editing expenses.
  *
- * @param {LoginFormProps} props - for the component
- * @returns {Element} LoginForm element
+ * @param {ExpenseFormProps} props - for the component
+ * @returns {Element} ExpenseForm element
  */
-export default function LoginForm(props: LoginFormProps): JSX.Element {
+export default function ExpenseForm(props: ExpenseFormProps): JSX.Element {
     return (
         <Formik
             initialValues={props.initialState}
-            validate={validate}
+            validationSchema={Yup.object({
+                name: Yup.string().required('Name cannot be empty'),
+                price: Yup.number().required('Price cannot be empty'),
+                link: Yup.string(),
+                date: Yup.date().default(() => new Date()),
+                tags: Yup.array(),
+            })}
             onSubmit={props.onSubmit}
         >
             <Form noValidate className={styles.formContainer}>
                 <TextField
-                    name='email'
-                    label='Email'
+                    name='Name'
+                    label='name'
                     className={styles.textField}
                 />
                 <TextField
-                    name='password'
-                    label='Password'
+                    name='Price'
+                    label='price'
+                    className={styles.textField}
+                />
+                <FormDatePicker name='date' />
+                <TextField
+                    name='Link'
+                    label='link'
                     className={styles.textField}
                 />
                 <div

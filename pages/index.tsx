@@ -10,6 +10,7 @@ import React from 'react';
 import PageLayout from '../components/pageLayout';
 
 import Tags from '../components/tags';
+import ExpenseForm from '../components/expenses/expenseForm';
 
 // ===================================================================
 //                            Component
@@ -42,6 +43,18 @@ function Home() {
             </main>
 
             <Tags />
+            <ExpenseForm
+                initialState={{
+                    name: '',
+                    price: 0,
+                    date: new Date(),
+                    link: '',
+                    tags: [],
+                }}
+                onSubmit={() => {
+                    return;
+                }}
+            ></ExpenseForm>
         </PageLayout>
     );
 }

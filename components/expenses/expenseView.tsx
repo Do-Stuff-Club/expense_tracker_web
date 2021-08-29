@@ -1,4 +1,4 @@
-import { Expense } from '../redux/expenses/types';
+import { Expense } from '../../redux/expenses/types';
 import React from 'react';
 import Link from 'next/link';
 import EditIcon from '@material-ui/icons/Edit';
