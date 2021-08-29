@@ -65,6 +65,7 @@ export default function LoginForm(props: LoginFormProps): JSX.Element {
                 <TextField
                     name='password'
                     label='Password'
+                    type='password'
                     className={styles.textField}
                 />
                 <div

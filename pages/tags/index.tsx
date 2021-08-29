@@ -4,6 +4,7 @@
 import { RootState } from '../../redux/store';
 import { connect, ConnectedProps } from 'react-redux';
 import styles from '../../styles/Home.module.css';
+import tagStyles from './index.module.css';
 import withAuth from '../../components/withAuthentication';
 import React, { useEffect, useState } from 'react';
 import PageLayout from '../../components/pageLayout';
@@ -64,17 +65,23 @@ function TagIndex(props: TagProps) {
             <NavBreadcrumbs></NavBreadcrumbs>
             <main>
                 <h1 className={styles.title}>Tags!</h1>
-                <TagTreeView
-                    tags={props.tag}
-                    onSelect={(tag) => {
-                        console.log(tag);
-                        setSelectedTag(tag);
-                    }}
-                ></TagTreeView>
-                <TagActionPanel
-                    selectedTag={selectedTag}
-                    {...props}
-                ></TagActionPanel>
+                <div className={tagStyles.tagsPageContainer}>
+                    <div className={tagStyles.tagActionContainer}>
+                        <TagActionPanel
+                            selectedTag={selectedTag}
+                            {...props}
+                        ></TagActionPanel>
+                    </div>
+                    <div className={tagStyles.tagsContainer}>
+                        <TagTreeView
+                            tags={props.tag}
+                            onSelect={(tag) => {
+                                console.log(tag);
+                                setSelectedTag(tag);
+                            }}
+                        ></TagTreeView>
+                    </div>
+                </div>
                 <Debug />
             </main>
         </PageLayout>

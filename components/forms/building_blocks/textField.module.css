@@ -21,7 +21,7 @@
     -webkit-transition: 0.5s;
     transition: 0.5s;
     outline: none;
-    text-align: center;
+    text-align: left;
 }
 
 .textField input:focus {
