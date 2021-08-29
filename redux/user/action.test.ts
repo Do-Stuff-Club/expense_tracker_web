@@ -5,6 +5,7 @@ import { AnyAction } from 'redux';
 import configureMockStore from 'redux-mock-store';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 import { UserData } from '../../api/user/types';
+import { defaultExpenseState } from '../expenses/reducer';
 import { RootState } from '../store';
 import { defaultTagState } from '../tags/state';
 import { loginAction } from './action';
@@ -50,6 +51,7 @@ describe('loginAction', () => {
         const store = mockStore({
             user: defaultUserState,
             tag: defaultTagState,
+            expense: defaultExpenseState,
         });
         return store.dispatch(loginAction(testInput)).then(() => {
             expect(store.getActions()).toEqual(expectedActions);

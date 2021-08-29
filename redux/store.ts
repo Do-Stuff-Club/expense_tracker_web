@@ -6,21 +6,27 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import user, { defaultUserState } from './user/reducer';
 import { UserAction } from './user/types';
 import { TagAction } from './tags/types';
+import { ExpenseAction } from './expenses/types';
+import expense, { defaultExpenseState } from './expenses/reducer';
 import tag from './tags/reducer';
 import { defaultTagState } from './tags/state';
 
 const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
 
-const defaultState = { user: defaultUserState, tag: defaultTagState };
+const defaultState = {
+    user: defaultUserState,
+    tag: defaultTagState,
+    expense: defaultExpenseState,
+};
 
 type HydrateAction = {
     type: typeof HYDRATE;
     payload: RootState;
 };
 
-type AppAction = HydrateAction | UserAction | TagAction;
+type AppAction = HydrateAction | UserAction | TagAction | ExpenseAction;
 
-const combinedReducer = combineReducers({ user, tag });
+const combinedReducer = combineReducers({ user, tag, expense });
 export type RootState = ReturnType<typeof combinedReducer>;
 
 // create your reducer

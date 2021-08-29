@@ -125,7 +125,7 @@ export async function createTagCall(
 }
 
 /**
- * API call to update a tag in a tag.
+ * API call to update a tag.
  *
  * @param {UpdateTagParams} params - input parameters from the page
  * @returns {Promise<OneTagData>} promise with data to send to Redux, if successful.

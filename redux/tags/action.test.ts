@@ -5,6 +5,7 @@ import { AnyAction } from 'redux';
 import configureMockStore from 'redux-mock-store';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 import { AllTagsData, OneTagData } from '../../api/tag/types';
+import { defaultExpenseState } from '../expenses/reducer';
 import { RootState } from '../store';
 import { defaultTagState } from '../tags/state';
 import { defaultUserState } from '../user/reducer';
@@ -54,6 +55,7 @@ describe('fetchTagsAction()', () => {
         const store = mockStore({
             user: defaultUserState,
             tag: defaultTagState,
+            expense: defaultExpenseState,
         });
         return store.dispatch(fetchTagsAction(testInput)).then(() => {
             expect(store.getActions()).toEqual(expectedActions);
@@ -90,6 +92,7 @@ describe('createTagAction()', () => {
         const store = mockStore({
             user: defaultUserState,
             tag: defaultTagState,
+            expense: defaultExpenseState,
         });
         return store.dispatch(createTagAction(testInput)).then(() => {
             expect(store.getActions()).toEqual(expectedActions);
@@ -126,6 +129,7 @@ describe('updateTagAction()', () => {
         const store = mockStore({
             user: defaultUserState,
             tag: defaultTagState,
+            expense: defaultExpenseState,
         });
         return store.dispatch(updateTagAction(testInput)).then(() => {
             expect(store.getActions()).toEqual(expectedActions);
@@ -162,6 +166,7 @@ describe('deleteTagAction()', () => {
         const store = mockStore({
             user: defaultUserState,
             tag: defaultTagState,
+            expense: defaultExpenseState,
         });
         return store.dispatch(deleteTagAction(testInput)).then(() => {
             expect(store.getActions()).toEqual(expectedActions);
