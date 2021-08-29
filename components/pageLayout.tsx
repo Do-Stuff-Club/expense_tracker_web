@@ -12,6 +12,7 @@ import styles from './pageLayout.module.css';
 export interface PageLayoutProps {
     pageName: string;
     children: React.ReactNode;
+    center?: boolean;
 }
 
 /**
@@ -37,7 +38,11 @@ export default function PageLayout(props: PageLayoutProps): JSX.Element {
             </AppBar>
             <div className={styles.outerContainer}>
                 <div></div>
-                <div className={styles.mainColumn}>{props.children}</div>
+                <div
+                    className={props.center ? styles.center : styles.mainColumn}
+                >
+                    {props.children}
+                </div>
                 <div></div>
             </div>
             <footer></footer>
