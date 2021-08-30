@@ -10,7 +10,6 @@ import React from 'react';
 import PageLayout from '../components/pageLayout';
 
 import Tags from '../components/tags';
-import ExpenseForm from '../components/expenses/expenseForm';
 
 // ===================================================================
 //                            Component

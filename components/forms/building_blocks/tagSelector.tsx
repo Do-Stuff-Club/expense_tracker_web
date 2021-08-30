@@ -52,8 +52,9 @@ export default function FormTagSelector(props: TagSelectorProps): JSX.Element {
                     ></TextField>
                 )}
             ></Autocomplete>
-            {value.map((tag) => (
+            {value.map((tag, idx) => (
                 <TagChip
+                    key={idx}
                     label={tag.name}
                     onDelete={() => onDeleteTag(tag)}
                 ></TagChip>
