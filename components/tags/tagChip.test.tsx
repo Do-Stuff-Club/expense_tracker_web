@@ -2,7 +2,7 @@
 //                             Imports
 // ===================================================================
 import React from 'react';
-import TagChip from '../components/tagChip';
+import TagChip from './tagChip';
 import { render, screen } from '@testing-library/react';
 
 // ===================================================================
