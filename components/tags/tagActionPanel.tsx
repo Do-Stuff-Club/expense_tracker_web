@@ -10,7 +10,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MoveIcon from '@material-ui/icons/ImportExport';
 import EditIcon from '@material-ui/icons/Edit';
 import NewTagDialog from './newTagDialog';
-import { createTagCall, deleteTagCall } from '../../api/tag/call';
+import EditTagDialog from './editTagDialog';
+import {
+    createTagCall,
+    updateTagCall,
+    deleteTagCall,
+} from '../../api/tag/call';
 import { TagProps } from '../../pages/tags';
 
 // ===================================================================
@@ -64,6 +69,7 @@ export default function TagActionPanel(
     props: TagActionPanelProps,
 ): JSX.Element {
     const [newTagOpen, newTagHandleOpen, newTagHandleClose] = useDialog();
+    const [editTagOpen, editTagHandleOpen, editTagHandleClose] = useDialog();
     return (
         <>
             <ButtonGroup
@@ -74,7 +80,10 @@ export default function TagActionPanel(
                 <IconButton onClick={newTagHandleOpen}>
                     <AddIcon />
                 </IconButton>
-                <IconButton disabled={props.selectedTag == undefined}>
+                <IconButton
+                    disabled={props.selectedTag == undefined}
+                    onClick={editTagHandleOpen}
+                >
                     <EditIcon />
                 </IconButton>
                 <IconButton disabled={props.selectedTag == undefined}>
@@ -113,6 +122,26 @@ export default function TagActionPanel(
                     );
                 }}
             ></NewTagDialog>
+            <EditTagDialog
+                name={props.selectedTag ? props.selectedTag?.name : ''}
+                open={editTagOpen}
+                handleClose={editTagHandleClose}
+                handleSubmit={(name) => {
+                    if (props.selectedTag == undefined) {
+                        // FIXME - throw error
+                    } else {
+                        updateTagCall({
+                            name: name,
+                            headers: props.user.authHeaders,
+                            parent_id: props.selectedTag?.parentId,
+                            id: props.selectedTag.id,
+                        }).then(
+                            (data) => props.updateTagAction(data),
+                            (err) => console.log(err), //FIXME
+                        );
+                    }
+                }}
+            ></EditTagDialog>
         </>
     );
 }
