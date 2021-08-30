@@ -7,9 +7,10 @@ import styles from '../forms/Form.module.css';
 import { FormProps } from '../forms/utils';
 import FormButton from '../forms/building_blocks/formButton';
 import TextField from '../forms/building_blocks/textField';
-import { Tag } from '../../redux/tags/types';
+import { Tag, TagState } from '../../redux/tags/types';
 import * as Yup from 'yup';
 import FormDatePicker from '../forms/building_blocks/datePicker';
+import FormTagSelector from '../forms/building_blocks/tagSelector';
 
 // ===================================================================
 //                         Helper Functions
@@ -25,7 +26,9 @@ export type ExpenseFormState = {
 // ===================================================================
 //                            Component
 // ===================================================================
-type ExpenseFormProps = FormProps<ExpenseFormState>;
+type ExpenseFormProps = FormProps<ExpenseFormState> & {
+    tagState: TagState;
+};
 
 /**
  * Expense Form for creating/editing expenses.
@@ -73,6 +76,10 @@ export default function ExpenseForm(props: ExpenseFormProps): JSX.Element {
                 >
                     <FormButton type='submit' name='Log In' />
                 </div>
+                <FormTagSelector
+                    name='tags'
+                    tagState={props.tagState}
+                ></FormTagSelector>
             </Form>
         </Formik>
     );

@@ -19,6 +19,9 @@ import Paper from '@material-ui/core/Paper';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import ExpenseForm from '../../components/expenses/expenseForm';
+import { getTagsCall } from '../../api/tag/call';
+import { fetchTagsAction } from '../../redux/tags/action';
 
 // ===================================================================
 //                            Component
@@ -32,6 +35,7 @@ const stateToProps = (state: RootState) => ({
 
 const dispatchToProps = {
     updateAllExpensesAction,
+    fetchTagsAction,
 };
 
 const connector = connect(stateToProps, dispatchToProps);
@@ -45,6 +49,14 @@ type ExpensesProps = ReduxProps;
  * @returns {Element} Page element
  */
 function Expenses(props: ExpensesProps) {
+    useEffect(() => {
+        getTagsCall({
+            headers: props.user.authHeaders,
+        }).then(
+            (data) => props.fetchTagsAction(data),
+            (error) => console.log(error),
+        );
+    }, []); // Pass an empty array so it only fires once
     useEffect(() => {
         getExpensesCall({
             user_id: props.user.id,
@@ -129,6 +141,19 @@ function Expenses(props: ExpensesProps) {
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <ExpenseForm
+                    tagState={props.tag}
+                    initialState={{
+                        name: '',
+                        price: 0,
+                        date: new Date(),
+                        link: '',
+                        tags: [],
+                    }}
+                    onSubmit={() => {
+                        return;
+                    }}
+                ></ExpenseForm>
             </main>
         </PageLayout>
     );

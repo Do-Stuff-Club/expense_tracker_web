@@ -43,18 +43,6 @@ function Home() {
             </main>
 
             <Tags />
-            <ExpenseForm
-                initialState={{
-                    name: '',
-                    price: 0,
-                    date: new Date(),
-                    link: '',
-                    tags: [],
-                }}
-                onSubmit={() => {
-                    return;
-                }}
-            ></ExpenseForm>
         </PageLayout>
     );
 }
