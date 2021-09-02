@@ -1,3 +1,6 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import { Expense } from '../../redux/expenses/types';
 import React from 'react';
 import Link from 'next/link';
@@ -12,11 +15,47 @@ import {
     ListItemSecondaryAction,
     IconButton,
 } from '@material-ui/core';
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 
+// ===================================================================
+//                       DataGrid Definitions
+// ===================================================================
+const columns: GridColDef[] = [
+    {
+        field: 'date',
+        headerName: 'Date',
+        width: 150,
+        sortable: true,
+    },
+    {
+        field: 'name',
+        headerName: 'Name',
+        width: 150,
+        sortable: true,
+    },
+    {
+        field: 'cost',
+        headerName: 'Price',
+        width: 150,
+        sortable: true,
+    },
+    {
+        field: 'link',
+        headerName: 'Link',
+        width: 150,
+    },
+    {
+        field: 'tags',
+        headerName: 'Tags',
+        width: 150,
+    },
+];
+
+// ===================================================================
+//                            Component
+// ===================================================================
 export interface ExpenseViewProps {
-    listKey: number;
-    expense: Expense;
-    onDelete: () => void;
+    expenses: ReadonlyArray<Expense>;
 }
 
 /**
@@ -28,56 +67,15 @@ export interface ExpenseViewProps {
  * @returns {Element} a list view of all tags
  */
 export default function ExpenseView(props: ExpenseViewProps): JSX.Element {
-    const [open, setOpen] = React.useState(true);
-
-    const handleClick = () => {
-        setOpen(!open);
-    };
-
-    const onEdit = () => {
-        return;
-    };
+    console.log(props.expenses);
     return (
-        <>
-            <ListItem divider button onClick={handleClick} key={props.listKey}>
-                <ListItemText primary={'Name: ' + props.expense.name} />
-                <ListItemText
-                    secondary={'Price: ' + props.expense.cost + '$'}
-                />
-                <ListItemSecondaryAction>
-                    <Link
-                        href={'/expense/' + props.expense.id + '/edit'}
-                        passHref
-                    >
-                        <IconButton aria-label='Edit' onClick={onEdit}>
-                            <EditIcon />
-                        </IconButton>
-                    </Link>
-                    <IconButton aria-label='Delete' onClick={props.onDelete}>
-                        <DeleteIcon />
-                    </IconButton>
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                </ListItemSecondaryAction>
-            </ListItem>
-            <Collapse in={open} timeout='auto' unmountOnExit>
-                <List component='div' disablePadding>
-                    <ListItem>
-                        <ListItemText primary={props.expense.date} />
-                    </ListItem>
-                    <ListItem>
-                        <ListItemText primary={props.expense.link} />
-                    </ListItem>
-                </List>
-                <List component='div' disablePadding>
-                    {props.expense.tags.map((tag, i) => {
-                        return (
-                            <ListItem button key={i}>
-                                <ListItemText primary={tag.name} />
-                            </ListItem>
-                        );
-                    })}
-                </List>
-            </Collapse>
-        </>
+        <div style={{ height: 500, width: '100%' }}>
+            <DataGrid
+                columns={columns}
+                rows={props.expenses}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+            ></DataGrid>
+        </div>
     );
 }
