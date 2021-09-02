@@ -18,7 +18,7 @@ export enum ExpenseActionTypes {
     CREATE_EXPENSE = 'create_expense',
     UPDATE_ALL_EXPENSES = 'update_all_expenses',
     UPDATE_ONE_EXPENSE = 'update_one_expense',
-    // DELETE_EXPENSE = why don't we need this?
+    DELETE_EXPENSE = 'delete_expense',
 }
 
 export interface CreateExpenseAction {
@@ -45,7 +45,16 @@ export interface UpdateOneExpenseAction {
     };
 }
 
+export interface DeleteExpenseAction {
+    type: ExpenseActionTypes.DELETE_EXPENSE;
+    payload: {
+        expense: Expense;
+        authHeaders: AuthHeaders;
+    };
+}
+
 export type ExpenseAction =
     | CreateExpenseAction
     | UpdateAllExpensesAction
-    | UpdateOneExpenseAction;
+    | UpdateOneExpenseAction
+    | DeleteExpenseAction;

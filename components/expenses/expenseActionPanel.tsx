@@ -7,7 +7,6 @@ import IconButton from '@material-ui/core/IconButton';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-import MoveIcon from '@material-ui/icons/ImportExport';
 import EditIcon from '@material-ui/icons/Edit';
 import NewExpenseDialog from './newExpenseDialog';
 //import EditExpenseDialog from './editExpenseDialog';
@@ -93,9 +92,6 @@ export default function ExpenseActionPanel(
                     onClick={editExpenseHandleOpen}
                 >
                     <EditIcon />
-                </IconButton>
-                <IconButton disabled={props.selectedExpense == undefined}>
-                    <MoveIcon />
                 </IconButton>
                 <IconButton
                     disabled={props.selectedExpense == undefined}

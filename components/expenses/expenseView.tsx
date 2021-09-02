@@ -2,7 +2,7 @@
 //                             Imports
 // ===================================================================
 import { Expense } from '../../redux/expenses/types';
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -15,7 +15,14 @@ import {
     ListItemSecondaryAction,
     IconButton,
 } from '@material-ui/core';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import {
+    DataGrid,
+    GridColDef,
+    GridRowData,
+    GridRowParams,
+    GridSelectionModel,
+    GridValueGetterParams,
+} from '@mui/x-data-grid';
 
 // ===================================================================
 //                       DataGrid Definitions
@@ -56,6 +63,7 @@ const columns: GridColDef[] = [
 // ===================================================================
 export interface ExpenseViewProps {
     expenses: ReadonlyArray<Expense>;
+    onSelect?: (expense?: Expense) => void;
 }
 
 /**
@@ -67,7 +75,9 @@ export interface ExpenseViewProps {
  * @returns {Element} a list view of all tags
  */
 export default function ExpenseView(props: ExpenseViewProps): JSX.Element {
-    console.log(props.expenses);
+    const [selectionModel, setSelectionModel] = useState<GridSelectionModel>(
+        [],
+    );
     return (
         <div style={{ height: 500, width: '100%' }}>
             <DataGrid
@@ -75,6 +85,20 @@ export default function ExpenseView(props: ExpenseViewProps): JSX.Element {
                 rows={props.expenses}
                 pageSize={5}
                 rowsPerPageOptions={[5]}
+                onRowClick={(gridRowParams) => {
+                    if (
+                        selectionModel.length == 1 &&
+                        selectionModel[0] == gridRowParams.id
+                    ) {
+                        setSelectionModel([]);
+                        if (props.onSelect) props.onSelect();
+                    } else {
+                        setSelectionModel([gridRowParams.id]);
+                        if (props.onSelect)
+                            props.onSelect(gridRowParams.row as Expense); // Type cast is due to poor generic typings on datagrid
+                    }
+                }}
+                selectionModel={selectionModel}
             ></DataGrid>
         </div>
     );

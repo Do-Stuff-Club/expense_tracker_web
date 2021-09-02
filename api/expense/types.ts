@@ -1,4 +1,5 @@
 import { Expense } from '../../redux/expenses/types';
+import { Tag } from '../../redux/tags/types';
 import { AuthHeaders } from '../../redux/user/types';
 import { TagResponse } from '../tag/types';
 
@@ -12,7 +13,7 @@ export interface CreateExpenseParams {
     cost: number;
     date: string;
     link: string;
-    tags: ReadonlyArray<string>;
+    tags: ReadonlyArray<Tag>;
     headers: AuthHeaders;
 }
 
