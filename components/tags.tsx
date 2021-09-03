@@ -2,6 +2,7 @@
 //                             Imports
 // ===================================================================
 import React, { useState } from 'react';
+import { Tag } from '../redux/tags/types';
 import TreeItem from '@material-ui/lab/TreeItem';
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';

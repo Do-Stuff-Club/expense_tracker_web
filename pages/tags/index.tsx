@@ -69,6 +69,7 @@ function TagIndex(props: TagProps) {
                     <div className={tagStyles.tagActionContainer}>
                         <TagActionPanel
                             selectedTag={selectedTag}
+                            tags={props.tag}
                             {...props}
                         ></TagActionPanel>
                     </div>
