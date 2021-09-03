@@ -16,6 +16,7 @@ import {
     deleteExpenseCall,
 } from '../../api/expense/call';
 import { ExpensesProps } from '../../pages/expenses/index';
+import EditExpenseDialog from './editExpenseDialog';
 
 // ===================================================================
 //                         Helper Functions
@@ -129,25 +130,39 @@ export default function ExpenseActionPanel(
                     );
                 }}
             ></NewExpenseDialog>
-            {/* <EditExpenseDialog
-                name={props.selectedExpense ? props.selectedExpense?.name : ''}
-                open={editExpenseOpen}
-                handleClose={editExpenseHandleClose}
-                handleSubmit={(formState) => {
-                    if (props.selectedExpense == undefined) {
-                        // FIXME - throw error
-                    } else {
-                        updateExpenseCall({
-                            name: name,
-                            headers: props.user.authHeaders,
-                            id: props.selectedExpense.id,
-                        }).then(
-                            (data) => props.updateOneExpenseAction(data),
-                            (err) => console.log(err), //FIXME
-                        );
-                    }
-                }}
-            ></EditExpenseDialog> */}
+            {
+                props.selectedExpense != undefined ? (
+                    <EditExpenseDialog
+                        expense={props.selectedExpense}
+                        tagState={props.tag}
+                        open={editExpenseOpen}
+                        handleClose={editExpenseHandleClose}
+                        handleSubmit={(formState) => {
+                            if (props.selectedExpense == undefined) {
+                                // FIXME - throw error
+                            } else {
+                                updateExpenseCall({
+                                    expense: {
+                                        id: props.selectedExpense.id,
+                                        name: formState.name,
+                                        cost: formState.price,
+                                        date: formState.date.toDateString(),
+                                        link: formState.link,
+                                        tags: formState.tags,
+                                    },
+                                    headers: props.user.authHeaders,
+                                }).then(
+                                    (data) => {
+                                        console.log(data);
+                                        props.updateOneExpenseAction(data);
+                                    },
+                                    (err) => console.log(err), //FIXME
+                                );
+                            }
+                        }}
+                    ></EditExpenseDialog>
+                ) : null // FIXME this is a bit weird- editing requires a selected expense, so editExpenseDialog cannot exist without selectedExpense. However, I'm not sure if this is the best way to represent that.
+            }
         </>
     );
 }

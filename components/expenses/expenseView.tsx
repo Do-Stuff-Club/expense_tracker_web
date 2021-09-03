@@ -3,18 +3,6 @@
 // ===================================================================
 import { Expense } from '../../redux/expenses/types';
 import React, { useState } from 'react';
-import Link from 'next/link';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import {
-    ListItem,
-    ListItemText,
-    Collapse,
-    List,
-    ListItemSecondaryAction,
-    IconButton,
-} from '@material-ui/core';
 import {
     DataGrid,
     GridColDef,
@@ -23,6 +11,7 @@ import {
     GridSelectionModel,
     GridValueGetterParams,
 } from '@mui/x-data-grid';
+import { Tag } from '../../redux/tags/types';
 
 // ===================================================================
 //                       DataGrid Definitions
@@ -55,6 +44,11 @@ const columns: GridColDef[] = [
         field: 'tags',
         headerName: 'Tags',
         width: 150,
+        valueGetter: (params: GridValueGetterParams) =>
+            (params.row.tags as Tag[]).reduce(
+                (acc: string, tag: Tag) => acc + ',' + tag.name,
+                '',
+            ),
     },
 ];
 
