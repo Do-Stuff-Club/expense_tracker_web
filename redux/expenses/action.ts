@@ -26,7 +26,7 @@ export const updateOneExpenseAction = (
     dispatch({
         type: ExpenseActionTypes.UPDATE_ONE_EXPENSE,
         payload: {
-            expenses: data.expense,
+            expense: data.expense,
             authHeaders: data.authHeaders,
         },
     });

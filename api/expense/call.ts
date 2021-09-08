@@ -103,12 +103,13 @@ export async function createExpenseCall(
                     cost: params.cost,
                     order_date: params.date,
                     link: params.link,
-                    //tags_attributes: params.tags.map((tag) => ({ name: tag })),
+                    tag_ids: params.tags.map((tag) => tag.id),
                 },
             },
             headers: params.headers,
         });
 
+        console.log(response.data);
         const obj: ExpenseResponse = response.data;
         const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
             id: tag.id,
@@ -197,7 +198,7 @@ export async function deleteExpenseCall(
  */
 export async function updateExpenseCall(
     params: UpdateExpenseParams,
-): Promise<AllExpensesData> {
+): Promise<OneExpenseData> {
     try {
         // Format nested params correctly
         // FIXME maybe let's move off axios since it has this stupid bug
@@ -214,37 +215,35 @@ export async function updateExpenseCall(
             return config;
         });
         const response = await axios({
-            method: 'post',
+            method: 'put',
             baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-            url: '/purchases',
+            url: '/purchases/' + params.expense.id,
             params: {
                 purchase: {
                     name: params.expense.name,
+                    cost: params.expense.cost,
+                    order_date: params.expense.date,
+                    link: params.expense.link,
+                    tag_ids: params.expense.tags.map((tag) => tag.id),
                 },
             },
             headers: params.headers,
         });
 
-        const expenses: ReadonlyArray<Expense> = response.data.map(
-            (expense: string) => {
-                const obj: ExpenseResponse = JSON.parse(expense);
-                const tags: ReadonlyArray<Tag> = obj.tags.map(
-                    (tag: TagResponse) => ({
-                        id: tag.id,
-                        name: tag.name,
-                        childIds: [],
-                    }),
-                );
-                return {
-                    id: obj.id,
-                    name: obj.name,
-                    cost: obj.cost,
-                    date: obj.order_date,
-                    link: obj.link,
-                    tags: tags,
-                };
-            },
-        );
+        const obj: ExpenseResponse = response.data;
+        const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
+            id: tag.id,
+            name: tag.name,
+            childIds: [],
+        }));
+        const expense = {
+            id: obj.id,
+            name: obj.name,
+            cost: obj.cost,
+            date: obj.order_date,
+            link: obj.link,
+            tags: tags,
+        };
         return Promise.resolve({
             authHeaders: {
                 client: response.headers['client'],
@@ -253,7 +252,7 @@ export async function updateExpenseCall(
                 'access-token': response.headers['access-token'],
                 'token-type': response.headers['token-type'],
             },
-            expenses: expenses, // FIXME why does this return multiple expenses?
+            expense: expense,
         });
     } catch (error) {
         return Promise.reject(error);

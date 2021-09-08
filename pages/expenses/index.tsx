@@ -4,7 +4,10 @@ import styles from '../../styles/Home.module.css';
 import { RootState } from '../../redux/store';
 import withAuth from '../../components/withAuthentication';
 import PageLayout from '../../components/pageLayout';
-import { updateAllExpensesAction } from '../../redux/expenses/action';
+import {
+    updateAllExpensesAction,
+    updateOneExpenseAction,
+} from '../../redux/expenses/action';
 import {
     deleteExpenseCall,
     getExpensesCall,
@@ -32,6 +35,7 @@ const stateToProps = (state: RootState) => ({
 const dispatchToProps = {
     createExpenseAction,
     updateAllExpensesAction,
+    updateOneExpenseAction,
     fetchTagsAction,
 };
 
