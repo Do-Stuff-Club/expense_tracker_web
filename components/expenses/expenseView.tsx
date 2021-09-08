@@ -6,8 +6,6 @@ import React, { useState } from 'react';
 import {
     DataGrid,
     GridColDef,
-    GridRowData,
-    GridRowParams,
     GridSelectionModel,
     GridValueGetterParams,
 } from '@mui/x-data-grid';
