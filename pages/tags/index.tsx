@@ -7,8 +7,6 @@ import styles from '../../styles/Home.module.css';
 import tagStyles from './index.module.css';
 import withAuth from '../../components/withAuthentication';
 import React, { useEffect, useState } from 'react';
-import PageLayout from '../../components/pageLayout';
-import NavBreadcrumbs from '../../components/navBreadcrumbs';
 import { getTagsCall } from '../../api/tag/call';
 import {
     fetchTagsAction,
@@ -20,6 +18,8 @@ import TagTreeView from '../../components/tags/tagTreeView';
 import TagActionPanel from '../../components/tags/tagActionPanel';
 import { Tag } from '../../redux/tags/types';
 import Debug from '../../components/debug';
+import AppLayout from '../../components/appLayout';
+import { NavPage } from '../../components/appHeader';
 
 // ===================================================================
 //                            Component
@@ -61,8 +61,7 @@ function TagIndex(props: TagProps) {
     const [selectedTag, setSelectedTag] = useState<Tag | undefined>(undefined);
 
     return (
-        <PageLayout pageName='My Tags'>
-            <NavBreadcrumbs></NavBreadcrumbs>
+        <AppLayout page={NavPage.TAGS}>
             <main>
                 <h1 className={styles.title}>Tags!</h1>
                 <div className={tagStyles.tagsPageContainer}>
@@ -84,7 +83,7 @@ function TagIndex(props: TagProps) {
                 </div>
                 <Debug />
             </main>
-        </PageLayout>
+        </AppLayout>
     );
 }
 

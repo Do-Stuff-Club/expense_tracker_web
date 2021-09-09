@@ -3,19 +3,19 @@ import { connect, ConnectedProps } from 'react-redux';
 import styles from '../../styles/Home.module.css';
 import { RootState } from '../../redux/store';
 import withAuth from '../../components/withAuthentication';
-import PageLayout from '../../components/pageLayout';
 import {
     updateAllExpensesAction,
     updateOneExpenseAction,
 } from '../../redux/expenses/action';
 import { getExpensesCall } from '../../api/expense/call';
-import NavBreadcrumbs from '../../components/navBreadcrumbs';
 import { getTagsCall } from '../../api/tag/call';
 import { fetchTagsAction } from '../../redux/tags/action';
 import { createExpenseAction } from '../../redux/expenses/action';
 import ExpenseView from '../../components/expenses/expenseView';
 import ExpenseActionPanel from '../../components/expenses/expenseActionPanel';
 import { Expense } from '../../redux/expenses/types';
+import { NavPage } from '../../components/appHeader';
+import AppLayout from '../../components/appLayout';
 
 // ===================================================================
 //                            Component
@@ -68,10 +68,8 @@ function Expenses(props: ExpensesProps) {
     }, []); // Empty array so only fires once
 
     return (
-        <PageLayout pageName='My Expenses'>
-            Here be expenses
+        <AppLayout page={NavPage.EXPENSES}>
             <main>
-                <NavBreadcrumbs></NavBreadcrumbs>
                 <h1 className={styles.title}>Expenses!</h1>
                 <ExpenseView
                     expenses={props.expense.expenses}
@@ -82,7 +80,7 @@ function Expenses(props: ExpensesProps) {
                     {...props}
                 />
             </main>
-        </PageLayout>
+        </AppLayout>
     );
 }
 

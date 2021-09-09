@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 
 import { RootState } from '../../redux/store';
 import withAuth from '../../components/withAuthentication';
-import PageLayout from '../../components/pageLayout';
-import NavBreadcrumbs from '../../components/navBreadcrumbs';
+import { NavPage } from '../../components/appHeader';
+import AppLayout from '../../components/appLayout';
 
 // ===================================================================
 //                            Component
@@ -26,12 +26,7 @@ const connector = connect(stateToProps, {});
  * @returns {Element} Page element
  */
 function Dashboard() {
-    return (
-        <PageLayout pageName='Dashboard'>
-            <NavBreadcrumbs></NavBreadcrumbs>
-            Here be dragons- default page
-        </PageLayout>
-    );
+    return <AppLayout page={NavPage.DASHBOARD}>HELLOOOO</AppLayout>;
 }
 
 export default connector(withAuth(Dashboard));
