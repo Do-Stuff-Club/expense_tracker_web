@@ -1,22 +1,61 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import { Expense } from '../../redux/expenses/types';
-import React from 'react';
-import Link from 'next/link';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import React, { useState } from 'react';
 import {
-    ListItem,
-    ListItemText,
-    Collapse,
-    List,
-    ListItemSecondaryAction,
-    IconButton,
-} from '@material-ui/core';
+    DataGrid,
+    GridColDef,
+    GridSelectionModel,
+    GridValueGetterParams,
+} from '@mui/x-data-grid';
+import { Tag } from '../../redux/tags/types';
 
+// ===================================================================
+//                       DataGrid Definitions
+// ===================================================================
+const columns: GridColDef[] = [
+    {
+        field: 'date',
+        headerName: 'Date',
+        width: 150,
+        sortable: true,
+    },
+    {
+        field: 'name',
+        headerName: 'Name',
+        width: 150,
+        sortable: true,
+    },
+    {
+        field: 'cost',
+        headerName: 'Price',
+        width: 150,
+        sortable: true,
+    },
+    {
+        field: 'link',
+        headerName: 'Link',
+        width: 150,
+    },
+    {
+        field: 'tags',
+        headerName: 'Tags',
+        width: 150,
+        valueGetter: (params: GridValueGetterParams) =>
+            (params.row.tags as Tag[]).reduce(
+                (acc: string, tag: Tag) => acc + ',' + tag.name,
+                '',
+            ),
+    },
+];
+
+// ===================================================================
+//                            Component
+// ===================================================================
 export interface ExpenseViewProps {
-    listKey: number;
-    expense: Expense;
-    onDelete: () => void;
+    expenses: ReadonlyArray<Expense>;
+    onSelect?: (expense?: Expense) => void;
 }
 
 /**
@@ -28,56 +67,31 @@ export interface ExpenseViewProps {
  * @returns {Element} a list view of all tags
  */
 export default function ExpenseView(props: ExpenseViewProps): JSX.Element {
-    const [open, setOpen] = React.useState(true);
-
-    const handleClick = () => {
-        setOpen(!open);
-    };
-
-    const onEdit = () => {
-        return;
-    };
+    const [selectionModel, setSelectionModel] = useState<GridSelectionModel>(
+        [],
+    );
     return (
-        <>
-            <ListItem divider button onClick={handleClick} key={props.listKey}>
-                <ListItemText primary={'Name: ' + props.expense.name} />
-                <ListItemText
-                    secondary={'Price: ' + props.expense.cost + '$'}
-                />
-                <ListItemSecondaryAction>
-                    <Link
-                        href={'/expense/' + props.expense.id + '/edit'}
-                        passHref
-                    >
-                        <IconButton aria-label='Edit' onClick={onEdit}>
-                            <EditIcon />
-                        </IconButton>
-                    </Link>
-                    <IconButton aria-label='Delete' onClick={props.onDelete}>
-                        <DeleteIcon />
-                    </IconButton>
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                </ListItemSecondaryAction>
-            </ListItem>
-            <Collapse in={open} timeout='auto' unmountOnExit>
-                <List component='div' disablePadding>
-                    <ListItem>
-                        <ListItemText primary={props.expense.date} />
-                    </ListItem>
-                    <ListItem>
-                        <ListItemText primary={props.expense.link} />
-                    </ListItem>
-                </List>
-                <List component='div' disablePadding>
-                    {props.expense.tags.map((tag, i) => {
-                        return (
-                            <ListItem button key={i}>
-                                <ListItemText primary={tag.name} />
-                            </ListItem>
-                        );
-                    })}
-                </List>
-            </Collapse>
-        </>
+        <div style={{ height: 500, width: '100%' }}>
+            <DataGrid
+                columns={columns}
+                rows={props.expenses}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                onRowClick={(gridRowParams) => {
+                    if (
+                        selectionModel.length == 1 &&
+                        selectionModel[0] == gridRowParams.id
+                    ) {
+                        setSelectionModel([]);
+                        if (props.onSelect) props.onSelect();
+                    } else {
+                        setSelectionModel([gridRowParams.id]);
+                        if (props.onSelect)
+                            props.onSelect(gridRowParams.row as Expense); // Type cast is due to poor generic typings on datagrid
+                    }
+                }}
+                selectionModel={selectionModel}
+            ></DataGrid>
+        </div>
     );
 }

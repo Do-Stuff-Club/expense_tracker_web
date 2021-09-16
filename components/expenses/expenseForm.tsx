@@ -51,35 +51,30 @@ export default function ExpenseForm(props: ExpenseFormProps): JSX.Element {
         >
             <Form noValidate className={styles.formContainer}>
                 <TextField
-                    name='Name'
-                    label='name'
+                    name='name'
+                    label='Name'
                     className={styles.textField}
                 />
                 <TextField
-                    name='Price'
-                    label='price'
+                    name='price'
+                    label='Price'
                     className={styles.textField}
                 />
                 <FormDatePicker name='date' />
                 <TextField
-                    name='Link'
-                    label='link'
+                    name='link'
+                    label='Link'
                     className={styles.textField}
                 />
-                <div
-                    className={`${styles.formButtonContainer} ${styles.homeButton}`}
-                >
-                    <FormButton href='/' name='Home' />
-                </div>
-                <div
-                    className={`${styles.formButtonContainer} ${styles.submitButton}`}
-                >
-                    <FormButton type='submit' name='Log In' />
-                </div>
                 <FormTagSelector
                     name='tags'
                     tagState={props.tagState}
                 ></FormTagSelector>
+                <div
+                    className={`${styles.formButtonContainer} ${styles.submitButton}`}
+                >
+                    <FormButton type='submit' name='Create!' />
+                </div>
             </Form>
         </Formik>
     );

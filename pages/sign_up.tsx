@@ -13,8 +13,8 @@ import { newUserCall } from '../api/user/call';
 import { loginAction } from '../redux/user/action';
 
 import { useFormik } from 'formik';
-import styles from '../styles/Form.module.css';
-import textFieldStyles from '../styles/TextField.module.css';
+import styles from '../components/forms/Form.module.css';
+import textFieldStyles from '../components/forms/building_blocks/textField.module.css';
 
 // ===================================================================
 //                            Component
