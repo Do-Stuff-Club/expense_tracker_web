@@ -2,26 +2,16 @@
 //                             Imports
 // ===================================================================
 import React from 'react';
-import Link from 'next/link';
-import {
-    AppBar,
-    Button,
-    ButtonGroup,
-    Toolbar,
-    Typography,
-} from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Grid } from '@material-ui/core';
+import StepperNav from './app/nav/stepperNav';
+import TabNav from './app/nav/tabNav';
+import { AppNavPage } from './app/nav/utils';
 
 // ===================================================================
 //                            Component
 // ===================================================================
-export enum NavPage {
-    DASHBOARD = 'dashboard_page',
-    EXPENSES = 'expenses_page',
-    TAGS = 'tags_page',
-}
-
 type AppHeaderProps = {
-    page: NavPage;
+    page: AppNavPage;
 };
 
 /**
@@ -37,25 +27,7 @@ export default function AppHeader(props: AppHeaderProps): JSX.Element {
         <AppBar position='static'>
             <Toolbar>
                 <Typography variant='h6'>Expense Tracker</Typography>
-                <ButtonGroup
-                    size='large'
-                    color='primary'
-                    aria-label='large outlined primary button group'
-                >
-                    <Link href='/dashboard' passHref>
-                        <Button disabled={props.page == NavPage.DASHBOARD}>
-                            Dashboard
-                        </Button>
-                    </Link>
-                    <Link href='/tags' passHref>
-                        <Button disabled={props.page == NavPage.TAGS}>
-                            Tags
-                        </Button>
-                    </Link>
-                    <Link href='/expenses' passHref>
-                        <Button>Expenses</Button>
-                    </Link>
-                </ButtonGroup>
+                <TabNav page={props.page} />
             </Toolbar>
         </AppBar>
     );

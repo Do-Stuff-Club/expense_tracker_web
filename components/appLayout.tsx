@@ -4,13 +4,14 @@
 import Head from 'next/head';
 import React from 'react';
 import styles from './pageLayout.module.css';
-import AppHeader, { NavPage } from './appHeader';
+import AppHeader from './appHeader';
+import { AppNavPage } from './app/nav/utils';
 // ===================================================================
 //                            Component
 // ===================================================================
 
 export interface AppLayoutProps {
-    page: NavPage;
+    page: AppNavPage;
     children: React.ReactNode;
     center?: boolean;
 }

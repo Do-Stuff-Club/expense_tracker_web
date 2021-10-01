@@ -14,8 +14,8 @@ import { createExpenseAction } from '../../redux/expenses/action';
 import ExpenseView from '../../components/expenses/expenseView';
 import ExpenseActionPanel from '../../components/expenses/expenseActionPanel';
 import { Expense } from '../../redux/expenses/types';
-import { NavPage } from '../../components/appHeader';
 import AppLayout from '../../components/appLayout';
+import { AppNavPage } from '../../components/app/nav/utils';
 
 // ===================================================================
 //                            Component
@@ -68,7 +68,7 @@ function Expenses(props: ExpensesProps) {
     }, []); // Empty array so only fires once
 
     return (
-        <AppLayout page={NavPage.EXPENSES}>
+        <AppLayout page={AppNavPage.EXPENSES}>
             <main>
                 <h1 className={styles.title}>Expenses!</h1>
                 <ExpenseView

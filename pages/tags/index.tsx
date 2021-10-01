@@ -19,7 +19,7 @@ import TagActionPanel from '../../components/tags/tagActionPanel';
 import { Tag } from '../../redux/tags/types';
 import Debug from '../../components/debug';
 import AppLayout from '../../components/appLayout';
-import { NavPage } from '../../components/appHeader';
+import { AppNavPage } from '../../components/app/nav/utils';
 
 // ===================================================================
 //                            Component
@@ -61,7 +61,7 @@ function TagIndex(props: TagProps) {
     const [selectedTag, setSelectedTag] = useState<Tag | undefined>(undefined);
 
     return (
-        <AppLayout page={NavPage.TAGS}>
+        <AppLayout page={AppNavPage.TAGS}>
             <main>
                 <h1 className={styles.title}>Tags!</h1>
                 <div className={tagStyles.tagsPageContainer}>
