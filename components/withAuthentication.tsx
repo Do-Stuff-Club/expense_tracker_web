@@ -22,8 +22,11 @@ export interface AuthProps {
  */
 export default function withAuth<BaseProps extends AuthProps>(
     WrappedComponent: React.ComponentType<BaseProps>,
-) {
-    return (props: BaseProps): JSX.Element => {
+): React.ComponentType<BaseProps> {
+    WrappedComponent.displayName = 'WithAuth: ' + WrappedComponent.displayName;
+    const component: React.ComponentType<BaseProps> = (
+        props: BaseProps,
+    ): JSX.Element => {
         console.log('Cookies!');
         const router = useRouter();
         useEffect(() => {
@@ -36,4 +39,5 @@ export default function withAuth<BaseProps extends AuthProps>(
             return <WrappedComponent {...(props as BaseProps)} />;
         else return <div>You are not logged in. Redirecting to login...</div>;
     };
+    return component;
 }

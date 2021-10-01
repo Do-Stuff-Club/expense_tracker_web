@@ -3,13 +3,9 @@
 // ===================================================================
 import React from 'react';
 import Link from 'next/link';
-import { Tabs, Tab, Typography } from '@material-ui/core';
+import { Tabs, Tab } from '@material-ui/core';
 import { AppNavPage, pageLink, pages, pageTitle } from './utils';
 import PropTypes from 'prop-types';
-import TabsIcon from '@material-ui/icons/Label';
-import ExpensesIcon from '@material-ui/icons/AttachMoney';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import { makeStyles } from '@material-ui/core/styles';
 
 // ===================================================================
 //                             Helpers

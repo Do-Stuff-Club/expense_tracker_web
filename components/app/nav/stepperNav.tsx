@@ -88,7 +88,13 @@ const useNavStepIconStyles = makeStyles({
     },
 });
 
-function NavStepIcon(props: StepIconProps) {
+/**
+ * Helper component for the Header Icons
+ *
+ * @param {StepIconProps} props - props with the page to represent
+ * @returns {Element} icon representing a page
+ */
+function NavStepIcon(props: StepIconProps): JSX.Element {
     const classes = useNavStepIconStyles();
     const { active, completed } = props;
 

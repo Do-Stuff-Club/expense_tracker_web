@@ -2,8 +2,7 @@
 //                             Imports
 // ===================================================================
 import React from 'react';
-import { AppBar, Toolbar, Typography, Grid } from '@material-ui/core';
-import StepperNav from './app/nav/stepperNav';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import TabNav from './app/nav/tabNav';
 import { AppNavPage } from './app/nav/utils';
 
