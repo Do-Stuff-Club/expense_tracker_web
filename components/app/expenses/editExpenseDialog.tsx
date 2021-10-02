@@ -3,29 +3,31 @@
 // ===================================================================
 import { Dialog, DialogTitle, DialogContent } from '@mui/material';
 import React from 'react';
-import { TagState } from '../../redux/tags/types';
+import { Expense } from '../../../redux/expenses/types';
+import { TagState } from '../../../redux/tags/types';
 import ExpenseForm, { ExpenseFormState } from './expenseForm';
 
 // ===================================================================
 //                            Component
 // ===================================================================
-type NewExpenseDialogProps = {
+type EditExpenseDialogProps = {
     open: boolean;
     handleClose: () => void;
     handleSubmit: (formState: ExpenseFormState) => void; // FIXME return error messages
     tagState: TagState;
+    expense: Expense;
 };
 
 /**
- * React component for creating expenses
+ * React component for editing expenses
  *
  * FIXME this module looks kinda ugly tbh
  *
- * @param {NewExpenseDialogProps} props - React properties for NewExpenseDialog
+ * @param {EditExpenseDialogProps} props - React properties for EditExpenseDialog
  * @returns {Element} a search bar that lets you select a single tag
  */
-export default function NewExpenseDialog(
-    props: NewExpenseDialogProps,
+export default function EditExpenseDialog(
+    props: EditExpenseDialogProps,
 ): JSX.Element {
     return (
         <Dialog
@@ -33,15 +35,15 @@ export default function NewExpenseDialog(
             onClose={props.handleClose}
             aria-labelledby='form-dialog-title'
         >
-            <DialogTitle id='form-dialog-title'>Create Expense</DialogTitle>
+            <DialogTitle id='form-dialog-title'>Edit Expense</DialogTitle>
             <DialogContent>
                 <ExpenseForm
                     initialState={{
-                        name: '',
-                        price: 0,
-                        date: new Date(),
-                        link: '',
-                        tags: [],
+                        name: props.expense.name,
+                        price: props.expense.cost,
+                        date: new Date(props.expense.date),
+                        link: props.expense.link,
+                        tags: props.expense.tags,
                     }}
                     onSubmit={(formState) => {
                         console.log('Submit!!');

@@ -2,7 +2,7 @@
 //                             Imports
 // ===================================================================
 import React, { useState } from 'react';
-import { Tag } from '../../redux/tags/types';
+import { Tag } from '../../../redux/tags/types';
 import IconButton from '@mui/material/IconButton';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import AddIcon from '@mui/icons-material/Add';
@@ -15,8 +15,8 @@ import {
     createTagCall,
     updateTagCall,
     deleteTagCall,
-} from '../../api/tag/call';
-import { TagProps } from '../../pages/tags';
+} from '../../../api/tag/call';
+import { TagProps } from '../../../pages/tags';
 
 // ===================================================================
 //                         Helper Functions

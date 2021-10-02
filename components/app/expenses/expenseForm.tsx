@@ -4,13 +4,13 @@
 import { Form, Formik } from 'formik';
 import React from 'react';
 import styles from '../forms/Form.module.css';
-import { FormProps } from '../forms/utils';
-import FormButton from '../forms/building_blocks/formButton';
-import TextField from '../forms/building_blocks/textField';
-import { Tag, TagState } from '../../redux/tags/types';
+import { FormProps } from '../shared/forms/utils';
+import FormButton from '../shared/forms/building_blocks/formButton';
+import TextField from '../shared/forms/building_blocks/textField';
+import { Tag, TagState } from '../../../redux/tags/types';
 import * as Yup from 'yup';
-import FormDatePicker from '../forms/building_blocks/datePicker';
-import FormTagSelector from '../forms/building_blocks/tagSelector';
+import FormDatePicker from '../shared/forms/building_blocks/datePicker';
+import FormTagSelector from '../shared/forms/building_blocks/tagSelector';
 
 // ===================================================================
 //                         Helper Functions

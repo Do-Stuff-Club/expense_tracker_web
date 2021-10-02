@@ -1,7 +1,7 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import { Expense } from '../../redux/expenses/types';
+import { Expense } from '../../../redux/expenses/types';
 import React, { useState } from 'react';
 import {
     DataGrid,
@@ -9,7 +9,7 @@ import {
     GridSelectionModel,
     GridValueGetterParams,
 } from '@mui/x-data-grid';
-import { Tag } from '../../redux/tags/types';
+import { Tag } from '../../../redux/tags/types';
 
 // ===================================================================
 //                       DataGrid Definitions

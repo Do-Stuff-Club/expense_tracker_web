@@ -2,7 +2,7 @@
 //                             Imports
 // ===================================================================
 import React from 'react';
-import { Tag, TagState } from '../../redux/tags/types';
+import { Tag, TagState } from '../../../redux/tags/types';
 
 // ===================================================================
 //                            Component

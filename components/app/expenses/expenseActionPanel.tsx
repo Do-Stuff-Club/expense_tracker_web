@@ -2,7 +2,7 @@
 //                             Imports
 // ===================================================================
 import React, { useState } from 'react';
-import { Expense } from '../../redux/expenses/types';
+import { Expense } from '../../../redux/expenses/types';
 import IconButton from '@mui/material/IconButton';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import AddIcon from '@mui/icons-material/Add';
@@ -14,8 +14,8 @@ import {
     createExpenseCall,
     updateExpenseCall,
     deleteExpenseCall,
-} from '../../api/expense/call';
-import { ExpensesProps } from '../../pages/expenses/index';
+} from '../../../api/expense/call';
+import { ExpensesProps } from '../../../pages/expenses/index';
 import EditExpenseDialog from './editExpenseDialog';
 
 // ===================================================================

@@ -3,8 +3,8 @@
 // ===================================================================
 import React from 'react';
 import { AppBar, Toolbar, Typography } from '@mui/material';
-import TabNav from './app/nav/tabNav';
-import { AppNavPage } from './app/nav/utils';
+import TabNav from './nav/tabNav';
+import { AppNavPage } from './nav/utils';
 
 // ===================================================================
 //                            Component

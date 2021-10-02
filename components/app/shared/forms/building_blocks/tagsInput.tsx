@@ -3,8 +3,8 @@
 // ===================================================================
 import { useField } from 'formik';
 import React, { useState } from 'react';
-import { Tag } from '../../../redux/tags/types';
-import TagChip from '../../tags/tagChip';
+import { Tag } from '../../../../../redux/tags/types';
+import TagChip from '../../../tags/tagChip';
 import FormButton from './formButton';
 
 // ===================================================================
