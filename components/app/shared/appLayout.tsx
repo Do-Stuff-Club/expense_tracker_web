@@ -3,7 +3,7 @@
 // ===================================================================
 import Head from 'next/head';
 import React from 'react';
-import styles from './pageLayout.module.css';
+import styles from './../../pageLayout.module.css';
 import AppHeader from './appHeader';
 import { AppNavPage } from './nav/utils';
 // ===================================================================

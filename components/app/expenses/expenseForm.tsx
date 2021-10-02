@@ -3,7 +3,7 @@
 // ===================================================================
 import { Form, Formik } from 'formik';
 import React from 'react';
-import styles from '../forms/Form.module.css';
+import styles from '../shared/forms/Form.module.css';
 import { FormProps } from '../shared/forms/utils';
 import FormButton from '../shared/forms/building_blocks/formButton';
 import TextField from '../shared/forms/building_blocks/textField';

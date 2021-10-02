@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import FormButton from '../components/forms/building_blocks/formButton';
+import FormButton from '../components/app/shared/forms/building_blocks/formButton';
 
 import TestComponent from '../components/debug';
 import PageLayout from '../components/pageLayout';

@@ -5,7 +5,7 @@ import { RootState } from '../../redux/store';
 import { connect, ConnectedProps } from 'react-redux';
 import styles from '../../styles/Home.module.css';
 import tagStyles from './index.module.css';
-import withAuth from '../../components/withAuthentication';
+import withAuth from '../../components/app/shared/withAuthentication';
 import React, { useEffect, useState } from 'react';
 import { getTagsCall } from '../../api/tag/call';
 import {
@@ -14,12 +14,12 @@ import {
     updateTagAction,
     deleteTagAction,
 } from '../../redux/tags/action';
-import TagTreeView from '../../components/tags/tagTreeView';
-import TagActionPanel from '../../components/tags/tagActionPanel';
+import TagTreeView from '../../components/app/tags/tagTreeView';
+import TagActionPanel from '../../components/app/tags/tagActionPanel';
 import { Tag } from '../../redux/tags/types';
 import Debug from '../../components/debug';
-import AppLayout from '../../components/appLayout';
-import { AppNavPage } from '../../components/app/nav/utils';
+import AppLayout from '../../components/app/shared/appLayout';
+import { AppNavPage } from '../../components/app/shared/nav/utils';
 
 // ===================================================================
 //                            Component

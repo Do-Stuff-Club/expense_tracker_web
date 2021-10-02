@@ -5,9 +5,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { RootState } from '../../redux/store';
-import withAuth from '../../components/withAuthentication';
-import AppLayout from '../../components/appLayout';
-import { AppNavPage } from '../../components/app/nav/utils';
+import withAuth from '../../components/app/shared/withAuthentication';
+import AppLayout from '../../components/app/shared/appLayout';
+import { AppNavPage } from '../../components/app/shared/nav/utils';
 
 // ===================================================================
 //                            Component

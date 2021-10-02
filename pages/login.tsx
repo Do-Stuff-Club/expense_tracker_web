@@ -10,7 +10,9 @@ import { loginAction } from '../redux/user/action';
 import TestComponent from '../components/debug';
 import PageLayout from '../components/pageLayout';
 import { loginCall } from '../api/user/call';
-import LoginForm, { LoginFormState } from '../components/forms/loginForm';
+import LoginForm, {
+    LoginFormState,
+} from '../components/app/shared/forms/loginForm';
 import styles from '../styles/Home.module.css';
 
 // ===================================================================

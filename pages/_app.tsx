@@ -5,6 +5,7 @@ import React from 'react';
 import { AppProps } from 'next/app';
 import { wrapper } from '../redux/store';
 import '../styles/globals.css';
+import AppThemeProvider from '../components/app/shared/theme/AppThemeProvider';
 
 // ===================================================================
 //                            Component
@@ -18,7 +19,11 @@ import '../styles/globals.css';
  * @returns {Element} Page element
  */
 function MyApp({ Component, pageProps }: AppProps) {
-    return <Component {...pageProps} />;
+    return (
+        <AppThemeProvider>
+            <Component {...pageProps} />
+        </AppThemeProvider>
+    );
 }
 
 export default wrapper.withRedux(MyApp);
