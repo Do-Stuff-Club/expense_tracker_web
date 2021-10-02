@@ -3,12 +3,12 @@
 // ===================================================================
 import React, { useState } from 'react';
 import { Tag } from '../../redux/tags/types';
-import IconButton from '@material-ui/core/IconButton';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
-import MoveIcon from '@material-ui/icons/ImportExport';
-import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@mui/material/IconButton';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import MoveIcon from '@mui/icons-material/ImportExport';
+import EditIcon from '@mui/icons-material/Edit';
 import NewTagDialog from './newTagDialog';
 import EditTagDialog from './editTagDialog';
 import {

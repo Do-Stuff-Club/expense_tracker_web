@@ -1,7 +1,7 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Toolbar, Typography } from '@mui/material';
 import Head from 'next/head';
 import React from 'react';
 import styles from './pageLayout.module.css';

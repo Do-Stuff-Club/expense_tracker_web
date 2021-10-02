@@ -1,7 +1,7 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import { Dialog, DialogTitle, DialogContent } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent } from '@mui/material';
 import React from 'react';
 import { TagState } from '../../redux/tags/types';
 import ExpenseForm, { ExpenseFormState } from './expenseForm';

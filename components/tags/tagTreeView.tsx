@@ -1,12 +1,12 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import React, { ChangeEvent, useState } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import { Tag, TagState } from '../../redux/tags/types';
-import TreeItem from '@material-ui/lab/TreeItem';
-import TreeView from '@material-ui/lab/TreeView';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import TreeItem from '@mui/lab/TreeItem';
+import TreeView from '@mui/lab/TreeView';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 /**
  * Recursively renders a tag tree using TreeItems.
@@ -45,7 +45,7 @@ export default function TagTreeView(props: TagTreeViewProps): JSX.Element {
     const [selectedTag, setSelectedTag] = useState<Tag>();
 
     const nodeSelectHandler = (
-        _event: ChangeEvent<Record<string, never>>,
+        _event: SyntheticEvent<Element, Event>,
         nodeIds: string,
     ) => {
         const tag = props.tags.map[parseInt(nodeIds)];

@@ -3,10 +3,10 @@
 // ===================================================================
 import { useField } from 'formik';
 import React from 'react';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import { KeyboardDatePicker } from '@material-ui/pickers';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import TextField from '@mui/material/TextField';
 
 // ===================================================================
 //                            Component
@@ -27,17 +27,20 @@ export default function FormDatePicker(props: DatePickerProps): JSX.Element {
     const { value } = meta;
     const { setValue } = helpers;
 
-    const onChange = (date: MaterialUiPickersDate) => {
+    const onChange = (date: Date | null) => {
         if (date) setValue(date);
     };
 
     return (
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DesktopDatePicker<Date>
                 value={value}
                 onChange={onChange}
-                format='MM/dd/yyyy'
-            ></KeyboardDatePicker>
-        </MuiPickersUtilsProvider>
+                inputFormat='MM/dd/yyyy'
+                renderInput={(props) => (
+                    <TextField label='Date' {...props}></TextField>
+                )}
+            ></DesktopDatePicker>
+        </LocalizationProvider>
     );
 }

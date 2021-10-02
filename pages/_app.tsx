@@ -5,9 +5,6 @@ import React from 'react';
 import { AppProps } from 'next/app';
 import { wrapper } from '../redux/store';
 import '../styles/globals.css';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-
-const theme = createMuiTheme();
 
 // ===================================================================
 //                            Component
@@ -21,11 +18,7 @@ const theme = createMuiTheme();
  * @returns {Element} Page element
  */
 function MyApp({ Component, pageProps }: AppProps) {
-    return (
-        <ThemeProvider theme={theme}>
-            <Component {...pageProps} />
-        </ThemeProvider>
-    );
+    return <Component {...pageProps} />;
 }
 
 export default wrapper.withRedux(MyApp);

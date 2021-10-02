@@ -5,8 +5,8 @@ import { useField } from 'formik';
 import React from 'react';
 import { Tag, TagState } from '../../../redux/tags/types';
 
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/lab/Autocomplete';
 import TagChip from '../../tags/tagChip';
 
 // ===================================================================

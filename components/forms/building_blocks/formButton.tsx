@@ -2,30 +2,28 @@
 //                             Imports
 // ===================================================================
 import React from 'react';
-import { Button, ButtonProps, makeStyles } from '@material-ui/core';
+import { Button, ButtonProps, styled } from '@mui/material';
 import styles from './formButton.module.css';
 
 // ===================================================================
 //                             Styling
 // ===================================================================
-const buttonStyling = makeStyles(
-    {
-        outlinedPrimary: {
-            color: 'white',
-            border: '1px solid white',
-            '&:hover': {
-                backgroundColor: 'white',
-                color: '#4253B4',
-            },
-        },
-        textPrimary: {
-            color: 'white',
-            '&:hover': {
-                color: 'black',
-            },
-        },
-    },
-    { name: 'MuiButton' },
+const StyledButton = styled(Button)((props) =>
+    props.variant === 'text'
+        ? {
+              color: 'white',
+              '&:hover': {
+                  color: 'black',
+              },
+          }
+        : {
+              color: 'white',
+              border: '1px solid white',
+              '&:hover': {
+                  backgroundColor: 'white',
+                  color: '#4253B4',
+              },
+          },
 );
 
 // ===================================================================
@@ -39,17 +37,12 @@ const buttonStyling = makeStyles(
  * @returns {Element} Button element
  */
 export default function FormButton(props: ButtonProps): JSX.Element {
-    const buttonStyles = buttonStyling();
-
     const classes = [styles.formButton];
-
-    if (props.variant === 'text') classes.push(buttonStyles.textPrimary);
-    else classes.push(buttonStyles.outlinedPrimary);
 
     if (props.className) classes.push(props.className);
 
     return (
-        <Button
+        <StyledButton
             className={classes.join(' ')}
             color='primary'
             variant={props.variant ? props.variant : 'outlined'}
@@ -58,6 +51,6 @@ export default function FormButton(props: ButtonProps): JSX.Element {
             onClick={props.onClick ? props.onClick : undefined}
         >
             {props.name}
-        </Button>
+        </StyledButton>
     );
 }

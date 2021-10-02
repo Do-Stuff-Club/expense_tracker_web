@@ -3,7 +3,7 @@
 // ===================================================================
 import React from 'react';
 import Link from 'next/link';
-import { Breadcrumbs } from '@material-ui/core';
+import { Breadcrumbs } from '@mui/material';
 
 // ===================================================================
 //                            Component

@@ -1,7 +1,7 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import { Chip } from '@material-ui/core';
+import { Chip } from '@mui/material';
 import React from 'react';
 import { alea } from 'seedrandom';
 

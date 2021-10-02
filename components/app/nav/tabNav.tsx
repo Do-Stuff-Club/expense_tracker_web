@@ -3,7 +3,7 @@
 // ===================================================================
 import React from 'react';
 import Link from 'next/link';
-import { Tabs, Tab } from '@material-ui/core';
+import { Tabs, Tab } from '@mui/material';
 import { AppNavPage, pageLink, pages, pageTitle } from './utils';
 import PropTypes from 'prop-types';
 
