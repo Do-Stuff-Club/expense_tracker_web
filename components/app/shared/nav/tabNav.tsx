@@ -44,7 +44,12 @@ export default function TabNav(props: TabNavProps): JSX.Element {
     else if (props.page == AppNavPage.EXPENSES) value = 1;
     else value = 2;
     return (
-        <Tabs value={value}>
+        <Tabs
+            value={value}
+            textColor='secondary'
+            indicatorColor='secondary'
+            centered
+        >
             {pages.map((page) => (
                 <Tab
                     key={page}
