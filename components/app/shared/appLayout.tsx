@@ -1,9 +1,9 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
+import { Box } from '@mui/material';
 import Head from 'next/head';
 import React from 'react';
-import styles from './../../pageLayout.module.css';
 import AppHeader from './appHeader';
 import { AppNavPage } from './nav/utils';
 // ===================================================================
@@ -33,15 +33,7 @@ export default function AppLayout(props: AppLayoutProps): JSX.Element {
                 />
             </Head>
             <AppHeader page={props.page}></AppHeader>
-            <div className={styles.outerContainer}>
-                <div></div>
-                <div
-                    className={props.center ? styles.center : styles.mainColumn}
-                >
-                    {props.children}
-                </div>
-                <div></div>
-            </div>
+            <Box sx={{ display: 'flex' }}>{props.children}</Box>
             <footer></footer>
         </>
     );

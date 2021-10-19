@@ -4,17 +4,18 @@
 import { useField } from 'formik';
 import React from 'react';
 import { Tag, TagState } from '../../../../../redux/tags/types';
+import { useSelector } from 'react-redux';
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/lab/Autocomplete';
 import TagChip from '../../../tags/tagChip';
+import { RootState } from '../../../../../redux/store';
 
 // ===================================================================
 //                            Component
 // ===================================================================
 type TagSelectorProps = {
     name: string;
-    tagState: TagState;
 };
 /**
  * Tag selector component. Must be used with
@@ -25,6 +26,10 @@ type TagSelectorProps = {
  */
 export default function FormTagSelector(props: TagSelectorProps): JSX.Element {
     const [, meta, helpers] = useField<ReadonlyArray<Tag>>(props.name);
+
+    const tagState: TagState = useSelector<RootState, TagState>(
+        (state) => state.tag,
+    );
 
     const { value } = meta;
     const { setValue } = helpers;
@@ -37,7 +42,7 @@ export default function FormTagSelector(props: TagSelectorProps): JSX.Element {
     return (
         <>
             <Autocomplete
-                options={Object.values(props.tagState.map)}
+                options={Object.values(tagState.map)}
                 getOptionLabel={(tag) => tag.name}
                 onChange={(event, newValue: Tag | null) => {
                     if (newValue && !value.includes(newValue)) {

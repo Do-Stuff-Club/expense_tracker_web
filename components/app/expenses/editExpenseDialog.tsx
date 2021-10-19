@@ -1,11 +1,21 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import { Dialog, DialogTitle, DialogContent } from '@mui/material';
+import {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+} from '@mui/material';
 import React from 'react';
 import { Expense } from '../../../redux/expenses/types';
 import { TagState } from '../../../redux/tags/types';
-import ExpenseForm, { ExpenseFormState } from './expenseForm';
+import {
+    ExpenseForm,
+    ExpenseFormActions,
+    ExpenseFormInputs,
+    ExpenseFormState,
+} from './expenseForm';
 
 // ===================================================================
 //                            Component
@@ -36,23 +46,27 @@ export default function EditExpenseDialog(
             aria-labelledby='form-dialog-title'
         >
             <DialogTitle id='form-dialog-title'>Edit Expense</DialogTitle>
-            <DialogContent>
-                <ExpenseForm
-                    initialState={{
-                        name: props.expense.name,
-                        price: props.expense.cost,
-                        date: new Date(props.expense.date),
-                        link: props.expense.link,
-                        tags: props.expense.tags,
-                    }}
-                    onSubmit={(formState) => {
-                        console.log('Submit!!');
-                        props.handleSubmit(formState);
-                        props.handleClose();
-                    }}
-                    tagState={props.tagState}
-                ></ExpenseForm>
-            </DialogContent>
+            <ExpenseForm
+                initialState={{
+                    name: props.expense.name,
+                    price: props.expense.cost,
+                    date: new Date(props.expense.date),
+                    link: props.expense.link,
+                    tags: props.expense.tags,
+                }}
+                onSubmit={(formState) => {
+                    console.log('Submit!!');
+                    props.handleSubmit(formState);
+                    props.handleClose();
+                }}
+            >
+                <DialogContent>
+                    <ExpenseFormInputs />
+                </DialogContent>
+                <DialogActions>
+                    <ExpenseFormActions onCancel={props.handleClose} />
+                </DialogActions>
+            </ExpenseForm>
         </Dialog>
     );
 }

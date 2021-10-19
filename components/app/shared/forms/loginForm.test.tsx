@@ -20,8 +20,10 @@ describe('LoginForm component', () => {
         );
 
         // Check that labels are rendered
-        expect(screen.getByText('Email')).toBeInTheDocument();
-        expect(screen.getByText('Password')).toBeInTheDocument();
+        // FIXME MUI renders the text label twice (once in a <label/> and once in a <span/>)
+        // so we query both and take the first one to check that the text is in the document.
+        expect(screen.getAllByText('Email')[0]).toBeInTheDocument();
+        expect(screen.getAllByText('Password')[0]).toBeInTheDocument();
 
         // Check that associated text fields exist
         expect(screen.getByLabelText('Email')).toBeInTheDocument();

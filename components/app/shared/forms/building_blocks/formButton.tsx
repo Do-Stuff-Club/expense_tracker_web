@@ -8,23 +8,7 @@ import styles from './formButton.module.css';
 // ===================================================================
 //                             Styling
 // ===================================================================
-const StyledButton = styled(Button)((props) =>
-    props.variant === 'text'
-        ? {
-              color: 'white',
-              '&:hover': {
-                  color: 'black',
-              },
-          }
-        : {
-              color: 'white',
-              border: '1px solid white',
-              '&:hover': {
-                  backgroundColor: 'white',
-                  color: '#4253B4',
-              },
-          },
-);
+const StyledButton = styled(Button)(); // FIXME customize later
 
 // ===================================================================
 //                            Component

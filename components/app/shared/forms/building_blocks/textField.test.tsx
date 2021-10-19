@@ -25,7 +25,9 @@ describe('TextField component', () => {
                 <TextField name='myField' label='Hello' />
             </Formik>,
         );
-        expect(screen.getByText('Hello')).toBeInTheDocument();
+        // FIXME MUI renders the text label twice (once in a <label/> and once in a <span/>)
+        // so we query both and take the first one to check that the text is in the document.
+        expect(screen.getAllByText('Hello')[0]).toBeInTheDocument();
     });
 
     it('has a text field associated with the label', () => {

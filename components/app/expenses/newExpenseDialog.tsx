@@ -1,10 +1,20 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import { Dialog, DialogTitle, DialogContent } from '@mui/material';
+import {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+} from '@mui/material';
 import React from 'react';
 import { TagState } from '../../../redux/tags/types';
-import ExpenseForm, { ExpenseFormState } from './expenseForm';
+import {
+    ExpenseForm,
+    ExpenseFormActions,
+    ExpenseFormInputs,
+    ExpenseFormState,
+} from './expenseForm';
 
 // ===================================================================
 //                            Component
@@ -34,23 +44,27 @@ export default function NewExpenseDialog(
             aria-labelledby='form-dialog-title'
         >
             <DialogTitle id='form-dialog-title'>Create Expense</DialogTitle>
-            <DialogContent>
-                <ExpenseForm
-                    initialState={{
-                        name: '',
-                        price: 0,
-                        date: new Date(),
-                        link: '',
-                        tags: [],
-                    }}
-                    onSubmit={(formState) => {
-                        console.log('Submit!!');
-                        props.handleSubmit(formState);
-                        props.handleClose();
-                    }}
-                    tagState={props.tagState}
-                ></ExpenseForm>
-            </DialogContent>
+            <ExpenseForm
+                initialState={{
+                    name: '',
+                    price: 0,
+                    date: new Date(),
+                    link: '',
+                    tags: [],
+                }}
+                onSubmit={(formState) => {
+                    console.log('Submit!!');
+                    props.handleSubmit(formState);
+                    props.handleClose();
+                }}
+            >
+                <DialogContent>
+                    <ExpenseFormInputs />
+                </DialogContent>
+                <DialogActions>
+                    <ExpenseFormActions onCancel={props.handleClose} />
+                </DialogActions>
+            </ExpenseForm>
         </Dialog>
     );
 }

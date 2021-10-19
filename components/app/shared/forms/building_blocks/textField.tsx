@@ -3,12 +3,12 @@
 // ===================================================================
 import { useField } from 'formik';
 import React from 'react';
-import textFieldStyles from './textField.module.css';
+import { TextField } from '@mui/material';
 
 // ===================================================================
 //                            Component
 // ===================================================================
-type TextFieldProps = {
+type FormTextFieldProps = {
     name: string;
     label: string;
     className?: string;
@@ -19,30 +19,20 @@ type TextFieldProps = {
  * Text field component with label and text input. Must be used with
  * <Formik/> context component
  *
- * @param {TextField} props - for the component
- * @returns {Element} TextField element
+ * @param {FormTextField} props - for the component
+ * @returns {Element} FormTextField element
  */
-export default function TextField({
-    className,
+export default function FormTextField({
     ...props
-}: TextFieldProps): JSX.Element {
+}: FormTextFieldProps): JSX.Element {
     const [field, meta] = useField<string>(props.name);
-    const styleClasses = className
-        ? [textFieldStyles.textField, className].join(' ')
-        : textFieldStyles.textField;
     return (
-        <>
-            <div className={styleClasses}>
-                <label htmlFor={props.name}>{props.label}</label>
-                <input id={props.name} {...field} {...props}></input>
-                {meta.touched && meta.error ? (
-                    <div className={textFieldStyles.formErrors}>
-                        {meta.error}
-                    </div>
-                ) : (
-                    <div />
-                )}
-            </div>
-        </>
+        <TextField
+            id={props.name}
+            error={meta.touched && meta.error != undefined}
+            helperText={meta.error}
+            {...field}
+            {...props}
+        ></TextField>
     );
 }

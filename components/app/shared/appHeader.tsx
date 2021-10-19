@@ -23,11 +23,19 @@ type AppHeaderProps = {
  */
 export default function AppHeader(props: AppHeaderProps): JSX.Element {
     return (
-        <AppBar position='static'>
-            <Toolbar>
-                <Typography variant='h6'>Expense Tracker</Typography>
-                <TabNav page={props.page} />
-            </Toolbar>
-        </AppBar>
+        <>
+            <AppBar
+                position='fixed'
+                sx={{
+                    zIndex: (theme) => theme.zIndex.drawer + 1,
+                }}
+            >
+                <Toolbar>
+                    <Typography variant='h6'>Expense Tracker</Typography>
+                    <TabNav page={props.page} />
+                </Toolbar>
+            </AppBar>
+            <Toolbar />
+        </>
     );
 }
