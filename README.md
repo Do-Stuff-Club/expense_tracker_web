@@ -20,6 +20,10 @@ Next, run the development server:
 yarn dev
 ```
 
+This will let you open the website on localhost:3000.
+
+Use VSCode to edit files, and install all suggested plugins.
+
 Other yarn scripts:
 
 | Name | Command | Description |
