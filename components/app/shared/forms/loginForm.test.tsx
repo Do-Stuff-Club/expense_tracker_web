@@ -33,7 +33,7 @@ describe('LoginForm component', () => {
         expect(screen.getByLabelText('Password')).toBeInTheDocument();
     });
 
-    it('has a Home button and Log In button', () => {
+    it('has a Back button and Log In button', () => {
         render(
             <LoginForm
                 initialState={{ email: '', password: '' }}
@@ -44,9 +44,9 @@ describe('LoginForm component', () => {
             </LoginForm>,
         );
 
-        // Check that Home button has important features
-        expect(screen.getByText('Home')).toBeInTheDocument();
-        expect(screen.getByText('Home').closest('a')).toHaveAttribute(
+        // Check that Back button has important features
+        expect(screen.getByText('Back')).toBeInTheDocument();
+        expect(screen.getByText('Back').closest('a')).toHaveAttribute(
             'href',
             '/',
         );
