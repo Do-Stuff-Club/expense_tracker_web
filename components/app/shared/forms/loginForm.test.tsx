@@ -2,7 +2,7 @@
 //                             Imports
 // ===================================================================
 import React from 'react';
-import LoginForm from './loginForm';
+import { LoginForm, LoginFormInputs, LoginFormActions } from './loginForm';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -16,7 +16,10 @@ describe('LoginForm component', () => {
             <LoginForm
                 initialState={{ email: '', password: '' }}
                 onSubmit={jest.fn()}
-            ></LoginForm>,
+            >
+                <LoginFormInputs />
+                <LoginFormActions />
+            </LoginForm>,
         );
 
         // Check that labels are rendered
@@ -35,7 +38,10 @@ describe('LoginForm component', () => {
             <LoginForm
                 initialState={{ email: '', password: '' }}
                 onSubmit={jest.fn()}
-            ></LoginForm>,
+            >
+                <LoginFormInputs />
+                <LoginFormActions />
+            </LoginForm>,
         );
 
         // Check that Home button has important features
@@ -58,7 +64,10 @@ describe('LoginForm component', () => {
                     password: 'supersecret',
                 }}
                 onSubmit={mockSubmitHandler}
-            ></LoginForm>,
+            >
+                <LoginFormInputs />
+                <LoginFormActions />
+            </LoginForm>,
         );
 
         userEvent.click(screen.getByText('Log In'));
@@ -80,7 +89,10 @@ describe('LoginForm component', () => {
             <LoginForm
                 initialState={{ email: '', password: '' }}
                 onSubmit={mockSubmitHandler}
-            ></LoginForm>,
+            >
+                <LoginFormInputs />
+                <LoginFormActions />
+            </LoginForm>,
         );
 
         userEvent.type(screen.getByLabelText('Email'), 'test@domain.com');
@@ -104,7 +116,10 @@ describe('LoginForm component', () => {
             <LoginForm
                 initialState={{ email: '', password: '' }}
                 onSubmit={mockSubmitHandler}
-            ></LoginForm>,
+            >
+                <LoginFormInputs />
+                <LoginFormActions />
+            </LoginForm>,
         );
 
         userEvent.type(screen.getByLabelText('Email'), 'test_domain.com');

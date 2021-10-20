@@ -3,7 +3,6 @@
 // ===================================================================
 import { Form, Formik } from 'formik';
 import React from 'react';
-import styles from './Form.module.css';
 import { FormProps } from './utils';
 import FormButton from './building_blocks/formButton';
 import TextField from './building_blocks/textField';
@@ -41,41 +40,52 @@ type LoginFormProps = FormProps<LoginFormState>;
 
 /**
  * Login Form for use on the login page. Users login using their email
- * and password.
+ * and password. This is the outer <form/>
+ * component that also provides the Formik context.
  *
  * @param {LoginFormProps} props - for the component
  * @returns {Element} LoginForm element
  */
-export default function LoginForm(props: LoginFormProps): JSX.Element {
+export function LoginForm(props: LoginFormProps): JSX.Element {
     return (
         <Formik
             initialValues={props.initialState}
             validate={validate}
             onSubmit={props.onSubmit}
         >
-            <Form noValidate className={styles.formContainer}>
-                <TextField
-                    name='email'
-                    label='Email'
-                    className={styles.textField}
-                />
-                <TextField
-                    name='password'
-                    label='Password'
-                    type='password'
-                    className={styles.textField}
-                />
-                <div
-                    className={`${styles.formButtonContainer} ${styles.homeButton}`}
-                >
-                    <FormButton href='/' name='Home' />
-                </div>
-                <div
-                    className={`${styles.formButtonContainer} ${styles.submitButton}`}
-                >
-                    <FormButton type='submit' name='Log In' />
-                </div>
-            </Form>
+            <Form noValidate>{props.children}</Form>
         </Formik>
+    );
+}
+
+/**
+ * Login Form inputs, including text fields, date pickers, tag selectors, etc.
+ * MUST be used as a child of a <LoginForm /> component.
+ * It can be an indirect child of an LoginForm.
+ *
+ * @returns {Element} LoginFormInputs element
+ */
+export function LoginFormInputs(): JSX.Element {
+    return (
+        <>
+            <TextField name='email' label='Email' />
+            <TextField name='password' label='Password' type='password' />
+        </>
+    );
+}
+
+/**
+ * Login Form action buttons, including submit and cancel.
+ * MUST be used as a child of a <LoginForm /> component.
+ * It can be an indirect child of an LoginForm.
+ *
+ * @returns {Element} LoginFormActions element
+ */
+export function LoginFormActions(): JSX.Element {
+    return (
+        <>
+            <FormButton name='Back' href='/' />
+            <FormButton type='submit' name='Log In' />
+        </>
     );
 }

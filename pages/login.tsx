@@ -10,10 +10,13 @@ import { loginAction } from '../redux/user/action';
 import TestComponent from '../components/debug';
 import PageLayout from '../components/pageLayout';
 import { loginCall } from '../api/user/call';
-import LoginForm, {
+import {
+    LoginForm,
+    LoginFormInputs,
+    LoginFormActions,
     LoginFormState,
 } from '../components/app/shared/forms/loginForm';
-import { Typography } from '@mui/material';
+import { Card, CardHeader, CardContent, CardActions } from '@mui/material';
 
 // ===================================================================
 //                            Component
@@ -53,8 +56,17 @@ function Login(props: LoginProps) {
 
     return (
         <PageLayout pageName='Expense Tracker Login' center={true}>
-            <Typography variant='h1'>Log In</Typography>
-            <LoginForm initialState={initialState} onSubmit={onSubmit} />
+            <Card sx={{ maxWidth: 275 }}>
+                <CardHeader title='Log In' />
+                <LoginForm initialState={initialState} onSubmit={onSubmit}>
+                    <CardContent>
+                        <LoginFormInputs />
+                    </CardContent>
+                    <CardActions>
+                        <LoginFormActions />
+                    </CardActions>
+                </LoginForm>
+            </Card>
             <TestComponent></TestComponent>
         </PageLayout>
     );
