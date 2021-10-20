@@ -18,7 +18,7 @@ import TagTreeView from '../../components/app/tags/tagTreeView';
 import TagActionPanel from '../../components/app/tags/tagActionPanel';
 import { Tag } from '../../redux/tags/types';
 import Debug from '../../components/debug';
-import AppLayout from '../../components/app/shared/appLayout';
+import AppLayout from '../../components/app/shared/layout/appLayout';
 import { AppNavPage } from '../../components/app/shared/nav/utils';
 
 // ===================================================================

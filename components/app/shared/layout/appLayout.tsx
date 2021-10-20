@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 import Head from 'next/head';
 import React from 'react';
 import AppHeader from './appHeader';
-import { AppNavPage } from './nav/utils';
+import { AppNavPage } from '../nav/utils';
 // ===================================================================
 //                            Component
 // ===================================================================

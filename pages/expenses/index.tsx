@@ -12,7 +12,7 @@ import { fetchTagsAction } from '../../redux/tags/action';
 import { createExpenseAction } from '../../redux/expenses/action';
 import ExpenseView from '../../components/app/expenses/expenseView';
 import { Expense } from '../../redux/expenses/types';
-import AppLayout from '../../components/app/shared/appLayout';
+import AppLayout from '../../components/app/shared/layout/appLayout';
 import { AppNavPage } from '../../components/app/shared/nav/utils';
 import ExpenseActionDrawer from '../../components/app/expenses/expenseActionDrawer';
 import { Box } from '@mui/material';
