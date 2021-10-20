@@ -9,6 +9,8 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoveIcon from '@material-ui/icons/ImportExport';
 import EditIcon from '@material-ui/icons/Edit';
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
 import NewTagDialog from './newTagDialog';
 import EditTagDialog from './editTagDialog';
 import {
@@ -45,6 +47,36 @@ function useDialog(): [boolean, () => void, () => void] {
     return [open, handleOpen, handleClose];
 }
 
+/**
+ * Moves tag from old parent to new parent.
+ *
+ * @param {Tag} tagToBeMoved - Tag | undefined
+ * @param {TagActionPanelProps} props - Props from Redux state
+ *
+ */
+function moveTagToNewParent(
+    tagToBeMoved: Tag | undefined,
+    props: TagActionPanelProps,
+) {
+    console.log(tagToBeMoved);
+    console.log(props.selectedTag);
+    if (tagToBeMoved == undefined) {
+        //FIXME - but also, that means i f'd up tag state because they shouldn't be allowed to click that button
+    } else if (tagToBeMoved == props.selectedTag) {
+        //FIXME - throw error message if they're not moving anything
+    } else {
+        updateTagCall({
+            name: tagToBeMoved.name,
+            headers: props.user.authHeaders,
+            parent_id: props.selectedTag?.id,
+            id: tagToBeMoved.id,
+        }).then(
+            (data) => props.updateTagAction(data),
+            (err) => console.log(err), //FIXME
+        );
+    }
+}
+
 // ===================================================================
 //                            Component
 // ===================================================================
@@ -70,6 +102,11 @@ export default function TagActionPanel(
 ): JSX.Element {
     const [newTagOpen, newTagHandleOpen, newTagHandleClose] = useDialog();
     const [editTagOpen, editTagHandleOpen, editTagHandleClose] = useDialog();
+    const [moveTag, setMoveTag] = useState<boolean>(false);
+    const [tagToBeMoved, setTagToBeMoved] = useState<Tag | undefined>(
+        undefined,
+    );
+
     return (
         <>
             <ButtonGroup
@@ -86,8 +123,29 @@ export default function TagActionPanel(
                 >
                     <EditIcon />
                 </IconButton>
-                <IconButton disabled={props.selectedTag == undefined}>
+                <IconButton
+                    disabled={props.selectedTag == undefined}
+                    onClick={() => {
+                        setMoveTag(true);
+                        setTagToBeMoved(props.selectedTag);
+                    }}
+                >
                     <MoveIcon />
+                </IconButton>
+                <IconButton
+                    disabled={moveTag == false}
+                    onClick={() => {
+                        moveTagToNewParent(tagToBeMoved, props);
+                        setMoveTag(false);
+                    }}
+                >
+                    <CheckIcon />
+                </IconButton>
+                <IconButton
+                    disabled={moveTag == false}
+                    onClick={() => setMoveTag(false)}
+                >
+                    <ClearIcon />
                 </IconButton>
                 <IconButton
                     disabled={props.selectedTag == undefined}
