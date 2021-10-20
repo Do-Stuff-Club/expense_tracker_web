@@ -13,7 +13,7 @@ import { loginCall } from '../api/user/call';
 import LoginForm, {
     LoginFormState,
 } from '../components/app/shared/forms/loginForm';
-import styles from '../styles/Home.module.css';
+import { Typography } from '@mui/material';
 
 // ===================================================================
 //                            Component
@@ -53,7 +53,7 @@ function Login(props: LoginProps) {
 
     return (
         <PageLayout pageName='Expense Tracker Login' center={true}>
-            <h1 className={styles.title}>Log In</h1>
+            <Typography variant='h1'>Log In</Typography>
             <LoginForm initialState={initialState} onSubmit={onSubmit} />
             <TestComponent></TestComponent>
         </PageLayout>

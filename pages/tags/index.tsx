@@ -3,8 +3,6 @@
 // ===================================================================
 import { RootState } from '../../redux/store';
 import { connect, ConnectedProps } from 'react-redux';
-import styles from '../../styles/Home.module.css';
-import tagStyles from './index.module.css';
 import withAuth from '../../components/app/shared/withAuthentication';
 import React, { useEffect, useState } from 'react';
 import { getTagsCall } from '../../api/tag/call';
@@ -20,6 +18,7 @@ import { Tag } from '../../redux/tags/types';
 import Debug from '../../components/debug';
 import AppLayout from '../../components/app/shared/layout/appLayout';
 import { AppNavPage } from '../../components/app/shared/nav/utils';
+import { Box } from '@mui/material';
 
 // ===================================================================
 //                            Component
@@ -62,27 +61,20 @@ function TagIndex(props: TagProps) {
 
     return (
         <AppLayout page={AppNavPage.TAGS}>
-            <main>
-                <h1 className={styles.title}>Tags!</h1>
-                <div className={tagStyles.tagsPageContainer}>
-                    <div className={tagStyles.tagActionContainer}>
-                        <TagActionPanel
-                            selectedTag={selectedTag}
-                            {...props}
-                        ></TagActionPanel>
-                    </div>
-                    <div className={tagStyles.tagsContainer}>
-                        <TagTreeView
-                            tags={props.tag}
-                            onSelect={(tag) => {
-                                console.log(tag);
-                                setSelectedTag(tag);
-                            }}
-                        ></TagTreeView>
-                    </div>
-                </div>
+            <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+                <TagActionPanel
+                    selectedTag={selectedTag}
+                    {...props}
+                ></TagActionPanel>
+                <TagTreeView
+                    tags={props.tag}
+                    onSelect={(tag) => {
+                        console.log(tag);
+                        setSelectedTag(tag);
+                    }}
+                ></TagTreeView>
                 <Debug />
-            </main>
+            </Box>
         </AppLayout>
     );
 }

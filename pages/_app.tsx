@@ -4,7 +4,6 @@
 import React from 'react';
 import { AppProps } from 'next/app';
 import { wrapper } from '../redux/store';
-import '../styles/globals.css';
 import AppThemeProvider from '../components/app/shared/theme/AppThemeProvider';
 
 // ===================================================================

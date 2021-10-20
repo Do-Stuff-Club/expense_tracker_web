@@ -5,9 +5,9 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { RootState } from '../redux/store';
 import { connect } from 'react-redux';
-import styles from '../styles/Home.module.css';
 import React from 'react';
 import PageLayout from '../components/pageLayout';
+import { Box, Typography } from '@mui/material';
 
 // ===================================================================
 //                            Component
@@ -29,15 +29,15 @@ function Home() {
                 <link rel='icon' href='/favicon.ico' />
             </Head>
 
-            <main className={styles.main}>
-                <h1 className={styles.title}>Welcome!</h1>
+            <Box>
+                <Typography variant='h1'>Welcome!</Typography>
                 <Link href='/login'>
                     <a>Login</a>
                 </Link>
                 <Link href='/sign_up'>
                     <a>Sign Up</a>
                 </Link>
-            </main>
+            </Box>
         </PageLayout>
     );
 }
