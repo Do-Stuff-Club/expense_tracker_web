@@ -148,7 +148,10 @@ export async function updateTagCall(
 
             return config;
         });
-        const reqParams: { name: string; parent_id?: number } = {
+        const reqParams: {
+            name: string;
+            parent_id?: number;
+        } = {
             name: params.name,
         };
         if (params.parent_id) {
