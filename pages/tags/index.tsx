@@ -13,12 +13,12 @@ import {
     deleteTagAction,
 } from '../../redux/tags/action';
 import TagTreeView from '../../components/app/tags/tagTreeView';
-import TagActionPanel from '../../components/app/tags/tagActionPanel';
 import { Tag } from '../../redux/tags/types';
 import Debug from '../../components/debug';
 import AppLayout from '../../components/app/shared/layout/appLayout';
 import { AppNavPage } from '../../components/app/shared/nav/utils';
 import { Box } from '@mui/material';
+import TagActionDrawer from '../../components/app/tags/tagActionDrawer';
 
 // ===================================================================
 //                            Component
@@ -61,11 +61,11 @@ function TagIndex(props: TagProps) {
 
     return (
         <AppLayout page={AppNavPage.TAGS}>
+            <TagActionDrawer
+                selectedTag={selectedTag}
+                {...props}
+            ></TagActionDrawer>
             <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
-                <TagActionPanel
-                    selectedTag={selectedTag}
-                    {...props}
-                ></TagActionPanel>
                 <TagTreeView
                     tags={props.tag}
                     onSelect={(tag) => {

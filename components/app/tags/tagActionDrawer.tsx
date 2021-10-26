@@ -6,6 +6,7 @@ import { Tag } from '../../../redux/tags/types';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import MoveIcon from '@mui/icons-material/SwapVert';
 import AppSidePanel from '../shared/layout/appSidePanel';
 import {
     createTagCall,
@@ -24,6 +25,11 @@ import {
 } from '@mui/material';
 import styled from '@mui/styled-engine';
 import { TagForm, TagFormActions, TagFormInputs } from './tagForm';
+import {
+    TagMoveForm,
+    TagMoveFormActions,
+    TagMoveFormInputs,
+} from './tagMoveForm';
 
 // ===================================================================
 //                         Helper Functions
@@ -167,6 +173,49 @@ export default function TagActionDrawer(
                         <TagFormActions onCancel={() => setExpanded(false)} />
                     </AccordionActions>
                 </TagForm>
+            </AppAccordion>
+            <AppAccordion
+                expanded={expanded === 'move'}
+                onChange={handleChange('move')}
+            >
+                <AccordionSummary
+                    aria-controls='panel1d-content'
+                    id='panel1d-header'
+                >
+                    <MoveIcon />
+                    <Typography>Move Tag</Typography>
+                </AccordionSummary>
+                <TagMoveForm
+                    initialState={{ toMove: undefined, newParent: undefined }}
+                    onSubmit={(formState) => {
+                        if (
+                            formState.toMove != undefined &&
+                            formState.newParent != undefined
+                        ) {
+                            updateTagCall({
+                                name: formState.toMove.name,
+                                headers: props.user.authHeaders,
+                                parent_id: formState.newParent.id,
+                                id: formState.toMove.id,
+                            }).then(
+                                (data) => props.updateTagAction(data),
+                                (err) => console.log(err), //FIXME
+                            );
+                        } else {
+                            //FIXME throw proper error message
+                            console.log('UNDEFINED TAGS IN MOVE TAG');
+                        }
+                    }}
+                >
+                    <AccordionDetails>
+                        <TagMoveFormInputs selectedTag={props.selectedTag} />
+                    </AccordionDetails>
+                    <AccordionActions>
+                        <TagMoveFormActions
+                            onCancel={() => setExpanded(false)}
+                        />
+                    </AccordionActions>
+                </TagMoveForm>
             </AppAccordion>
             <AppAccordion
                 expanded={expanded === 'delete'}

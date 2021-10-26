@@ -42,12 +42,11 @@ export default function FormTagSelector(props: TagSelectorProps): JSX.Element {
     return (
         <>
             <Autocomplete
+                multiple
                 options={Object.values(tagState.map)}
                 getOptionLabel={(tag) => tag.name}
-                onChange={(event, newValue: Tag | null) => {
-                    if (newValue && !value.includes(newValue)) {
-                        setValue([...value, newValue]);
-                    }
+                onChange={(event, newValue) => {
+                    setValue(newValue);
                 }}
                 renderInput={(params) => (
                     <TextField
@@ -56,14 +55,16 @@ export default function FormTagSelector(props: TagSelectorProps): JSX.Element {
                         variant='outlined'
                     ></TextField>
                 )}
+                renderTags={(tags) =>
+                    tags.map((tag, idx) => (
+                        <TagChip
+                            key={idx}
+                            label={tag.name}
+                            onDelete={() => onDeleteTag(tag)}
+                        ></TagChip>
+                    ))
+                }
             ></Autocomplete>
-            {value.map((tag, idx) => (
-                <TagChip
-                    key={idx}
-                    label={tag.name}
-                    onDelete={() => onDeleteTag(tag)}
-                ></TagChip>
-            ))}
         </>
     );
 }
