@@ -51,7 +51,18 @@ export const setTagInState = produce((draft: TagState, tag: Tag) => {
  */
 export const removeTagInState = produce((draft: TagState, tag: Tag) => {
     const castedDraft = castDraft(draft);
+
+    // delete tag from its parents' children if it has a parent
+    const parentId = castedDraft.map[tag.id].parentId;
+    if (parentId) {
+        castedDraft.map[parentId].childIds = castedDraft.map[
+            parentId
+        ].childIds.filter((id) => id != tag.id);
+    }
+
+    // delete tag itself
     delete castedDraft.map[tag.id];
+
     castedDraft.rootIds = draft.rootIds.filter((id) => id != tag.id);
 });
 
