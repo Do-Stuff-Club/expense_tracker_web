@@ -22,7 +22,18 @@ export const defaultTagState: TagState = {
  */
 export const setTagInState = produce((draft: TagState, tag: Tag) => {
     const castedDraft = castDraft(draft);
+    let oldParent;
+    if (castedDraft.map[tag.id]) {
+        oldParent = castedDraft.map[tag.id].parentId;
+    }
     castedDraft.map[tag.id] = castDraft(tag);
+
+    // if old parent is not equal to tag's parent, then must delete tag from old parent
+    if (oldParent && tag.parentId && oldParent !== tag.parentId) {
+        castedDraft.map[oldParent].childIds = castedDraft.map[
+            oldParent
+        ].childIds.filter((id) => id != tag.id);
+    }
 
     // FIXME clean up this mess
     if (
@@ -33,9 +44,12 @@ export const setTagInState = produce((draft: TagState, tag: Tag) => {
         castedDraft.map[tag.parentId].childIds.push(tag.id);
     }
 
+    // if tag has no parent and not included in root ids, add to root
     if (tag.parentId == undefined && !castedDraft.rootIds.includes(tag.id)) {
         castedDraft.rootIds.push(tag.id);
     }
+
+    // if tag has parent and included in tag ids, remove from root ids
     if (tag.parentId != undefined && castedDraft.rootIds.includes(tag.id)) {
         castedDraft.rootIds = castedDraft.rootIds.filter((id) => id != tag.id);
     }
@@ -53,10 +67,9 @@ export const removeTagInState = produce((draft: TagState, tag: Tag) => {
     const castedDraft = castDraft(draft);
 
     // delete tag from its parents' children if it has a parent
-    const parentId = castedDraft.map[tag.id].parentId;
-    if (parentId) {
-        castedDraft.map[parentId].childIds = castedDraft.map[
-            parentId
+    if (tag.parentId != undefined) {
+        castedDraft.map[tag.parentId].childIds = castedDraft.map[
+            tag.parentId
         ].childIds.filter((id) => id != tag.id);
     }
 
