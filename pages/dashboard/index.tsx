@@ -8,6 +8,8 @@ import { RootState } from '../../redux/store';
 import withAuth from '../../components/app/shared/withAuthentication';
 import AppLayout from '../../components/app/shared/layout/appLayout';
 import { AppNavPage } from '../../components/app/shared/nav/utils';
+import { Box } from '@mui/material';
+import PieChart from '../../components/app/dashboard/pieChart';
 
 // ===================================================================
 //                            Component
@@ -26,7 +28,23 @@ const connector = connect(stateToProps, {});
  * @returns {Element} Page element
  */
 function Dashboard() {
-    return <AppLayout page={AppNavPage.DASHBOARD}>HELLOOOO</AppLayout>;
+    return (
+        <AppLayout page={AppNavPage.DASHBOARD}>
+            <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+                <PieChart
+                    labels={['Red', 'Blue', 'Yellow']}
+                    values={[300, 50, 100]}
+                    colors={[
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)',
+                    ]}
+                    height={'150px'}
+                    width={'150px'}
+                ></PieChart>
+            </Box>
+        </AppLayout>
+    );
 }
 
 export default connector(withAuth(Dashboard));
