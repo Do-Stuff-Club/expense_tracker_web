@@ -14,7 +14,7 @@ export const loginAction = (
         payload: {
             loggedIn: true,
             id: data.id,
-            authHeaders: data.authHeaders,
+            // authHeaders: data.authHeaders,
         },
     });
 };

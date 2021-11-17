@@ -19,7 +19,7 @@ export const fetchTagsAction = (
         type: TagActionTypes.FETCH_TAGS,
         payload: {
             tags: data.tags,
-            authHeaders: data.authHeaders,
+            // authHeaders: data.authHeaders,
         },
     });
 };

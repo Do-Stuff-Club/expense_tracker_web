@@ -30,7 +30,7 @@ export type TagResponse = {
 };
 
 export type AllTagsData = {
-    authHeaders: AuthHeaders;
+    // authHeaders: AuthHeaders;
     tags: ReadonlyArray<Tag>;
 };
 

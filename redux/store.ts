@@ -38,19 +38,20 @@ const rootReducer = (state: RootState = defaultState, action: AppAction) => {
             return { ...state, ...action.payload };
         default:
             // Replace auth token on each request
-            if (
-                state.user.loggedIn &&
-                action.payload.authHeaders['access-token'] != '' // Only replace if access-token is not empty- that indicates batch mode
-            ) {
-                const stateWithAuth: RootState = {
-                    ...state,
-                    user: {
-                        ...state.user,
-                        authHeaders: action.payload.authHeaders,
-                    },
-                };
-                return combinedReducer(stateWithAuth, action);
-            } else return combinedReducer(state, action);
+            // if (
+            //     state.user.loggedIn &&
+            //     action.payload.authHeaders['access-token'] != '' // Only replace if access-token is not empty- that indicates batch mode
+            // ) {
+            //     const stateWithAuth: RootState = {
+            //         ...state,
+            //         user: {
+            //             ...state.user,
+            //             authHeaders: action.payload.authHeaders,
+            //         },
+            //     };
+            //     return combinedReducer(stateWithAuth, action);
+            // } else
+            return combinedReducer(state, action);
     }
 };
 

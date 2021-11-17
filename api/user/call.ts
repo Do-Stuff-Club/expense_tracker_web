@@ -3,6 +3,7 @@
 // ===================================================================
 import axios from 'axios';
 import { LoginParams, NewUserParams, UserData } from './types';
+import { post } from '../../services/httpClient';
 
 // ===================================================================
 //                             API Calls
@@ -61,23 +62,28 @@ export async function newUserCall(params: NewUserParams): Promise<UserData> {
  */
 export async function loginCall(params: LoginParams): Promise<UserData> {
     try {
-        const response = await axios({
-            method: 'post',
-            baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-            url: '/auth/sign_in',
-            params: params,
-        });
+        const data = await post('/auth/sign_in', {}, params);
 
         return Promise.resolve({
-            id: response.data.data.id,
-            authHeaders: {
-                client: response.headers['client'],
-                expiry: response.headers['expiry'],
-                uid: response.headers['uid'],
-                'access-token': response.headers['access-token'],
-                'token-type': response.headers['token-type'],
-            },
+            id: data.data.id,
         });
+        // const response = await axios({
+        //     method: 'post',
+        //     baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
+        //     url: '/auth/sign_in',
+        //     params: params,
+        // });
+
+        // return Promise.resolve({
+        //     id: response.data.data.id,
+        //     authHeaders: {
+        //         client: response.headers['client'],
+        //         expiry: response.headers['expiry'],
+        //         uid: response.headers['uid'],
+        //         'access-token': response.headers['access-token'],
+        //         'token-type': response.headers['token-type'],
+        //     },
+        // });
     } catch (error) {
         // if (error.response) {
         //     // The request was made and the server responded with a status code

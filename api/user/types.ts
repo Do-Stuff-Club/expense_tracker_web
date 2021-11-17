@@ -13,5 +13,5 @@ export interface LoginParams {
 
 export interface UserData {
     id: number;
-    authHeaders: AuthHeaders;
+    // authHeaders: AuthHeaders;
 }
