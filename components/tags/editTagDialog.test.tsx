@@ -14,11 +14,11 @@ describe('EditTagDialog component', () => {
     it('has a text field for the tag name', () => {
         render(
             <EditTagDialog
-                open = {true}
-                name = ''
-                handleClose = {() => 'beep'}
-                handleSubmit = {(name: string) => 'boop ' + name}
-            ></EditTagDialog>
+                open={true}
+                name=''
+                handleClose={() => 'beep'}
+                handleSubmit={(name: string) => 'boop ' + name}
+            ></EditTagDialog>,
         );
 
         // Check that the label is rendered
@@ -31,10 +31,10 @@ describe('EditTagDialog component', () => {
     it('renders the Edit Tag dialog title text', () => {
         render(
             <EditTagDialog
-                open = {true}
-                name = ''
-                handleClose = {jest.fn()}
-                handleSubmit = {jest.fn()}
+                open={true}
+                name=''
+                handleClose={jest.fn()}
+                handleSubmit={jest.fn()}
             ></EditTagDialog>,
         );
 
@@ -45,10 +45,10 @@ describe('EditTagDialog component', () => {
     it('has a cancel button', () => {
         render(
             <EditTagDialog
-                open = {true}
-                name = ''
-                handleClose = {jest.fn()}
-                handleSubmit = {jest.fn()}
+                open={true}
+                name=''
+                handleClose={jest.fn()}
+                handleSubmit={jest.fn()}
             ></EditTagDialog>,
         );
 
@@ -60,10 +60,10 @@ describe('EditTagDialog component', () => {
         const mockSubmitHandler = jest.fn();
         render(
             <EditTagDialog
-                open = {true}
-                name = 'Test Name'
-                handleClose = {jest.fn()}
-                handleSubmit = {mockSubmitHandler}
+                open={true}
+                name='Test Name'
+                handleClose={jest.fn()}
+                handleSubmit={mockSubmitHandler}
             ></EditTagDialog>,
         );
 
@@ -72,16 +72,16 @@ describe('EditTagDialog component', () => {
         await waitFor(() => {
             expect(mockSubmitHandler).toHaveBeenCalledWith('Test Name');
         });
-    })
+    });
 
     it('has a functioning submit button with valid user input', async () => {
         const mockSubmitHandler = jest.fn();
         render(
             <EditTagDialog
-                open = {true}
-                name = ''
-                handleClose = {jest.fn()}
-                handleSubmit = {mockSubmitHandler}
+                open={true}
+                name=''
+                handleClose={jest.fn()}
+                handleSubmit={mockSubmitHandler}
             ></EditTagDialog>,
         );
 
@@ -97,10 +97,10 @@ describe('EditTagDialog component', () => {
         const mockSubmitHandler = jest.fn();
         render(
             <EditTagDialog
-                open = {true}
-                name = 'Test Name'
-                handleClose = {jest.fn()}
-                handleSubmit = {mockSubmitHandler}
+                open={true}
+                name='Test Name'
+                handleClose={jest.fn()}
+                handleSubmit={mockSubmitHandler}
             ></EditTagDialog>,
         );
 
@@ -110,5 +110,5 @@ describe('EditTagDialog component', () => {
         await waitFor(() => {
             expect(mockSubmitHandler).not.toHaveBeenCalled();
         });
-    }); 
+    });
 });
