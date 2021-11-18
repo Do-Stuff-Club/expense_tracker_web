@@ -49,7 +49,7 @@ export default function EditTagDialog(props: EditTagDialogProps): JSX.Element {
                 >
                     <Form>
                         <label htmlFor='name'>Name</label>
-                        <Field name='name' type='text' />
+                        <Field name='name' id='name' type='text' />
                         <ErrorMessage name='name' />
 
                         <button type='submit'>Submit</button>
