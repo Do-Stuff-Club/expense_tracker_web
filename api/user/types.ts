@@ -1,5 +1,3 @@
-import { AuthHeaders } from '../../redux/user/types';
-
 export interface NewUserParams {
     email: string;
     password: string;
@@ -13,5 +11,4 @@ export interface LoginParams {
 
 export interface UserData {
     id: number;
-    // authHeaders: AuthHeaders;
 }

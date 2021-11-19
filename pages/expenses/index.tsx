@@ -50,19 +50,17 @@ function Expenses(props: ExpensesProps) {
     );
 
     useEffect(() => {
-        getTagsCall({
-            headers: props.user.authHeaders,
-        }).then(
+        getTagsCall().then(
             (data) => props.fetchTagsAction(data),
             (error) => console.log(error),
         );
     }, []); // Pass an empty array so it only fires once
     useEffect(() => {
-        getExpensesCall({
-            user_id: props.user.id,
-            headers: props.user.authHeaders,
-        }).then(
-            (data) => props.updateAllExpensesAction(data),
+        getExpensesCall(props.user.id).then(
+            (data) => {
+                console.log('GetExpenseCall success');
+                props.updateAllExpensesAction(data);
+            },
             (error) => console.log(error),
         );
     }, []); // Empty array so only fires once

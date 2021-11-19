@@ -8,8 +8,7 @@ export interface AuthHeaders {
 
 export interface UserState {
     loggedIn: boolean;
-    id: number;
-    authHeaders: AuthHeaders;
+    id: number | undefined;
 }
 
 export enum UserActionTypes {

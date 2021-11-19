@@ -1,7 +1,6 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import axios from 'axios';
 import { LoginParams, NewUserParams, UserData } from './types';
 import { post } from '../../services/httpClient';
 
@@ -17,22 +16,10 @@ import { post } from '../../services/httpClient';
  */
 export async function newUserCall(params: NewUserParams): Promise<UserData> {
     try {
-        const response = await axios({
-            method: 'post',
-            baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-            url: '/auth',
-            params: params,
-        });
+        const data = await post('/auth', {}, params);
 
         return Promise.resolve({
-            id: response.data.data.id,
-            authHeaders: {
-                client: response.headers['client'],
-                expiry: response.headers['expiry'],
-                uid: response.headers['uid'],
-                'access-token': response.headers['access-token'],
-                'token-type': response.headers['token-type'],
-            },
+            id: data.data.id,
         });
     } catch (error) {
         // if (error.response) {
@@ -67,23 +54,6 @@ export async function loginCall(params: LoginParams): Promise<UserData> {
         return Promise.resolve({
             id: data.data.id,
         });
-        // const response = await axios({
-        //     method: 'post',
-        //     baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-        //     url: '/auth/sign_in',
-        //     params: params,
-        // });
-
-        // return Promise.resolve({
-        //     id: response.data.data.id,
-        //     authHeaders: {
-        //         client: response.headers['client'],
-        //         expiry: response.headers['expiry'],
-        //         uid: response.headers['uid'],
-        //         'access-token': response.headers['access-token'],
-        //         'token-type': response.headers['token-type'],
-        //     },
-        // });
     } catch (error) {
         // if (error.response) {
         //     // The request was made and the server responded with a status code

@@ -2,17 +2,15 @@ import axios, { AxiosResponse } from 'axios';
 import { AuthHeaders } from '../redux/user/types';
 import { clearAuthInfo, getAuthInfo, storeAuthInfo } from './auth.helper';
 
-console.log(process.env);
-
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
-// const baseURL = 'https://expense-tracker-test-api.herokuapp.com/';
 
 /**
  * Makes a 'GET' request
- * @param url Request url
- * @param headers request headers
- * @param authRequest if true then auth info is automatically added (true by default)
- * @returns response data
+ *
+ * @param {string} url Request url
+ * @param {{ [key: string]: string | undefined }} headers request headers
+ * @param {boolean} authRequest if true then auth info is automatically added (true by default)
+ * @returns {Promise<any>} response data
  */
 export const get = async (
     url: string,
@@ -33,16 +31,17 @@ export const get = async (
 
 /**
  * Makes a 'POST' request
- * @param url Request url
- * @param headers request headers
- * @param params request body
- * @param authRequest if true then auth info is automatically added (true by default)
- * @returns response data
+ *
+ * @param {string} url Request url
+ * @param {{ [key: string]: string | undefined }} headers request headers
+ * @param {any} data request body
+ * @param {boolean} authRequest if true then auth info is automatically added (true by default)
+ * @returns {Promise<any>} response data
  */
 export const post = async (
     url: string,
     headers: { [key: string]: string | undefined },
-    params: any,
+    data: any,
     authRequest = true,
 ): Promise<any> => {
     console.log("Initiating 'POST' request");
@@ -53,7 +52,7 @@ export const post = async (
         url,
         baseURL,
         headers,
-        params,
+        data,
     });
 
     // store or clear auth info
@@ -65,11 +64,12 @@ export const post = async (
 
 /**
  * Makes a 'DELETE' request
- * @param url Request url
- * @param headers request headers
- * @param params request body
- * @param authRequest if true then auth info is automatically added (true by default)
- * @returns response data
+ *
+ * @param {string} url Request url
+ * @param {{ [key: string]: string | undefined }} headers request headers
+ * @param {any} params request body
+ * @param {boolean} authRequest if true then auth info is automatically added (true by default)
+ * @returns {Promise<any>} response data
  */
 export const httpDelete = async (
     url: string,
@@ -96,16 +96,17 @@ export const httpDelete = async (
 
 /**
  * Makes a 'PUT' request
- * @param url Request url
- * @param headers request headers
- * @param params request body
- * @param authRequest if true then auth info is automatically added (true by default)
- * @returns response data
+ *
+ * @param {string} url Request url
+ * @param {{ [key: string]: string | undefined }} headers request headers
+ * @param {any} data request body
+ * @param {boolean} authRequest if true then auth info is automatically added (true by default)
+ * @returns {Promise<any>} response data
  */
 export const put = async (
     url: string,
     headers: { [key: string]: string | undefined },
-    params: any,
+    data: any,
     authRequest = true,
 ): Promise<any> => {
     setAuthHeaders(headers, authRequest);
@@ -115,7 +116,7 @@ export const put = async (
         url,
         baseURL,
         headers,
-        params,
+        data,
     });
 
     // store or clear auth info
@@ -128,12 +129,13 @@ export const put = async (
 //#region internal methods
 /**
  * Handles auth info persistance, if response is 401 or 403 auth info is cleared, otherwise it's persisted
- * @param response http response
+ *
+ * @param {AxiosResponse} response http response
  */
 const handleAuthInfoPersistance = (response: AxiosResponse) => {
     if (response.status === 401 || response.status === 403) {
         clearAuthInfo();
-    } else {
+    } else if (response.headers['access-token']) {
         const authHeaders: AuthHeaders = {
             client: response.headers['client'],
             expiry: response.headers['expiry'],
@@ -147,8 +149,9 @@ const handleAuthInfoPersistance = (response: AxiosResponse) => {
 
 /**
  * Updates auth headers if necessary
- * @param headers request headers
- * @param authRequest is this an authenticated request (true by default)
+ *
+ * @param {{ [key:string]: string | undefined }} headers request headers
+ * @param {boolean} authRequest is this an authenticated request (true by default)
  */
 const setAuthHeaders = (
     headers: { [key: string]: string | undefined },
@@ -167,8 +170,9 @@ const setAuthHeaders = (
 
 /**
  * Handles http response
- * @param response Http response
- * @returns
+ *
+ * @param {AxiosResponse} response Http response
+ * @returns {any} response data
  */
 const handleRequestResponse = (response: AxiosResponse) => {
     if (response.status === 200) {

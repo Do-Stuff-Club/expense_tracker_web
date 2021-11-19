@@ -1,11 +1,51 @@
 import { AuthHeaders } from '../redux/user/types';
 
 const storageKey = 'exp-trk';
-
 const authStorageKey = `${storageKey}-auth`;
+const userIdStorageKey = `${storageKey}-user-id`;
+
+/**
+ * Stores logged in user id
+ *
+ * @param {string} id user id
+ */
+export const storeUserId = (id: string): void => {
+    if (window && localStorage) localStorage.setItem(userIdStorageKey, id);
+};
+
+/**
+ * Retrieves logged in user id from the storage
+ *
+ * @returns {string} logged in user id
+ */
+export const getUserId = (): string | undefined => {
+    if (window && localStorage) {
+        const userId = localStorage.getItem(userIdStorageKey);
+        return userId || undefined;
+    }
+    return undefined;
+};
+
+/**
+ * Checks if user is authenticated
+ *
+ * @returns {boolean} true if user is authenticated, false otherwise
+ */
+export const isAuthenticated = (): boolean => {
+    const authInfo = getAuthInfo();
+    if (authInfo) {
+        if (authInfo['access-token'])
+            // sanity check
+            return true;
+    }
+
+    return false;
+};
+
 /**
  * Persists auth info
- * @param authInfo Auth information
+ *
+ * @param {AuthHeaders} authInfo Auth information
  */
 export const storeAuthInfo = (authInfo: AuthHeaders): void => {
     if (authInfo) {
@@ -17,7 +57,8 @@ export const storeAuthInfo = (authInfo: AuthHeaders): void => {
 
 /**
  * Returns stored auth info
- * @returns Auth information
+ *
+ * @returns {AuthHeaders | undefined} Auth information
  */
 export const getAuthInfo = (): AuthHeaders | undefined => {
     if (localStorage) {

@@ -5,13 +5,13 @@ import {
     CreateExpenseParams,
     DeleteExpenseParams,
     ExpenseResponse,
-    GetExpenseParams,
     OneExpenseData,
     UpdateExpenseParams,
 } from './types';
 import { Expense } from '../../redux/expenses/types';
 import { Tag } from '../../redux/tags/types';
 import { TagResponse } from '../tag/types';
+import { get, httpDelete, post } from '../../services/httpClient';
 
 //====================================================
 // Export Functions
@@ -19,49 +19,36 @@ import { TagResponse } from '../tag/types';
 /**
  * API call to fetch all expense information.
  *
- * @param {GetExpenseParams} params - input parameters from the page
+ * @param {number | undefined} userId - input parameters from the page
  * @returns {Promise<AllExpensesData>} promise with data to send to Redux, if successful.
  */
 export async function getExpensesCall(
-    params: GetExpenseParams,
+    userId: number | undefined,
 ): Promise<AllExpensesData> {
     try {
-        const response = await axios({
-            method: 'get',
-            baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-            url: '/purchases',
-            params: { user_id: params.user_id },
-            headers: params.headers,
+        const data = await get(`/purchases?user_id=${userId}`, {});
+
+        const expenses = data.map((expense: string) => {
+            const obj: ExpenseResponse = JSON.parse(expense);
+            const tags: ReadonlyArray<Tag> = obj.tags.map(
+                (tag: TagResponse) => ({
+                    id: tag.id,
+                    name: tag.name,
+                    childIds: [],
+                }),
+            );
+            return {
+                id: obj.id,
+                name: obj.name,
+                cost: obj.cost,
+                date: obj.order_date,
+                link: obj.link,
+                tags: tags,
+            };
         });
-        const expenses: ReadonlyArray<Expense> = response.data.map(
-            (expense: string) => {
-                const obj: ExpenseResponse = JSON.parse(expense);
-                const tags: ReadonlyArray<Tag> = obj.tags.map(
-                    (tag: TagResponse) => ({
-                        id: tag.id,
-                        name: tag.name,
-                        childIds: [],
-                    }),
-                );
-                return {
-                    id: obj.id,
-                    name: obj.name,
-                    cost: obj.cost,
-                    date: obj.order_date,
-                    link: obj.link,
-                    tags: tags,
-                };
-            },
-        );
+
         return Promise.resolve({
-            authHeaders: {
-                client: response.headers['client'],
-                expiry: response.headers['expiry'],
-                uid: response.headers['uid'],
-                'access-token': response.headers['access-token'],
-                'token-type': response.headers['token-type'],
-            },
-            expenses: expenses,
+            expenses,
         });
     } catch (error) {
         return Promise.reject(error);
@@ -78,26 +65,10 @@ export async function createExpenseCall(
     params: CreateExpenseParams,
 ): Promise<OneExpenseData> {
     try {
-        // Format nested params correctly
-        // FIXME maybe let's move off axios since it has this stupid bug
-        axios.interceptors.request.use((config) => {
-            window.console.log(config);
-
-            config.paramsSerializer = (params) => {
-                return qs.stringify(params, {
-                    arrayFormat: 'brackets',
-                    encode: false,
-                });
-            };
-
-            return config;
-        });
-
-        const response = await axios({
-            method: 'post',
-            baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-            url: '/purchases',
-            params: {
+        const data = await post(
+            '/purchases',
+            {},
+            {
                 purchase: {
                     name: params.name,
                     cost: params.cost,
@@ -106,11 +77,11 @@ export async function createExpenseCall(
                     tag_ids: params.tags.map((tag) => tag.id),
                 },
             },
-            headers: params.headers,
-        });
+        );
 
-        console.log(response.data);
-        const obj: ExpenseResponse = response.data;
+        console.log('POST /purchases ', data);
+
+        const obj: ExpenseResponse = data;
         const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
             id: tag.id,
             name: tag.name,
@@ -125,13 +96,6 @@ export async function createExpenseCall(
             tags: tags,
         };
         return Promise.resolve({
-            authHeaders: {
-                client: response.headers['client'],
-                expiry: response.headers['expiry'],
-                uid: response.headers['uid'],
-                'access-token': response.headers['access-token'],
-                'token-type': response.headers['token-type'],
-            },
             expense: expense,
         });
     } catch (error) {
@@ -149,40 +113,26 @@ export async function deleteExpenseCall(
     params: DeleteExpenseParams,
 ): Promise<AllExpensesData> {
     try {
-        const response = await axios({
-            method: 'delete',
-            baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-            url: '/purchases/' + params.id,
-            headers: params.headers,
+        const data = await httpDelete(`/purchases/${params.id}`, {}, undefined);
+        const expenses: ReadonlyArray<Expense> = data.map((expense: string) => {
+            const obj: ExpenseResponse = JSON.parse(expense);
+            const tags: ReadonlyArray<Tag> = obj.tags.map(
+                (tag: TagResponse) => ({
+                    id: tag.id,
+                    name: tag.name,
+                    childIds: [],
+                }),
+            );
+            return {
+                id: obj.id,
+                name: obj.name,
+                cost: obj.cost,
+                date: obj.order_date,
+                link: obj.link,
+                tags: tags,
+            };
         });
-        const expenses: ReadonlyArray<Expense> = response.data.map(
-            (expense: string) => {
-                const obj: ExpenseResponse = JSON.parse(expense);
-                const tags: ReadonlyArray<Tag> = obj.tags.map(
-                    (tag: TagResponse) => ({
-                        id: tag.id,
-                        name: tag.name,
-                        childIds: [],
-                    }),
-                );
-                return {
-                    id: obj.id,
-                    name: obj.name,
-                    cost: obj.cost,
-                    date: obj.order_date,
-                    link: obj.link,
-                    tags: tags,
-                };
-            },
-        );
         return Promise.resolve({
-            authHeaders: {
-                client: response.headers['client'],
-                expiry: response.headers['expiry'],
-                uid: response.headers['uid'],
-                'access-token': response.headers['access-token'],
-                'token-type': response.headers['token-type'],
-            },
             expenses: expenses,
         });
     } catch (error) {

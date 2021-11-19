@@ -3,11 +3,6 @@ import { Tag } from '../../redux/tags/types';
 import { AuthHeaders } from '../../redux/user/types';
 import { TagResponse } from '../tag/types';
 
-export interface GetExpenseParams {
-    user_id: number;
-    headers: AuthHeaders;
-}
-
 export interface CreateExpenseParams {
     name: string;
     cost: number;
@@ -42,11 +37,9 @@ export interface ExpenseResponse {
 }
 
 export interface AllExpensesData {
-    authHeaders: AuthHeaders;
     expenses: ReadonlyArray<Expense>;
 }
 
 export interface OneExpenseData {
-    authHeaders: AuthHeaders;
     expense: Expense;
 }

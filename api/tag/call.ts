@@ -40,14 +40,12 @@ function tagFromResponse(resp: TagResponse): Tag {
 /**
  * API call to fetch all tag information.
  *
- * @param {GetTagParams} params - input parameters from the page
  * @returns {Promise<AllTagsData>} promise with data to send to Redux, if successful.
  */
-export async function getTagsCall(params: GetTagParams): Promise<AllTagsData> {
+export async function getTagsCall(): Promise<AllTagsData> {
     try {
         const data = await get('/tags', {});
-        // eslint-disable-next-line no-debugger
-        debugger;
+
         const tags = data.map((tag: string) =>
             tagFromResponse(JSON.parse(tag)),
         );
@@ -55,26 +53,6 @@ export async function getTagsCall(params: GetTagParams): Promise<AllTagsData> {
         return Promise.resolve({
             tags,
         });
-        // const response = await axios({
-        //     method: 'get',
-        //     baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-        //     url: '/tags',
-        //     headers: params.headers,
-        // });
-        // const tags: ReadonlyArray<Tag> = response.data.map((tag: string) => {
-        //     const resp: TagResponse = JSON.parse(tag);
-        //     return tagFromResponse(resp);
-        // });
-        // return Promise.resolve({
-        //     authHeaders: {
-        //         client: response.headers['client'],
-        //         expiry: response.headers['expiry'],
-        //         uid: response.headers['uid'],
-        //         'access-token': response.headers['access-token'],
-        //         'token-type': response.headers['token-type'],
-        //     },
-        //     tags: tags,
-        // });
     } catch (error) {
         return Promise.reject(error);
     }
