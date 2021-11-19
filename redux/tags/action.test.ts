@@ -34,20 +34,12 @@ describe('fetchTagsAction()', () => {
     it('creates a single FETCH_TAGS action when it resolves', () => {
         const testInput: AllTagsData = {
             tags: [],
-            authHeaders: {
-                'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                'token-type': 'Bearer',
-                client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                expiry: '1618718924',
-                uid: 'test@test.org',
-            },
         };
         const expectedActions = [
             {
                 type: TagActionTypes.FETCH_TAGS,
                 payload: {
                     tags: testInput.tags,
-                    authHeaders: testInput.authHeaders,
                 },
             },
         ];

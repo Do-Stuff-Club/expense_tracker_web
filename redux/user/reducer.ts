@@ -3,7 +3,7 @@ import { UserAction, UserActionTypes, UserState } from './types';
 
 export const defaultUserState: UserState = {
     loggedIn: false,
-    id: -1,
+    id: undefined,
 };
 
 /**
@@ -22,6 +22,12 @@ export default function user(
         case UserActionTypes.LOGIN:
             return action.payload;
         default:
-            return { ...state, id: parseInt(getUserId() || '') };
+            return {
+                ...state,
+                id:
+                    getUserId() !== undefined
+                        ? parseInt(getUserId() as string)
+                        : undefined,
+            };
     }
 }

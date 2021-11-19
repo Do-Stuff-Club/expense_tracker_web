@@ -29,13 +29,6 @@ describe('loginAction', () => {
     it('creates a single LOGIN action when it resolves', () => {
         const testInput: UserData = {
             id: 42,
-            authHeaders: {
-                'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                'token-type': 'Bearer',
-                client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                expiry: '1618718924',
-                uid: 'test@test.org',
-            },
         };
         const expectedActions = [
             {
@@ -43,7 +36,6 @@ describe('loginAction', () => {
                 payload: {
                     loggedIn: true,
                     id: testInput.id,
-                    authHeaders: testInput.authHeaders,
                 },
             },
         ];
