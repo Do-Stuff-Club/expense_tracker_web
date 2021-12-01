@@ -7,7 +7,6 @@ import {
     AllTagsData,
     CreateTagParams,
     DeleteTagParams,
-    GetTagParams,
     OneTagData,
     TagResponse,
     UpdateTagParams,

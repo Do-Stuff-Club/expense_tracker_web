@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosResponse } from 'axios';
 import { AuthHeaders } from '../redux/user/types';
 import { clearAuthInfo, getAuthInfo, storeAuthInfo } from './auth.helper';
@@ -8,7 +10,7 @@ const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
  * Makes a 'GET' request
  *
  * @param {string} url Request url
- * @param {{ [key: string]: string | undefined }} headers request headers
+ * @param {Object.<string, string | undefined>} headers request headers
  * @param {boolean} authRequest if true then auth info is automatically added (true by default)
  * @returns {Promise<any>} response data
  */
@@ -33,7 +35,7 @@ export const get = async (
  * Makes a 'POST' request
  *
  * @param {string} url Request url
- * @param {{ [key: string]: string | undefined }} headers request headers
+ * @param {Object.<string, string | undefined>} headers request headers
  * @param {any} data request body
  * @param {boolean} authRequest if true then auth info is automatically added (true by default)
  * @returns {Promise<any>} response data
@@ -66,7 +68,7 @@ export const post = async (
  * Makes a 'DELETE' request
  *
  * @param {string} url Request url
- * @param {{ [key: string]: string | undefined }} headers request headers
+ * @param {Object.<string, string | undefined>} headers request headers
  * @param {any} params request body
  * @param {boolean} authRequest if true then auth info is automatically added (true by default)
  * @returns {Promise<any>} response data
@@ -98,7 +100,7 @@ export const httpDelete = async (
  * Makes a 'PUT' request
  *
  * @param {string} url Request url
- * @param {{ [key: string]: string | undefined }} headers request headers
+ * @param {Object.<string, string | undefined>} headers request headers
  * @param {any} data request body
  * @param {boolean} authRequest if true then auth info is automatically added (true by default)
  * @returns {Promise<any>} response data
@@ -150,7 +152,7 @@ const handleAuthInfoPersistance = (response: AxiosResponse) => {
 /**
  * Updates auth headers if necessary
  *
- * @param {{ [key:string]: string | undefined }} headers request headers
+ * @param {Object.<string, string | undefined>} headers request headers
  * @param {boolean} authRequest is this an authenticated request (true by default)
  */
 const setAuthHeaders = (
