@@ -1,8 +1,14 @@
-import { AuthHeaders } from '../redux/user/types';
-
 const storageKey = 'exp-trk';
 const authStorageKey = `${storageKey}-auth`;
 const userIdStorageKey = `${storageKey}-user-id`;
+
+export type AuthHeaders = {
+    client: string;
+    expiry: string;
+    uid: string;
+    'access-token': string;
+    'token-type': string;
+};
 
 /**
  * Stores logged in user id

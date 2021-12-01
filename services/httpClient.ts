@@ -1,8 +1,16 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// ===================================================================
+//                             Imports
+// ===================================================================
 import axios, { AxiosResponse } from 'axios';
-import { AuthHeaders } from '../redux/user/types';
-import { clearAuthInfo, getAuthInfo, storeAuthInfo } from './auth.helper';
+import {
+    AuthHeaders,
+    clearAuthInfo,
+    getAuthInfo,
+    storeAuthInfo,
+} from './auth.helper';
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -115,6 +123,38 @@ export const put = async (
 
     const response = await axios({
         method: 'put',
+        url,
+        baseURL,
+        headers,
+        data,
+    });
+
+    // store or clear auth info
+    handleAuthInfoPersistance(response);
+
+    // handle http response
+    return handleRequestResponse(response);
+};
+
+/**
+ * Makes a 'PATCH' request
+ *
+ * @param {string} url Request url
+ * @param {Object.<string, string | undefined>} headers request headers
+ * @param {any} data request body
+ * @param {boolean} authRequest if true then auth info is automatically added (true by default)
+ * @returns {Promise<any>} response data
+ */
+export const patch = async (
+    url: string,
+    headers: { [key: string]: string | undefined },
+    data: any,
+    authRequest = true,
+): Promise<any> => {
+    setAuthHeaders(headers, authRequest);
+
+    const response = await axios({
+        method: 'patch',
         url,
         baseURL,
         headers,

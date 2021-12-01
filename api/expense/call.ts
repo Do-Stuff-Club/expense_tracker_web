@@ -1,5 +1,3 @@
-import axios from 'axios';
-import qs from 'qs';
 import {
     AllExpensesData,
     CreateExpenseParams,
@@ -11,7 +9,7 @@ import {
 import { Expense } from '../../redux/expenses/types';
 import { Tag } from '../../redux/tags/types';
 import { TagResponse } from '../tag/types';
-import { get, httpDelete, post } from '../../services/httpClient';
+import { get, httpDelete, post, put } from '../../services/httpClient';
 
 //====================================================
 // Export Functions
@@ -150,36 +148,19 @@ export async function updateExpenseCall(
     params: UpdateExpenseParams,
 ): Promise<OneExpenseData> {
     try {
-        // Format nested params correctly
-        // FIXME maybe let's move off axios since it has this stupid bug
-        axios.interceptors.request.use((config) => {
-            window.console.log(config);
-
-            config.paramsSerializer = (params) => {
-                return qs.stringify(params, {
-                    arrayFormat: 'brackets',
-                    encode: false,
-                });
-            };
-
-            return config;
-        });
-        const response = await axios({
-            method: 'put',
-            baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-            url: '/purchases/' + params.expense.id,
-            params: {
-                purchase: {
-                    name: params.expense.name,
-                    cost: params.expense.cost,
-                    order_date: params.expense.date,
-                    link: params.expense.link,
-                    tag_ids: params.expense.tags.map((tag) => tag.id),
-                },
+        const data = await put(
+            `/purchases/${params.expense.id}`,
+            {},
+            {
+                name: params.expense.name,
+                cost: params.expense.cost,
+                order_date: params.expense.date,
+                link: params.expense.link,
+                tag_ids: params.expense.tags.map((tag) => tag.id),
             },
-        });
+        );
 
-        const obj: ExpenseResponse = response.data;
+        const obj: ExpenseResponse = data;
         const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
             id: tag.id,
             name: tag.name,
@@ -194,13 +175,6 @@ export async function updateExpenseCall(
             tags: tags,
         };
         return Promise.resolve({
-            authHeaders: {
-                client: response.headers['client'],
-                expiry: response.headers['expiry'],
-                uid: response.headers['uid'],
-                'access-token': response.headers['access-token'],
-                'token-type': response.headers['token-type'],
-            },
             expense: expense,
         });
     } catch (error) {

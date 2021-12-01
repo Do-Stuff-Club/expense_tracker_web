@@ -1,4 +1,3 @@
-import { AuthHeaders } from '../user/types';
 import { Tag } from '../tags/types';
 
 export interface Expense {
@@ -25,7 +24,6 @@ export interface CreateExpenseAction {
     type: ExpenseActionTypes.CREATE_EXPENSE;
     payload: {
         expense: Expense;
-        authHeaders: AuthHeaders;
     };
 }
 
@@ -33,7 +31,6 @@ export interface UpdateAllExpensesAction {
     type: ExpenseActionTypes.UPDATE_ALL_EXPENSES;
     payload: {
         expenses: ReadonlyArray<Expense>;
-        authHeaders: AuthHeaders;
     };
 }
 
@@ -41,7 +38,6 @@ export interface UpdateOneExpenseAction {
     type: ExpenseActionTypes.UPDATE_ONE_EXPENSE;
     payload: {
         expense: Expense;
-        authHeaders: AuthHeaders;
     };
 }
 
@@ -49,7 +45,6 @@ export interface DeleteExpenseAction {
     type: ExpenseActionTypes.DELETE_EXPENSE;
     payload: {
         expense: Expense;
-        authHeaders: AuthHeaders;
     };
 }
 

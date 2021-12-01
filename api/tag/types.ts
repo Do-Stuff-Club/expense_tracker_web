@@ -1,9 +1,4 @@
 import { Tag } from '../../redux/tags/types';
-import { AuthHeaders } from '../../redux/user/types';
-
-export type GetTagParams = {
-    headers: AuthHeaders;
-};
 
 export type CreateTagParams = {
     name: string;
@@ -32,6 +27,5 @@ export type AllTagsData = {
 };
 
 export type OneTagData = {
-    authHeaders: AuthHeaders;
     tag: Tag;
 };

@@ -1,11 +1,3 @@
-export interface AuthHeaders {
-    client: string;
-    expiry: string;
-    uid: string;
-    'access-token': string;
-    'token-type': string;
-}
-
 export interface UserState {
     loggedIn: boolean;
     id: number | undefined;

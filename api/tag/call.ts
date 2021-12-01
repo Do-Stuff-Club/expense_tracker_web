@@ -12,7 +12,7 @@ import {
     UpdateTagParams,
 } from './types';
 import { Tag } from '../../redux/tags/types';
-import { get } from '../../services/httpClient';
+import { get, httpDelete, patch, post, put } from '../../services/httpClient';
 // ===================================================================
 //                       Helper Functions
 // ===================================================================
@@ -67,43 +67,15 @@ export async function createTagCall(
     params: CreateTagParams,
 ): Promise<OneTagData> {
     try {
-        // Format nested params correctly
-        // FIXME maybe let's move off axios since it has this stupid bug
-        axios.interceptors.request.use((config) => {
-            window.console.log(config);
-
-            config.paramsSerializer = (params) => {
-                return qs.stringify(params, {
-                    arrayFormat: 'brackets',
-                    encode: false,
-                });
-            };
-
-            return config;
-        });
-        const reqParams: { name: string; parent_id?: number } = {
-            name: params.name,
-        };
-        if (params.parent_id) {
-            reqParams.parent_id = params.parent_id;
-        }
-        const response = await axios({
-            method: 'post',
-            baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-            url: '/tags/',
-            params: reqParams,
-        });
-        const resp: TagResponse = response.data;
+        const data = await post(
+            `/tags/?name=${params.name}&parent_id=${params.parent_id}`,
+            {},
+            undefined,
+        );
+        const resp: TagResponse = data;
         const tag = tagFromResponse(resp);
 
         return Promise.resolve({
-            authHeaders: {
-                client: response.headers['client'],
-                expiry: response.headers['expiry'],
-                uid: response.headers['uid'],
-                'access-token': response.headers['access-token'],
-                'token-type': response.headers['token-type'],
-            },
             tag: tag,
         });
     } catch (error) {
@@ -121,46 +93,16 @@ export async function updateTagCall(
     params: UpdateTagParams,
 ): Promise<OneTagData> {
     try {
-        // Format nested params correctly
-        // FIXME maybe let's move off axios since it has this stupid bug
-        axios.interceptors.request.use((config) => {
-            window.console.log(config);
+        const data = await put(
+            `/tags/${params.id}?name=${params.name}&=${params.parent_id}`,
+            {},
+            undefined,
+        );
 
-            config.paramsSerializer = (params) => {
-                return qs.stringify(params, {
-                    arrayFormat: 'brackets',
-                    encode: false,
-                });
-            };
-
-            return config;
-        });
-        const reqParams: {
-            name: string;
-            parent_id?: number;
-        } = {
-            name: params.name,
-        };
-        if (params.parent_id) {
-            reqParams.parent_id = params.parent_id;
-        }
-        const response = await axios({
-            method: 'patch',
-            baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-            url: '/tags/' + params.id,
-            params: reqParams,
-        });
-        const resp: TagResponse = response.data;
+        const resp: TagResponse = data;
         const tag = tagFromResponse(resp);
 
         return Promise.resolve({
-            authHeaders: {
-                client: response.headers['client'],
-                expiry: response.headers['expiry'],
-                uid: response.headers['uid'],
-                'access-token': response.headers['access-token'],
-                'token-type': response.headers['token-type'],
-            },
             tag: tag,
         });
     } catch (error) {
@@ -178,36 +120,11 @@ export async function deleteTagCall(
     params: DeleteTagParams,
 ): Promise<OneTagData> {
     try {
-        // Format nested params correctly
-        // FIXME maybe let's move off axios since it has this stupid bug
-        axios.interceptors.request.use((config) => {
-            window.console.log(config);
-
-            config.paramsSerializer = (params) => {
-                return qs.stringify(params, {
-                    arrayFormat: 'brackets',
-                    encode: false,
-                });
-            };
-
-            return config;
-        });
-        const response = await axios({
-            method: 'delete',
-            baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
-            url: '/tags/' + params.id,
-        });
-        const resp: TagResponse = response.data;
+        const data = await httpDelete(`/tags/${params.id}`, {}, undefined);
+        const resp: TagResponse = data;
         const tag = tagFromResponse(resp);
 
         return Promise.resolve({
-            authHeaders: {
-                client: response.headers['client'],
-                expiry: response.headers['expiry'],
-                uid: response.headers['uid'],
-                'access-token': response.headers['access-token'],
-                'token-type': response.headers['token-type'],
-            },
             tag: tag,
         });
     } catch (error) {
