@@ -1,8 +1,6 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import axios from 'axios';
-import qs from 'qs';
 import {
     AllTagsData,
     CreateTagParams,
@@ -12,7 +10,7 @@ import {
     UpdateTagParams,
 } from './types';
 import { Tag } from '../../redux/tags/types';
-import { get, httpDelete, patch, post, put } from '../../services/httpClient';
+import { get, httpDelete, post, put } from '../../services/httpClient';
 // ===================================================================
 //                       Helper Functions
 // ===================================================================
