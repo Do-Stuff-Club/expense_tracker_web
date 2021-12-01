@@ -33,7 +33,7 @@
         "j-toker": "^0.0.10-beta3",
         "jquery": "^3.5.1",
         "jquery-deparam": "^0.5.3",
-        "next": "10.0.4",
+        "next": "12",
         "next-redux-wrapper": "^6.0.2",
         "prop-types": "^15.7.2",
         "qs": "^6.9.5",
