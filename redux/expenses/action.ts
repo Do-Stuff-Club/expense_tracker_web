@@ -13,7 +13,6 @@ export const updateAllExpensesAction = (
         type: ExpenseActionTypes.UPDATE_ALL_EXPENSES,
         payload: {
             expenses: data.expenses,
-            authHeaders: data.authHeaders,
         },
     });
 };
@@ -27,7 +26,6 @@ export const updateOneExpenseAction = (
         type: ExpenseActionTypes.UPDATE_ONE_EXPENSE,
         payload: {
             expense: data.expense,
-            authHeaders: data.authHeaders,
         },
     });
 };
@@ -41,7 +39,6 @@ export const createExpenseAction = (
         type: ExpenseActionTypes.CREATE_EXPENSE,
         payload: {
             expense: data.expense,
-            authHeaders: data.authHeaders,
         },
     });
 };

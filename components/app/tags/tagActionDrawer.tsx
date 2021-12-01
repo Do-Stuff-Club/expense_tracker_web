@@ -106,7 +106,6 @@ export default function TagActionDrawer(
                     onSubmit={(formState) => {
                         createTagCall({
                             name: formState.name,
-                            headers: props.user.authHeaders,
                             parent_id: props.selectedTag
                                 ? props.selectedTag.id
                                 : undefined,
@@ -151,7 +150,6 @@ export default function TagActionDrawer(
                         } else {
                             updateTagCall({
                                 name: formState.name,
-                                headers: props.user.authHeaders,
                                 parent_id: props.selectedTag?.parentId,
                                 id: props.selectedTag.id,
                             }).then(
@@ -194,7 +192,6 @@ export default function TagActionDrawer(
                         ) {
                             updateTagCall({
                                 name: formState.toMove.name,
-                                headers: props.user.authHeaders,
                                 parent_id: formState.newParent.id,
                                 id: formState.toMove.id,
                             }).then(
@@ -245,7 +242,6 @@ export default function TagActionDrawer(
                             if (props.selectedTag) {
                                 deleteTagCall({
                                     id: props.selectedTag.id,
-                                    headers: props.user.authHeaders,
                                 }).then(
                                     (data) => props.deleteTagAction(data),
                                     (err) => console.log(err), // FIXME - needs a real handler

@@ -92,7 +92,6 @@ export async function createTagCall(
             baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
             url: '/tags/',
             params: reqParams,
-            headers: params.headers,
         });
         const resp: TagResponse = response.data;
         const tag = tagFromResponse(resp);
@@ -150,7 +149,6 @@ export async function updateTagCall(
             baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
             url: '/tags/' + params.id,
             params: reqParams,
-            headers: params.headers,
         });
         const resp: TagResponse = response.data;
         const tag = tagFromResponse(resp);
@@ -198,7 +196,6 @@ export async function deleteTagCall(
             method: 'delete',
             baseURL: 'https://expense-tracker-test-api.herokuapp.com/',
             url: '/tags/' + params.id,
-            headers: params.headers,
         });
         const resp: TagResponse = response.data;
         const tag = tagFromResponse(resp);

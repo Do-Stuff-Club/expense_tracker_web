@@ -177,7 +177,6 @@ export async function updateExpenseCall(
                     tag_ids: params.expense.tags.map((tag) => tag.id),
                 },
             },
-            headers: params.headers,
         });
 
         const obj: ExpenseResponse = response.data;

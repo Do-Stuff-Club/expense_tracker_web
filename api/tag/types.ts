@@ -8,7 +8,6 @@ export type GetTagParams = {
 export type CreateTagParams = {
     name: string;
     parent_id?: number;
-    headers: AuthHeaders;
 };
 
 export type UpdateTagParams = CreateTagParams & {
@@ -17,7 +16,6 @@ export type UpdateTagParams = CreateTagParams & {
 
 export interface DeleteTagParams {
     id: number;
-    headers: AuthHeaders;
 }
 
 export type TagResponse = {
