@@ -261,6 +261,7 @@ const setAuthHeaders = (headers: Headers, authRequest = true) => {
  *
  * @param {AxiosResponse} response - Http response
  * @returns {TReturn} - Response data
+ * @template TReturn - Return type
  */
 const handleRequestResponse = <TReturn>(response: AxiosResponse) => {
     if (response.status === 200) {
