@@ -12,10 +12,17 @@ import {
     storeAuthInfo,
 } from './auth.helper';
 
+// ===================================================================
+//                             Constants
+// ===================================================================
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
+// ===================================================================
+//                             Functions
+// ===================================================================
 /**
  * Makes a 'GET' request
+ * By default it will try to set authentication headers automatically (which are stored in the local storage)
  *
  * @param {string} url Request url
  * @param {Object.<string, string | undefined>} headers request headers
@@ -27,6 +34,7 @@ export const get = async (
     headers: { [key: string]: string | undefined },
     authRequest = true,
 ): Promise<any> => {
+    // set auth headers (access token, etc) depending on authRequest value
     setAuthHeaders(headers, authRequest);
 
     // make the api call
@@ -41,6 +49,7 @@ export const get = async (
 
 /**
  * Makes a 'POST' request
+ * By default it will try to set authentication headers automatically (which are stored in the local storage)
  *
  * @param {string} url Request url
  * @param {Object.<string, string | undefined>} headers request headers
@@ -54,9 +63,10 @@ export const post = async (
     data: any,
     authRequest = true,
 ): Promise<any> => {
-    console.log("Initiating 'POST' request");
+    // set auth headers (access token, etc) depending on authRequest value
     setAuthHeaders(headers, authRequest);
 
+    // make the api call
     const response = await axios({
         method: 'post',
         url,
@@ -74,6 +84,7 @@ export const post = async (
 
 /**
  * Makes a 'DELETE' request
+ * By default it will try to set authentication headers automatically (which are stored in the local storage)
  *
  * @param {string} url Request url
  * @param {Object.<string, string | undefined>} headers request headers
@@ -87,8 +98,10 @@ export const httpDelete = async (
     params: any,
     authRequest = true,
 ): Promise<any> => {
+    // set auth headers (access token, etc) depending on authRequest value
     setAuthHeaders(headers, authRequest);
 
+    // make the api call
     const response = await axios({
         method: 'delete',
         url,
@@ -106,6 +119,7 @@ export const httpDelete = async (
 
 /**
  * Makes a 'PUT' request
+ * By default it will try to set authentication headers automatically (which are stored in the local storage)
  *
  * @param {string} url Request url
  * @param {Object.<string, string | undefined>} headers request headers
@@ -119,8 +133,10 @@ export const put = async (
     data: any,
     authRequest = true,
 ): Promise<any> => {
+    // set auth headers (access token, etc) depending on authRequest value
     setAuthHeaders(headers, authRequest);
 
+    // make the api call
     const response = await axios({
         method: 'put',
         url,
@@ -138,6 +154,7 @@ export const put = async (
 
 /**
  * Makes a 'PATCH' request
+ * By default it will try to set authentication headers automatically (which are stored in the local storage)
  *
  * @param {string} url Request url
  * @param {Object.<string, string | undefined>} headers request headers
@@ -151,8 +168,10 @@ export const patch = async (
     data: any,
     authRequest = true,
 ): Promise<any> => {
+    // set auth headers (access token, etc) depending on authRequest value
     setAuthHeaders(headers, authRequest);
 
+    // make the api call
     const response = await axios({
         method: 'patch',
         url,

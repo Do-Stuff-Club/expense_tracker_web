@@ -1,7 +1,13 @@
+// ===================================================================
+//                             Constants
+// ===================================================================
 const storageKey = 'exp-trk';
 const authStorageKey = `${storageKey}-auth`;
 const userIdStorageKey = `${storageKey}-user-id`;
 
+// ===================================================================
+//                               Types
+// ===================================================================
 export type AuthHeaders = {
     client: string;
     expiry: string;
@@ -10,8 +16,12 @@ export type AuthHeaders = {
     'token-type': string;
 };
 
+// ===================================================================
+//                             Functions
+// ===================================================================
 /**
- * Stores logged in user id
+ * Stores user id in local storage.
+ * Usually used to store currently logged in user id
  *
  * @param {string} id user id
  */

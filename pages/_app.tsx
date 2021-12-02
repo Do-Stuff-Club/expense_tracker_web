@@ -26,6 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
 }
 
+// This is used disable SSR or Server Side Rendering.
 export default dynamic(() => Promise.resolve(wrapper.withRedux(MyApp)), {
     ssr: false,
 });
