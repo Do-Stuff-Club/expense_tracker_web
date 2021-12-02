@@ -26,14 +26,18 @@ const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 //                             Functions
 // ===================================================================
 /**
- * Makes a 'GET' request
- * By default it will try to set authentication headers automatically (which are stored in the local storage)
+ * Makes a 'GET' request while setting authentication headers automatically
+ * (which are persisted to local storage).
  *
- * @param {string} url Request url
- * @param {Headers} headers request headers
- * @param {boolean} authRequest if true then auth info is automatically added (true by default)
- * @returns {Promise<TReturn>} response data
- * @template TReturn Return type
+ * The automatic authentication header
+ * handling can be disabled using the authRequest argument.
+ *
+ * @param {string} url - Request url
+ * @param {Headers} headers - Request headers
+ * @param {boolean} authRequest - Whether or not to automatically handle
+ * authentication headers. True by default.
+ * @returns {Promise<TReturn>} - Response data
+ * @template TReturn - Return type
  */
 export const get = async <TReturn>(
     url: string,
@@ -54,15 +58,19 @@ export const get = async <TReturn>(
 };
 
 /**
- * Makes a 'POST' request
- * By default it will try to set authentication headers automatically (which are stored in the local storage)
+ * Makes a 'POST' request while setting authentication headers automatically
+ * (which are persisted to local storage).
  *
- * @param {string} url Request url
- * @param {Headers} headers request headers
- * @param {any} data request body
- * @param {boolean} authRequest if true then auth info is automatically added (true by default)
- * @returns {Promise<TReturn>} response data
- * @template TReturn Return type
+ * The automatic authentication header
+ * handling can be disabled using the authRequest argument.
+ *
+ * @param {string} url - Request url
+ * @param {Headers} headers - Request headers
+ * @param {any} data - Request body
+ * @param {boolean} authRequest - Whether or not to automatically handle
+ * authentication headers. True by default.
+ * @returns {Promise<TReturn>} - Response data
+ * @template TReturn - Return type
  */
 export const post = async <TReturn>(
     url: string,
@@ -90,15 +98,19 @@ export const post = async <TReturn>(
 };
 
 /**
- * Makes a 'DELETE' request
- * By default it will try to set authentication headers automatically (which are stored in the local storage)
+ * Makes a 'Delete' request while setting authentication headers automatically
+ * (which are persisted to local storage).
  *
- * @param {string} url Request url
- * @param {Headers} headers request headers
- * @param {any} params request body
- * @param {boolean} authRequest if true then auth info is automatically added (true by default)
- * @returns {Promise<TReturn>} response data
- * @template TReturn Return type
+ * The automatic authentication header
+ * handling can be disabled using the authRequest argument.
+ *
+ * @param {string} url - Request url
+ * @param {Headers} headers - Request headers
+ * @param {any} params - Request body
+ * @param {boolean} authRequest - Whether or not to automatically handle
+ * authentication headers. True by default.
+ * @returns {Promise<TReturn>} - Response data
+ * @template TReturn - Return type
  */
 export const httpDelete = async <TReturn>(
     url: string,
@@ -126,15 +138,19 @@ export const httpDelete = async <TReturn>(
 };
 
 /**
- * Makes a 'PUT' request
- * By default it will try to set authentication headers automatically (which are stored in the local storage)
+ * Makes a 'PUT' request while setting authentication headers automatically
+ * (which are persisted to local storage).
  *
- * @param {string} url Request url
- * @param {Headers} headers request headers
- * @param {any} data request body
- * @param {boolean} authRequest if true then auth info is automatically added (true by default)
- * @returns {Promise<TReturn>} response data
- * @template TReturn Return type
+ * The automatic authentication header
+ * handling can be disabled using the authRequest argument.
+ *
+ * @param {string} url - Request url
+ * @param {Headers} headers - Request headers
+ * @param {any} data - Request body
+ * @param {boolean} authRequest - Whether or not to automatically handle
+ * authentication headers. True by default.
+ * @returns {Promise<TReturn>} - Response data
+ * @template TReturn - Return type
  */
 export const put = async <TReturn>(
     url: string,
@@ -162,15 +178,19 @@ export const put = async <TReturn>(
 };
 
 /**
- * Makes a 'PATCH' request
- * By default it will try to set authentication headers automatically (which are stored in the local storage)
+ * Makes a 'PATCH' request while setting authentication headers automatically
+ * (which are persisted to local storage).
  *
- * @param {string} url Request url
- * @param {Headers} headers request headers
- * @param {any} data request body
- * @param {boolean} authRequest if true then auth info is automatically added (true by default)
- * @returns {Promise<TReturn>} response data
- * @template TReturn Return type
+ * The automatic authentication header
+ * handling can be disabled using the authRequest argument.
+ *
+ * @param {string} url - Request url
+ * @param {Headers} headers - Request headers
+ * @param {any} data - Request body
+ * @param {boolean} authRequest - Whether or not to automatically handle
+ * authentication headers. True by default.
+ * @returns {Promise<TReturn>} - Response data
+ * @template TReturn - Return type
  */
 export const patch = async <TReturn>(
     url: string,
@@ -201,7 +221,7 @@ export const patch = async <TReturn>(
 /**
  * Handles auth info persistance, if response is 401 or 403 auth info is cleared, otherwise it's persisted
  *
- * @param {AxiosResponse} response http response
+ * @param {AxiosResponse} response - http response
  */
 const handleAuthInfoPersistance = (response: AxiosResponse) => {
     if (response.status === 401 || response.status === 403) {
@@ -219,10 +239,10 @@ const handleAuthInfoPersistance = (response: AxiosResponse) => {
 };
 
 /**
- * Updates auth headers if necessary
+ * Updates auth headers, if necessary.
  *
- * @param {Headers} headers request headers
- * @param {boolean} authRequest is this an authenticated request (true by default)
+ * @param {Headers} headers - Request headers
+ * @param {boolean} authRequest - Is this an authenticated request (true by default)
  */
 const setAuthHeaders = (headers: Headers, authRequest = true) => {
     if (authRequest) {
@@ -237,10 +257,10 @@ const setAuthHeaders = (headers: Headers, authRequest = true) => {
 };
 
 /**
- * Handles http response
+ * Handles http response errors.
  *
- * @param {AxiosResponse} response Http response
- * @returns {any} response data
+ * @param {AxiosResponse} response - Http response
+ * @returns {TReturn} - Response data
  */
 const handleRequestResponse = <TReturn>(response: AxiosResponse) => {
     if (response.status === 200) {

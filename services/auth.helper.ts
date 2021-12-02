@@ -20,19 +20,23 @@ export type AuthHeaders = {
 //                             Functions
 // ===================================================================
 /**
- * Stores user id in local storage.
- * Usually used to store currently logged in user id
+ * Stores a user id in local storage. Usually used to store the id of the
+ * current logged-in user during API calls.
  *
- * @param {string} id user id
+ * See https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API for
+ * more info about local storage
+ *
+ * @param {string} id - user id
  */
 export const storeUserId = (id: string): void => {
     if (window && localStorage) localStorage.setItem(userIdStorageKey, id);
 };
 
 /**
- * Retrieves logged in user id from the storage
+ * Retrieves logged-in user id from local storage, if it exists.
  *
- * @returns {string} logged in user id
+ * @returns {string | undefined} - id of the current logged-in user, or undefined
+ * if the user's id cannot be found in local storage.
  */
 export const getUserId = (): string | undefined => {
     if (window && localStorage) {
@@ -43,9 +47,9 @@ export const getUserId = (): string | undefined => {
 };
 
 /**
- * Checks if user is authenticated
+ * Checks if user is authenticated using information in local storage.
  *
- * @returns {boolean} true if user is authenticated, false otherwise
+ * @returns {boolean} - true if user is authenticated, false otherwise
  */
 export const isAuthenticated = (): boolean => {
     const authInfo = getAuthInfo();
@@ -59,9 +63,9 @@ export const isAuthenticated = (): boolean => {
 };
 
 /**
- * Persists auth info
+ * Persists authentication info to local storage.
  *
- * @param {AuthHeaders} authInfo Auth information
+ * @param {AuthHeaders} authInfo - Authentication info to store.
  */
 export const storeAuthInfo = (authInfo: AuthHeaders): void => {
     if (authInfo) {
@@ -72,9 +76,10 @@ export const storeAuthInfo = (authInfo: AuthHeaders): void => {
 };
 
 /**
- * Returns stored auth info
+ * Look up authentication info from local storage.
  *
- * @returns {AuthHeaders | undefined} Auth information
+ * @returns {AuthHeaders | undefined} - Authentication info from
+ * local storage if it exists, undefined otherwise.
  */
 export const getAuthInfo = (): AuthHeaders | undefined => {
     if (localStorage) {
@@ -87,7 +92,7 @@ export const getAuthInfo = (): AuthHeaders | undefined => {
 };
 
 /**
- * Clears auth info from the storage
+ * Clears all authentication info from local storage.
  */
 export const clearAuthInfo = (): void => {
     if (localStorage) {
