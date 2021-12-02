@@ -5,6 +5,7 @@ import React from 'react';
 import { AppProps } from 'next/app';
 import { wrapper } from '../redux/store';
 import AppThemeProvider from '../components/app/shared/theme/AppThemeProvider';
+import dynamic from 'next/dynamic';
 
 // ===================================================================
 //                            Component
@@ -25,4 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
 }
 
-export default wrapper.withRedux(MyApp);
+// This is used disable SSR or Server Side Rendering.
+export default dynamic(() => Promise.resolve(wrapper.withRedux(MyApp)), {
+    ssr: false,
+});

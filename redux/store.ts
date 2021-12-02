@@ -37,20 +37,7 @@ const rootReducer = (state: RootState = defaultState, action: AppAction) => {
             // Attention! This will overwrite client state! Real apps should use proper reconciliation.
             return { ...state, ...action.payload };
         default:
-            // Replace auth token on each request
-            if (
-                state.user.loggedIn &&
-                action.payload.authHeaders['access-token'] != '' // Only replace if access-token is not empty- that indicates batch mode
-            ) {
-                const stateWithAuth: RootState = {
-                    ...state,
-                    user: {
-                        ...state.user,
-                        authHeaders: action.payload.authHeaders,
-                    },
-                };
-                return combinedReducer(stateWithAuth, action);
-            } else return combinedReducer(state, action);
+            return combinedReducer(state, action);
     }
 };
 

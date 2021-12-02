@@ -1,9 +1,4 @@
 // ===================================================================
-//                             Imports
-// ===================================================================
-import { AuthHeaders } from '../user/types';
-
-// ===================================================================
 //                              State
 // ===================================================================
 export type Tag = {
@@ -32,7 +27,6 @@ export type FetchTagsAction = {
     type: TagActionTypes.FETCH_TAGS;
     payload: {
         tags: ReadonlyArray<Tag>;
-        authHeaders: AuthHeaders;
     };
 };
 
@@ -40,7 +34,6 @@ export type CreateTagAction = {
     type: TagActionTypes.CREATE_TAG;
     payload: {
         tag: Tag;
-        authHeaders: AuthHeaders;
     };
 };
 
@@ -48,7 +41,6 @@ export type UpdateTagAction = {
     type: TagActionTypes.UPDATE_TAG;
     payload: {
         tag: Tag;
-        authHeaders: AuthHeaders;
     };
 };
 
@@ -56,7 +48,6 @@ export type DeleteTagAction = {
     type: TagActionTypes.DELETE_TAG;
     payload: {
         tag: Tag;
-        authHeaders: AuthHeaders;
     };
 };
 

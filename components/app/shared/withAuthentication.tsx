@@ -3,6 +3,7 @@
 // ===================================================================
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { isAuthenticated } from '../../../services/auth.helper';
 
 // ===================================================================
 //                            Component
@@ -30,12 +31,12 @@ export default function withAuth<BaseProps extends AuthProps>(
         console.log('Cookies!');
         const router = useRouter();
         useEffect(() => {
-            if (!props.auth.loggedIn) {
+            if (!isAuthenticated()) {
                 router.push('/login');
             }
-        });
+        }, []);
 
-        if (props.auth.loggedIn)
+        if (isAuthenticated())
             return <WrappedComponent {...(props as BaseProps)} />;
         else return <div>You are not logged in. Redirecting to login...</div>;
     };

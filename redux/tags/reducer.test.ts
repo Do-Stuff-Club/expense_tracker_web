@@ -29,13 +29,6 @@ describe('tag reducer', () => {
                         childIds: [],
                     },
                 ],
-                authHeaders: {
-                    'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                    'token-type': 'Bearer',
-                    client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                    expiry: '1618718924',
-                    uid: 'test@test.org',
-                },
             },
         };
 
@@ -66,13 +59,6 @@ describe('tag reducer', () => {
                     name: 'New Name',
                     id: 2,
                     childIds: [],
-                },
-                authHeaders: {
-                    'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                    'token-type': 'Bearer',
-                    client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                    expiry: '1618718924',
-                    uid: 'test@test.org',
                 },
             },
         };
@@ -112,13 +98,6 @@ describe('tag reducer', () => {
                     parentId: 9001,
                     childIds: [],
                 },
-                authHeaders: {
-                    'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                    'token-type': 'Bearer',
-                    client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                    expiry: '1618718924',
-                    uid: 'test@test.org',
-                },
             },
         };
 
@@ -146,13 +125,6 @@ describe('tag reducer', () => {
                     id: 42, // Doesn't exist in testState
                     parentId: 9001,
                     childIds: [],
-                },
-                authHeaders: {
-                    'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                    'token-type': 'Bearer',
-                    client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                    expiry: '1618718924',
-                    uid: 'test@test.org',
                 },
             },
         };
@@ -182,13 +154,6 @@ describe('tag reducer', () => {
                     name: 'Delete me',
                     childIds: [],
                 },
-                authHeaders: {
-                    'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                    'token-type': 'Bearer',
-                    client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                    expiry: '1618718924',
-                    uid: 'test@test.org',
-                },
             },
         };
         expect(tag(testState, testAction)).toEqual(defaultTagState);
@@ -205,13 +170,6 @@ describe('tag reducer', () => {
                     id: 42,
                     childIds: [],
                 },
-                authHeaders: {
-                    'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                    'token-type': 'Bearer',
-                    client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                    expiry: '1618718924',
-                    uid: 'test@test.org',
-                },
             },
         };
 
@@ -226,13 +184,6 @@ describe('tag reducer', () => {
                     name: 'bad',
                     id: 42,
                     childIds: [],
-                },
-                authHeaders: {
-                    'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                    'token-type': 'Bearer',
-                    client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                    expiry: '1618718924',
-                    uid: 'test@test.org',
                 },
             },
         };

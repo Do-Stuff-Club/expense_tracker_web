@@ -19,7 +19,6 @@ export const fetchTagsAction = (
         type: TagActionTypes.FETCH_TAGS,
         payload: {
             tags: data.tags,
-            authHeaders: data.authHeaders,
         },
     });
 };
@@ -33,7 +32,6 @@ export const createTagAction = (
         type: TagActionTypes.CREATE_TAG,
         payload: {
             tag: data.tag,
-            authHeaders: data.authHeaders,
         },
     });
 };
@@ -47,7 +45,6 @@ export const updateTagAction = (
         type: TagActionTypes.UPDATE_TAG,
         payload: {
             tag: data.tag,
-            authHeaders: data.authHeaders,
         },
     });
 };
@@ -61,7 +58,6 @@ export const deleteTagAction = (
         type: TagActionTypes.DELETE_TAG,
         payload: {
             tag: data.tag,
-            authHeaders: data.authHeaders,
         },
     });
 };

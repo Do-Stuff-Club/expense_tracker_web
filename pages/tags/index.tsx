@@ -49,9 +49,7 @@ export type TagProps = ReduxProps;
  */
 function TagIndex(props: TagProps) {
     useEffect(() => {
-        getTagsCall({
-            headers: props.user.authHeaders,
-        }).then(
+        getTagsCall().then(
             (data) => props.fetchTagsAction(data),
             (error) => console.log(error),
         );

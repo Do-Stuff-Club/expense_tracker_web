@@ -34,20 +34,12 @@ describe('fetchTagsAction()', () => {
     it('creates a single FETCH_TAGS action when it resolves', () => {
         const testInput: AllTagsData = {
             tags: [],
-            authHeaders: {
-                'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                'token-type': 'Bearer',
-                client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                expiry: '1618718924',
-                uid: 'test@test.org',
-            },
         };
         const expectedActions = [
             {
                 type: TagActionTypes.FETCH_TAGS,
                 payload: {
                     tags: testInput.tags,
-                    authHeaders: testInput.authHeaders,
                 },
             },
         ];
@@ -71,20 +63,12 @@ describe('createTagAction()', () => {
                 id: 42,
                 childIds: [],
             },
-            authHeaders: {
-                'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                'token-type': 'Bearer',
-                client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                expiry: '1618718924',
-                uid: 'test@test.org',
-            },
         };
         const expectedActions = [
             {
                 type: TagActionTypes.CREATE_TAG,
                 payload: {
                     tag: testInput.tag,
-                    authHeaders: testInput.authHeaders,
                 },
             },
         ];
@@ -108,20 +92,12 @@ describe('updateTagAction()', () => {
                 id: 42,
                 childIds: [],
             },
-            authHeaders: {
-                'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                'token-type': 'Bearer',
-                client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                expiry: '1618718924',
-                uid: 'test@test.org',
-            },
         };
         const expectedActions = [
             {
                 type: TagActionTypes.UPDATE_TAG,
                 payload: {
                     tag: testInput.tag,
-                    authHeaders: testInput.authHeaders,
                 },
             },
         ];
@@ -145,20 +121,12 @@ describe('deleteTagAction()', () => {
                 id: 42,
                 childIds: [],
             },
-            authHeaders: {
-                'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                'token-type': 'Bearer',
-                client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                expiry: '1618718924',
-                uid: 'test@test.org',
-            },
         };
         const expectedActions = [
             {
                 type: TagActionTypes.DELETE_TAG,
                 payload: {
                     tag: testInput.tag,
-                    authHeaders: testInput.authHeaders,
                 },
             },
         ];

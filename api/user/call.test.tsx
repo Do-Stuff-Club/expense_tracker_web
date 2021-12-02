@@ -51,13 +51,6 @@ describe('newUserCall()', () => {
 
         const expectedData: UserData = {
             id: 1,
-            authHeaders: {
-                'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                'token-type': 'Bearer',
-                client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                expiry: '1618718924',
-                uid: 'test@test.org',
-            },
         };
 
         mockedAxios.mockResolvedValueOnce(mockApiResponse);
@@ -127,13 +120,6 @@ describe('loginCall()', () => {
 
         const expectedData: UserData = {
             id: 1,
-            authHeaders: {
-                'access-token': '-MW9nVhXviMt83nlYQU9yw',
-                'token-type': 'Bearer',
-                client: 'VZ6QbHPUroBvLnVcKQGYkw',
-                expiry: '1618718924',
-                uid: 'test@test.org',
-            },
         };
 
         mockedAxios.mockResolvedValueOnce(mockApiResponse);

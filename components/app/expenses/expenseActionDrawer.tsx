@@ -114,7 +114,6 @@ export default function ExpenseActionDrawer(
                             date: formState.date.toDateString(),
                             link: formState.link,
                             tags: formState.tags,
-                            headers: props.user.authHeaders,
                         }).then(
                             (data) => props.createExpenseAction(data),
                             (err) => console.log(err), // FIXME - needs a real handler
@@ -173,7 +172,6 @@ export default function ExpenseActionDrawer(
                                     link: formState.link,
                                     tags: formState.tags,
                                 },
-                                headers: props.user.authHeaders,
                             }).then(
                                 (data) => {
                                     console.log(data);
@@ -228,7 +226,6 @@ export default function ExpenseActionDrawer(
                             if (props.selectedExpense) {
                                 deleteExpenseCall({
                                     id: props.selectedExpense.id,
-                                    headers: props.user.authHeaders,
                                 }).then(
                                     (data) =>
                                         props.updateAllExpensesAction(data),

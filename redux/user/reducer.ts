@@ -1,15 +1,9 @@
+import { getUserId } from '../../services/auth.helper';
 import { UserAction, UserActionTypes, UserState } from './types';
 
 export const defaultUserState: UserState = {
     loggedIn: false,
-    id: -1,
-    authHeaders: {
-        client: '',
-        'access-token': '',
-        expiry: '',
-        'token-type': '',
-        uid: '',
-    },
+    id: undefined,
 };
 
 /**
@@ -28,6 +22,12 @@ export default function user(
         case UserActionTypes.LOGIN:
             return action.payload;
         default:
-            return state;
+            return {
+                ...state,
+                id:
+                    getUserId() !== undefined
+                        ? parseInt(getUserId() as string)
+                        : undefined,
+            };
     }
 }
