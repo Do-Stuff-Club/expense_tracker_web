@@ -24,7 +24,10 @@ export async function getExpensesCall(
     userId: number | undefined,
 ): Promise<AllExpensesData> {
     try {
-        const data = await get(`/purchases?user_id=${userId}`, {});
+        const data = await get<Array<string>>(
+            `/purchases?user_id=${userId}`,
+            {},
+        );
 
         const expenses = data.map((expense: string) => {
             const obj: ExpenseResponse = JSON.parse(expense);
@@ -63,7 +66,7 @@ export async function createExpenseCall(
     params: CreateExpenseParams,
 ): Promise<OneExpenseData> {
     try {
-        const data = await post(
+        const data = await post<ExpenseResponse>(
             '/purchases',
             {},
             {
@@ -111,7 +114,11 @@ export async function deleteExpenseCall(
     params: DeleteExpenseParams,
 ): Promise<AllExpensesData> {
     try {
-        const data = await httpDelete(`/purchases/${params.id}`, {}, undefined);
+        const data = await httpDelete<Array<string>>(
+            `/purchases/${params.id}`,
+            {},
+            undefined,
+        );
         const expenses: ReadonlyArray<Expense> = data.map((expense: string) => {
             const obj: ExpenseResponse = JSON.parse(expense);
             const tags: ReadonlyArray<Tag> = obj.tags.map(
@@ -148,7 +155,7 @@ export async function updateExpenseCall(
     params: UpdateExpenseParams,
 ): Promise<OneExpenseData> {
     try {
-        const data = await put(
+        const data = await put<ExpenseResponse>(
             `/purchases/${params.expense.id}`,
             {},
             {
@@ -160,18 +167,17 @@ export async function updateExpenseCall(
             },
         );
 
-        const obj: ExpenseResponse = data;
-        const tags: ReadonlyArray<Tag> = obj.tags.map((tag: TagResponse) => ({
+        const tags: ReadonlyArray<Tag> = data.tags.map((tag: TagResponse) => ({
             id: tag.id,
             name: tag.name,
             childIds: [],
         }));
         const expense = {
-            id: obj.id,
-            name: obj.name,
-            cost: obj.cost,
-            date: obj.order_date,
-            link: obj.link,
+            id: data.id,
+            name: data.name,
+            cost: data.cost,
+            date: data.order_date,
+            link: data.link,
             tags: tags,
         };
         return Promise.resolve({

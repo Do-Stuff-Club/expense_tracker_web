@@ -13,6 +13,11 @@ import {
 } from './auth.helper';
 
 // ===================================================================
+//                               Types
+// ===================================================================
+export type Headers = { [key: string]: string | undefined };
+
+// ===================================================================
 //                             Constants
 // ===================================================================
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -25,15 +30,16 @@ const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
  * By default it will try to set authentication headers automatically (which are stored in the local storage)
  *
  * @param {string} url Request url
- * @param {Object.<string, string | undefined>} headers request headers
+ * @param {Headers} headers request headers
  * @param {boolean} authRequest if true then auth info is automatically added (true by default)
- * @returns {Promise<any>} response data
+ * @returns {Promise<TReturn>} response data
+ * @template TReturn Return type
  */
-export const get = async (
+export const get = async <TReturn>(
     url: string,
-    headers: { [key: string]: string | undefined },
+    headers: Headers,
     authRequest = true,
-): Promise<any> => {
+): Promise<TReturn> => {
     // set auth headers (access token, etc) depending on authRequest value
     setAuthHeaders(headers, authRequest);
 
@@ -44,7 +50,7 @@ export const get = async (
     handleAuthInfoPersistance(response);
 
     // handle http response
-    return handleRequestResponse(response);
+    return handleRequestResponse<TReturn>(response);
 };
 
 /**
@@ -52,17 +58,18 @@ export const get = async (
  * By default it will try to set authentication headers automatically (which are stored in the local storage)
  *
  * @param {string} url Request url
- * @param {Object.<string, string | undefined>} headers request headers
+ * @param {Headers} headers request headers
  * @param {any} data request body
  * @param {boolean} authRequest if true then auth info is automatically added (true by default)
- * @returns {Promise<any>} response data
+ * @returns {Promise<TReturn>} response data
+ * @template TReturn Return type
  */
-export const post = async (
+export const post = async <TReturn>(
     url: string,
-    headers: { [key: string]: string | undefined },
+    headers: Headers,
     data: any,
     authRequest = true,
-): Promise<any> => {
+): Promise<TReturn> => {
     // set auth headers (access token, etc) depending on authRequest value
     setAuthHeaders(headers, authRequest);
 
@@ -79,7 +86,7 @@ export const post = async (
     handleAuthInfoPersistance(response);
 
     // handle http response
-    return handleRequestResponse(response);
+    return handleRequestResponse<TReturn>(response);
 };
 
 /**
@@ -87,17 +94,18 @@ export const post = async (
  * By default it will try to set authentication headers automatically (which are stored in the local storage)
  *
  * @param {string} url Request url
- * @param {Object.<string, string | undefined>} headers request headers
+ * @param {Headers} headers request headers
  * @param {any} params request body
  * @param {boolean} authRequest if true then auth info is automatically added (true by default)
- * @returns {Promise<any>} response data
+ * @returns {Promise<TReturn>} response data
+ * @template TReturn Return type
  */
-export const httpDelete = async (
+export const httpDelete = async <TReturn>(
     url: string,
-    headers: { [key: string]: string | undefined },
+    headers: Headers,
     params: any,
     authRequest = true,
-): Promise<any> => {
+): Promise<TReturn> => {
     // set auth headers (access token, etc) depending on authRequest value
     setAuthHeaders(headers, authRequest);
 
@@ -114,7 +122,7 @@ export const httpDelete = async (
     handleAuthInfoPersistance(response);
 
     // handle http response
-    return handleRequestResponse(response);
+    return handleRequestResponse<TReturn>(response);
 };
 
 /**
@@ -122,17 +130,18 @@ export const httpDelete = async (
  * By default it will try to set authentication headers automatically (which are stored in the local storage)
  *
  * @param {string} url Request url
- * @param {Object.<string, string | undefined>} headers request headers
+ * @param {Headers} headers request headers
  * @param {any} data request body
  * @param {boolean} authRequest if true then auth info is automatically added (true by default)
- * @returns {Promise<any>} response data
+ * @returns {Promise<TReturn>} response data
+ * @template TReturn Return type
  */
-export const put = async (
+export const put = async <TReturn>(
     url: string,
-    headers: { [key: string]: string | undefined },
+    headers: Headers,
     data: any,
     authRequest = true,
-): Promise<any> => {
+): Promise<TReturn> => {
     // set auth headers (access token, etc) depending on authRequest value
     setAuthHeaders(headers, authRequest);
 
@@ -149,7 +158,7 @@ export const put = async (
     handleAuthInfoPersistance(response);
 
     // handle http response
-    return handleRequestResponse(response);
+    return handleRequestResponse<TReturn>(response);
 };
 
 /**
@@ -157,17 +166,18 @@ export const put = async (
  * By default it will try to set authentication headers automatically (which are stored in the local storage)
  *
  * @param {string} url Request url
- * @param {Object.<string, string | undefined>} headers request headers
+ * @param {Headers} headers request headers
  * @param {any} data request body
  * @param {boolean} authRequest if true then auth info is automatically added (true by default)
- * @returns {Promise<any>} response data
+ * @returns {Promise<TReturn>} response data
+ * @template TReturn Return type
  */
-export const patch = async (
+export const patch = async <TReturn>(
     url: string,
-    headers: { [key: string]: string | undefined },
+    headers: Headers,
     data: any,
     authRequest = true,
-): Promise<any> => {
+): Promise<TReturn> => {
     // set auth headers (access token, etc) depending on authRequest value
     setAuthHeaders(headers, authRequest);
 
@@ -184,7 +194,7 @@ export const patch = async (
     handleAuthInfoPersistance(response);
 
     // handle http response
-    return handleRequestResponse(response);
+    return handleRequestResponse<TReturn>(response);
 };
 
 //#region internal methods
@@ -211,13 +221,10 @@ const handleAuthInfoPersistance = (response: AxiosResponse) => {
 /**
  * Updates auth headers if necessary
  *
- * @param {Object.<string, string | undefined>} headers request headers
+ * @param {Headers} headers request headers
  * @param {boolean} authRequest is this an authenticated request (true by default)
  */
-const setAuthHeaders = (
-    headers: { [key: string]: string | undefined },
-    authRequest = true,
-) => {
+const setAuthHeaders = (headers: Headers, authRequest = true) => {
     if (authRequest) {
         const authInfo = getAuthInfo();
 
@@ -235,9 +242,9 @@ const setAuthHeaders = (
  * @param {AxiosResponse} response Http response
  * @returns {any} response data
  */
-const handleRequestResponse = (response: AxiosResponse) => {
+const handleRequestResponse = <TReturn>(response: AxiosResponse) => {
     if (response.status === 200) {
-        return response.data;
+        return response.data as TReturn;
     } else {
         throw Error(`Something went wrong: ${response.statusText}`);
     }

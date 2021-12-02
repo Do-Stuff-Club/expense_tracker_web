@@ -41,7 +41,7 @@ function tagFromResponse(resp: TagResponse): Tag {
  */
 export async function getTagsCall(): Promise<AllTagsData> {
     try {
-        const data = await get('/tags', {});
+        const data = await get<Array<string>>('/tags', {});
 
         const tags = data.map((tag: string) =>
             tagFromResponse(JSON.parse(tag)),
@@ -65,13 +65,12 @@ export async function createTagCall(
     params: CreateTagParams,
 ): Promise<OneTagData> {
     try {
-        const data = await post(
+        const data = await post<TagResponse>(
             `/tags/?name=${params.name}&parent_id=${params.parent_id}`,
             {},
             undefined,
         );
-        const resp: TagResponse = data;
-        const tag = tagFromResponse(resp);
+        const tag = tagFromResponse(data);
 
         return Promise.resolve({
             tag: tag,
@@ -91,14 +90,13 @@ export async function updateTagCall(
     params: UpdateTagParams,
 ): Promise<OneTagData> {
     try {
-        const data = await put(
+        const data = await put<TagResponse>(
             `/tags/${params.id}?name=${params.name}&=${params.parent_id}`,
             {},
             undefined,
         );
 
-        const resp: TagResponse = data;
-        const tag = tagFromResponse(resp);
+        const tag = tagFromResponse(data);
 
         return Promise.resolve({
             tag: tag,
@@ -118,9 +116,12 @@ export async function deleteTagCall(
     params: DeleteTagParams,
 ): Promise<OneTagData> {
     try {
-        const data = await httpDelete(`/tags/${params.id}`, {}, undefined);
-        const resp: TagResponse = data;
-        const tag = tagFromResponse(resp);
+        const data = await httpDelete<TagResponse>(
+            `/tags/${params.id}`,
+            {},
+            undefined,
+        );
+        const tag = tagFromResponse(data);
 
         return Promise.resolve({
             tag: tag,

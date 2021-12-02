@@ -16,7 +16,8 @@ import { post } from '../../services/httpClient';
  */
 export async function newUserCall(params: NewUserParams): Promise<UserData> {
     try {
-        const data = await post('/auth', {}, params);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const data = await post<any>('/auth', {}, params);
 
         return Promise.resolve({
             id: data.data.id,
@@ -49,7 +50,8 @@ export async function newUserCall(params: NewUserParams): Promise<UserData> {
  */
 export async function loginCall(params: LoginParams): Promise<UserData> {
     try {
-        const data = await post('/auth/sign_in', {}, params);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const data = await post<any>('/auth/sign_in', {}, params);
 
         return Promise.resolve({
             id: data.data.id,
