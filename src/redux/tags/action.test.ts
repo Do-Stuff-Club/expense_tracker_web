@@ -7,7 +7,7 @@ import thunk, { ThunkDispatch } from 'redux-thunk';
 import { AllTagsData, OneTagData } from '../../api/tag/types';
 import { defaultExpenseState } from '../expenses/reducer';
 import { RootState } from '../store';
-import { defaultTagState } from '../tags/state';
+import { defaultTagState } from './state';
 import { defaultUserState } from '../user/reducer';
 import {
     createTagAction,
