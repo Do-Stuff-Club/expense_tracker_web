@@ -64,7 +64,7 @@ export function ExpenseFormInputs(): JSX.Element {
         <>
             <TextField name='name' label='Name' />
             <TextField name='price' label='Price' />
-            <FormDatePicker name='date' />
+            <FormDatePicker name='date' label='Date' />
             <TextField name='link' label='Link' />
             <FormTagSelector name='tags'></FormTagSelector>
         </>

@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField';
 // ===================================================================
 type DatePickerProps = {
     name: string;
+    label: string;
 };
 /**
  * Date picker component. Must be used with
@@ -35,10 +36,15 @@ export default function FormDatePicker(props: DatePickerProps): JSX.Element {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DesktopDatePicker<Date>
                 value={value}
+                label={props.label}
                 onChange={onChange}
                 inputFormat='MM/dd/yyyy'
                 renderInput={(props) => (
-                    <TextField label='Date' {...props}></TextField>
+                    <TextField
+                        error={meta.touched && meta.error != undefined}
+                        helperText={meta.error}
+                        {...props}
+                    ></TextField>
                 )}
             ></DesktopDatePicker>
         </LocalizationProvider>
