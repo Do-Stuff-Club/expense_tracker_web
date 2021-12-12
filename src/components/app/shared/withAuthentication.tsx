@@ -8,11 +8,6 @@ import { isAuthenticated } from '../../../services/auth.helper';
 // ===================================================================
 //                            Component
 // ===================================================================
-export interface AuthProps {
-    auth: {
-        loggedIn: boolean;
-    };
-}
 /**
  * Higher-order component used to wrap pages that require authentication. This includes
  * application pages for expenses, tags, and dashboards. Redirects users to login if they
@@ -21,7 +16,7 @@ export interface AuthProps {
  * @param {React.ComponentType} WrappedComponent - component to wrap with Auth
  * @returns {Element} a page component wrapped in an authentication check
  */
-export default function withAuth<BaseProps extends AuthProps>(
+export default function withAuth<BaseProps>(
     WrappedComponent: React.ComponentType<BaseProps>,
 ): React.ComponentType<BaseProps> {
     WrappedComponent.displayName = 'WithAuth: ' + WrappedComponent.displayName;
