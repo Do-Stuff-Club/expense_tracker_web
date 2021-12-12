@@ -45,7 +45,7 @@ export default function FormDateRangeTypePicker(
                 }}
                 label='Age'
             >
-                <MenuItem value='PREV_MONTH'>Previous month</MenuItem>
+                <MenuItem value='MTD'>Month to date</MenuItem>
                 <MenuItem value='YTD'>Year to date</MenuItem>
                 <MenuItem value='CUSTOM_RANGE'>Custom date range</MenuItem>
             </Select>

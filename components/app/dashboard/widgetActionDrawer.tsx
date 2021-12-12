@@ -23,8 +23,16 @@ import {
     WidgetFormInputs,
     WidgetFormState,
 } from './widgetForm';
-import { todaysDate } from '../../../services/date.helper';
+import {
+    dateRangeStartEnd,
+    toDateRange,
+    todaysDate,
+} from '../../../services/date.helper';
 import { FormikProps } from 'formik';
+import { queryExpensesCall } from '../../../api/expense/call';
+import { DashboardProps } from '../../../pages/dashboard';
+import { FormatShapesTwoTone } from '@mui/icons-material';
+import { DateRange } from '../../../services/date.helper';
 
 // ===================================================================
 //                         Helper Functions
@@ -54,7 +62,7 @@ const AppAccordion = styled((props: AccordionProps) => (
 type WidgetActionDrawerProps = {
     actionHandler?: (action: WidgetAction) => void;
     //selectedWidget: Widget | undefined;
-}; //& WidgetsProps;
+} & DashboardProps;
 
 /**
  * React component that renders a menu of buttons for interacting with tags.
@@ -93,22 +101,26 @@ export default function WidgetActionDrawer(
                 </AccordionSummary>
                 <WidgetForm
                     initialState={{
-                        date_range_type: 'TODAY',
+                        date_range_type: 'MTD',
                         start_date: todaysDate(),
                         end_date: todaysDate(),
                         tags: [],
                     }}
                     onSubmit={(formState) => {
-                        // createWidgetCall({
-                        //     name: formState.name,
-                        //     cost: formState.price,
-                        //     date: formState.date.toDateString(),
-                        //     link: formState.link,
-                        //     tags: formState.tags,
-                        // }).then(
-                        //     (data) => props.createWidgetAction(data),
-                        //     (err) => console.log(err), // FIXME - needs a real handler
-                        // );
+                        const dateRange = toDateRange(
+                            formState.date_range_type,
+                            formState.start_date,
+                            formState.end_date,
+                        );
+                        const { start, end } = dateRangeStartEnd(dateRange);
+                        queryExpensesCall(props.user.id, {
+                            start_date: start,
+                            end_date: end,
+                            tags: formState.tags,
+                        }).then(
+                            (data) => console.log(data),
+                            (err) => console.log(err),
+                        );
                     }}
                 >
                     <AccordionDetails>

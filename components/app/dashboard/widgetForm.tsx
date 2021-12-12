@@ -12,6 +12,7 @@ import FormDatePicker from '../shared/forms/building_blocks/datePicker';
 import FormTagSelector from '../shared/forms/building_blocks/tagSelector';
 import FormDateRangeTypePicker from '../shared/forms/building_blocks/dateRangePicker';
 import { DateRangeType } from '../../../services/date.helper';
+import Box from '@mui/material/Box';
 
 // ===================================================================
 //                         Helper Functions
@@ -79,12 +80,16 @@ export function WidgetFormInputs(): JSX.Element {
     return (
         <>
             <FormDateRangeTypePicker name='date_range_type' />
-            {values.date_range_type == 'CUSTOM_RANGE' ? (
-                <>
-                    <FormDatePicker name='start_date' label='Start' />
-                    <FormDatePicker name='end_date' label='End' />
-                </>
-            ) : null}
+            <Box
+                display={
+                    values.date_range_type != 'CUSTOM_RANGE'
+                        ? 'none'
+                        : undefined
+                }
+            >
+                <FormDatePicker name='start_date' label='Start' />
+                <FormDatePicker name='end_date' label='End' />
+            </Box>
             <FormTagSelector name='tags'></FormTagSelector>
         </>
     );
