@@ -5,6 +5,7 @@
 //                             Imports
 // ===================================================================
 import axios, { AxiosResponse } from 'axios';
+import qs from 'qs';
 import {
     AuthHeaders,
     clearAuthInfo,
@@ -22,6 +23,20 @@ export type Headers = { [key: string]: string | undefined };
 // ===================================================================
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
+// See https://github.com/axios/axios/issues/738
+axios.interceptors.request.use((config) => {
+    window.console.log(config);
+
+    config.paramsSerializer = (params) => {
+        return qs.stringify(params, {
+            arrayFormat: 'brackets',
+            encode: false,
+        });
+    };
+
+    return config;
+});
+
 // ===================================================================
 //                             Functions
 // ===================================================================
@@ -34,6 +49,7 @@ const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
  *
  * @param {string} url - Request url
  * @param {Headers} headers - Request headers
+ * @param {any} params - Request body
  * @param {boolean} authRequest - Whether or not to automatically handle
  * authentication headers. True by default.
  * @returns {Promise<TReturn>} - Response data
@@ -42,13 +58,20 @@ const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 export const get = async <TReturn>(
     url: string,
     headers: Headers,
+    params: any,
     authRequest = true,
 ): Promise<TReturn> => {
     // set auth headers (access token, etc) depending on authRequest value
     setAuthHeaders(headers, authRequest);
 
     // make the api call
-    const response = await axios({ method: 'get', url, baseURL, headers });
+    const response = await axios({
+        method: 'get',
+        url,
+        baseURL,
+        headers,
+        params,
+    });
 
     // store or clear auth info
     handleAuthInfoPersistance(response);

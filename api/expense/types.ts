@@ -18,6 +18,12 @@ export interface UpdateExpenseParams {
     expense: Expense;
 }
 
+export interface QueryExpenseParams {
+    start_date: Date;
+    end_date: Date;
+    tags: ReadonlyArray<Tag>;
+}
+
 export interface ExpenseResponse {
     id: number;
     name: string;

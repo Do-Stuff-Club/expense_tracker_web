@@ -6,7 +6,6 @@ import startOfYear from 'date-fns/startOfYear';
 import subDays from 'date-fns/subDays';
 import subMonths from 'date-fns/subMonths';
 import subYears from 'date-fns/subYears';
-import { Interval } from 'date-fns';
 
 // ===================================================================
 //                               Types
@@ -49,7 +48,8 @@ type ComputedPrevDateRange = {
  */
 type SpecifiedDateRange = {
     type: 'CUSTOM_RANGE';
-    interval: Interval;
+    start: Date;
+    end: Date;
 };
 
 /**
@@ -60,6 +60,28 @@ export type DateRange =
     | ComputedPrevDateRange
     | SpecifiedDateRange;
 
+// ===================================================================
+//                              Classes
+// ===================================================================
+/**
+ * Custom class for DateRangeErrors
+ */
+class DateRangeError extends Error {
+    constructor(msg: string) {
+        // Pass remaining arguments (including vendor specific ones) to parent constructor
+        super(msg);
+
+        // Set the prototype explicitly.
+        Object.setPrototypeOf(this, DateRangeError.prototype);
+
+        // Maintains proper stack trace for where our error was thrown (only available on V8)
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, DateRangeError);
+        }
+
+        this.name = 'DateRangeError';
+    }
+}
 // ===================================================================
 //                             Functions
 // ===================================================================
@@ -78,9 +100,11 @@ export const todaysDate = (): Date => {
  * Converts our custom DateRange objects to a start and end date
  *
  * @param {DateRange} range - The custom date range object to convert
- * @returns {Interval} An object with specific start and end dates.
+ * @returns {{ start: Date; end: Date }} An object with specific start and end dates.
  */
-export const dateRangeStartEnd = (range: DateRange): Interval => {
+export const dateRangeStartEnd = (
+    range: DateRange,
+): { start: Date; end: Date } => {
     switch (range.type) {
         case 'TODAY': {
             const today = todaysDate();
@@ -113,8 +137,44 @@ export const dateRangeStartEnd = (range: DateRange): Interval => {
             break;
         }
         case 'CUSTOM_RANGE': {
-            return range.interval;
+            return { start: range.start, end: range.end };
             break;
         }
+    }
+};
+
+export const toDateRange = (
+    type: DateRangeType,
+    start?: Date,
+    end?: Date,
+    quantity?: number,
+): DateRange => {
+    if (type == 'CUSTOM_RANGE') {
+        if (start == undefined || end == undefined)
+            throw new DateRangeError(
+                `Tried to create CUSTOM_RANGE date range, but start or end range is not defined. start: ${start}, end:${end}`,
+            );
+        return {
+            type,
+            start,
+            end,
+        };
+    } else if (
+        type == 'PREV_N_DAYS' ||
+        type == 'PREV_N_MONTHS' ||
+        type == 'PREV_N_YEARS'
+    ) {
+        if (quantity == undefined)
+            throw new DateRangeError(
+                `Tried to create ${type} date range, but quantity not defined.`,
+            );
+        return {
+            type,
+            quantity,
+        };
+    } else {
+        return {
+            type,
+        };
     }
 };

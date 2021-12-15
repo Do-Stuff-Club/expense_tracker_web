@@ -3,8 +3,6 @@
 // ===================================================================
 import React from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 //import EditWidgetDialog from './editWidgetDialog';
 import AppSidePanel from '../shared/layout/appSidePanel';
 import {
@@ -14,25 +12,16 @@ import {
     AccordionSummary,
     Typography,
     AccordionActions,
-    Button,
 } from '@mui/material';
 import styled from '@mui/styled-engine';
-import {
-    WidgetForm,
-    WidgetFormActions,
-    WidgetFormInputs,
-    WidgetFormState,
-} from './widgetForm';
+import { WidgetForm, WidgetFormActions, WidgetFormInputs } from './widgetForm';
 import {
     dateRangeStartEnd,
     toDateRange,
     todaysDate,
 } from '../../../services/date.helper';
-import { FormikProps } from 'formik';
 import { queryExpensesCall } from '../../../api/expense/call';
 import { DashboardProps } from '../../../pages/dashboard';
-import { FormatShapesTwoTone } from '@mui/icons-material';
-import { DateRange } from '../../../services/date.helper';
 
 // ===================================================================
 //                         Helper Functions

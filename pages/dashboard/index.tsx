@@ -2,7 +2,7 @@
 //                             Imports
 // ===================================================================
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 
 import { RootState } from '../../redux/store';
 import withAuth from '../../components/app/shared/withAuthentication';
@@ -10,6 +10,7 @@ import AppLayout from '../../components/app/shared/layout/appLayout';
 import { AppNavPage } from '../../components/app/shared/nav/utils';
 import { Box } from '@mui/material';
 import PieChart from '../../components/app/dashboard/pieChart';
+import WidgetActionDrawer from '../../components/app/dashboard/widgetActionDrawer';
 
 // ===================================================================
 //                            Component
@@ -21,15 +22,19 @@ const stateToProps = (state: RootState) => ({
     ...state,
 });
 const connector = connect(stateToProps, {});
+type ReduxProps = ConnectedProps<typeof connector>;
+export type DashboardProps = ReduxProps;
 
 /**
  * Dashboard page component. Has helpful displays for various stats
  *
+ * @param {DashboardProps} props - Props from Redux state
  * @returns {Element} Page element
  */
-function Dashboard() {
+function Dashboard(props: DashboardProps) {
     return (
         <AppLayout page={AppNavPage.DASHBOARD}>
+            <WidgetActionDrawer {...props} />
             <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
                 <PieChart
                     labels={['Red', 'Blue', 'Yellow']}

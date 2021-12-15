@@ -1,11 +1,10 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import { Form, Formik, FormikProps, useFormikContext } from 'formik';
+import { Form, Formik, useFormikContext } from 'formik';
 import React from 'react';
 import { FormProps } from '../shared/forms/utils';
 import FormButton from '../shared/forms/building_blocks/formButton';
-import TextField from '../shared/forms/building_blocks/textField';
 import { Tag } from '../../../redux/tags/types';
 import * as Yup from 'yup';
 import FormDatePicker from '../shared/forms/building_blocks/datePicker';

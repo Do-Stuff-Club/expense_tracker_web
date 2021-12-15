@@ -4,6 +4,7 @@ import {
     DeleteExpenseParams,
     ExpenseResponse,
     OneExpenseData,
+    QueryExpenseParams,
     UpdateExpenseParams,
 } from './types';
 import { Expense } from '../../redux/expenses/types';
@@ -26,6 +27,7 @@ export async function getExpensesCall(
     try {
         const data = await get<Array<string>>(
             `/purchases?user_id=${userId}`,
+            {},
             {},
         );
 
@@ -182,6 +184,57 @@ export async function updateExpenseCall(
         };
         return Promise.resolve({
             expense: expense,
+        });
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+/**
+ * API call to query expenses using dates and tags
+ *
+ * @param {number | undefined} userId - logged-in user ID
+ * @param {QueryExpenseParams} params - input parameters from the page
+ * @returns {Promise<AllExpensesData>} promise with data to send to Redux, if successful.
+ */
+export async function queryExpensesCall(
+    userId: number | undefined,
+    params: QueryExpenseParams,
+): Promise<AllExpensesData> {
+    try {
+        const data = await get<Array<string>>(
+            `/select_purchases?user_id=${userId}`,
+            {},
+            {
+                filters: {
+                    start_date: params.start_date,
+                    end_date: params.end_date,
+                    tag_ids: params.tags.map((tag) => tag.id),
+                },
+            },
+        );
+
+        const expenses = data.map((expense: string) => {
+            const obj: ExpenseResponse = JSON.parse(expense);
+            const tags: ReadonlyArray<Tag> = obj.tags.map(
+                (tag: TagResponse) => ({
+                    id: tag.id,
+                    name: tag.name,
+                    childIds: [],
+                }),
+            );
+            return {
+                id: obj.id,
+                name: obj.name,
+                cost: obj.cost,
+                date: obj.order_date,
+                link: obj.link,
+                tags: tags,
+            };
+        });
+
+        return Promise.resolve({
+            expenses,
         });
     } catch (error) {
         return Promise.reject(error);

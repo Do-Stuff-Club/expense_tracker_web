@@ -41,7 +41,7 @@ function tagFromResponse(resp: TagResponse): Tag {
  */
 export async function getTagsCall(): Promise<AllTagsData> {
     try {
-        const data = await get<Array<string>>('/tags', {});
+        const data = await get<Array<string>>('/tags', {}, {});
 
         const tags = data.map((tag: string) =>
             tagFromResponse(JSON.parse(tag)),
