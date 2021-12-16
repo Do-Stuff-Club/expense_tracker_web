@@ -3,13 +3,13 @@ import { Box } from '@mui/material';
 
 import { Expense } from '../../../redux/expenses/types';
 
-import ExpenseActionDrawer from './expenseActionDrawer';
+// import ExpenseActionDrawer from './expenseActionDrawer';
+import ExpenseActionDrawer from '../../../containers/expenses/expenseActionDrawer.container';
 import ExpenseView from './expenseView';
 import { AllExpensesData, OneExpenseData } from '../../../api/expense/types';
 import { AllTagsData } from '../../../api/tag/types';
 
 type ExpensesProps = {
-    createExpenseAction: (data: OneExpenseData) => Promise<void>;
     updateAllExpensesAction: (data: AllExpensesData) => Promise<void>;
     updateOneExpenseAction: (data: OneExpenseData) => Promise<void>;
     fetchTagsAction: (data: AllTagsData) => Promise<void>;
@@ -43,10 +43,11 @@ const Expenses = (props: ExpensesProps): JSX.Element => {
         // );
     }, []); // Empty array so only fires once
 
+    //TODO: create a new container for ExpenseActionDrawer
     const { expenses } = props;
     return (
         <>
-            <ExpenseActionDrawer selectedExpense={selectedExpense} {...props} />
+            <ExpenseActionDrawer selectedExpense={selectedExpense} />
             <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
                 <ExpenseView
                     expenses={expenses}

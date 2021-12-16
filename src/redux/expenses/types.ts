@@ -15,13 +15,23 @@ export interface ExpenseState {
 
 export enum ExpenseActionTypes {
     CREATE_EXPENSE = 'create_expense',
+    //#region create expense
+    CREATE_EXPENSE_INIT = 'CREATE_EXPENSE_INIT',
+    CREATE_EXPENSE_SUCCESS = 'CREATE_EXPENSE_SUCCESS',
+    CREATE_EXPENSE_FAIL = 'CREATE_EXPENSE_FAIL',
+    // CREATE_EXPENSE_CANCEL = "CREATE_EXPENSE_CANCEL", // TODO: not needed, for now
+    //#endregion
     UPDATE_ALL_EXPENSES = 'update_all_expenses',
     UPDATE_ONE_EXPENSE = 'update_one_expense',
     DELETE_EXPENSE = 'delete_expense',
 }
 
 export interface CreateExpenseAction {
-    type: ExpenseActionTypes.CREATE_EXPENSE;
+    type:
+        | ExpenseActionTypes.CREATE_EXPENSE
+        | ExpenseActionTypes.CREATE_EXPENSE_INIT
+        | ExpenseActionTypes.CREATE_EXPENSE_FAIL
+        | ExpenseActionTypes.CREATE_EXPENSE_SUCCESS;
     payload: {
         expense: Expense;
     };

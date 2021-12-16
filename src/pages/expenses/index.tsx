@@ -1,7 +1,7 @@
 import React from 'react';
 import AppLayout from '../../components/app/shared/layout/appLayout';
 import { AppNavPage } from '../../components/app/shared/nav/utils';
-import Expenses from '../../containers/expenses.container';
+import Expenses from '../../containers/expenses/expenses.container';
 
 // ===================================================================
 //                            Component

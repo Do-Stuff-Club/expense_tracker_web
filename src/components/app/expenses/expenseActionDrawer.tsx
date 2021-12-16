@@ -9,11 +9,9 @@ import EditIcon from '@mui/icons-material/Edit';
 //import EditExpenseDialog from './editExpenseDialog';
 import AppSidePanel from '../shared/layout/appSidePanel';
 import {
-    createExpenseCall,
     updateExpenseCall,
     deleteExpenseCall,
 } from '../../../api/expense/call';
-import { ExpensesProps } from '../../../pages/expenses/index';
 import {
     AccordionProps,
     Accordion,
@@ -29,16 +27,14 @@ import {
     ExpenseFormActions,
     ExpenseFormInputs,
 } from './expenseForm';
+import {
+    CreateExpenseParams,
+    OneExpenseData,
+} from '../../../api/expense/types';
 
 // ===================================================================
 //                         Helper Functions
 // ===================================================================
-enum ExpenseAction {
-    CREATE = 'tag_action_panel_create',
-    RENAME = 'tag_action_panel_rename',
-    MOVE = 'tag_action_panel_move',
-    DELETE = 'tag_action_panel_delete',
-}
 
 const AppAccordion = styled((props: AccordionProps) => (
     <Accordion disableGutters elevation={0} square {...props} />
@@ -59,9 +55,11 @@ const AppAccordion = styled((props: AccordionProps) => (
 // "& ExpenseProps" line. We should clean this up and possibly move some of
 // this logic up to pages/tag/index.tsx
 type ExpenseActionDrawerProps = {
-    actionHandler?: (action: ExpenseAction) => void;
+    createNewExpenseAction: (
+        data: CreateExpenseParams,
+    ) => Promise<OneExpenseData | undefined>;
     selectedExpense: Expense | undefined;
-} & ExpensesProps;
+};
 
 /**
  * React component that renders a menu of buttons for interacting with tags.
@@ -71,9 +69,7 @@ type ExpenseActionDrawerProps = {
  * @param {ExpenseActionDrawerProps} props - React properties for ExpenseActionDrawer
  * @returns {Element} a button with tag actions
  */
-export default function ExpenseActionDrawer(
-    props: ExpenseActionDrawerProps,
-): JSX.Element {
+const ExpenseActionDrawer = (props: ExpenseActionDrawerProps): JSX.Element => {
     const [expanded, setExpanded] = React.useState<
         'new' | 'edit' | 'delete' | false
     >(false);
@@ -108,16 +104,14 @@ export default function ExpenseActionDrawer(
                         tags: [],
                     }}
                     onSubmit={(formState) => {
-                        createExpenseCall({
+                        // TODO: those types should match
+                        props.createNewExpenseAction({
                             name: formState.name,
                             cost: formState.price,
                             date: formState.date.toDateString(),
                             link: formState.link,
                             tags: formState.tags,
-                        }).then(
-                            (data) => props.createExpenseAction(data),
-                            (err) => console.log(err), // FIXME - needs a real handler
-                        );
+                        });
                     }}
                 >
                     <AccordionDetails>
@@ -240,4 +234,6 @@ export default function ExpenseActionDrawer(
             </AppAccordion>
         </AppSidePanel>
     );
-}
+};
+
+export default ExpenseActionDrawer;
