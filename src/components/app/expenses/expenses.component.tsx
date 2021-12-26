@@ -1,19 +1,28 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 
 import { Expense } from '../../../redux/expenses/types';
 
-// import ExpenseActionDrawer from './expenseActionDrawer';
 import ExpenseActionDrawer from '../../../containers/expenses/expenseActionDrawer.container';
-import ExpenseView from './expenseView';
-import { AllExpensesData, OneExpenseData } from '../../../api/expense/types';
-import { AllTagsData } from '../../../api/tag/types';
 
+import ExpenseView from './expenseView';
+
+import { AllTagsData } from '../../../api/tag/types';
+import { AllExpensesData } from '../../../api/expense/types';
+
+// ===================================================================
+//                             Component
+// ===================================================================
 type ExpensesProps = {
-    updateAllExpensesAction: (data: AllExpensesData) => Promise<void>;
-    updateOneExpenseAction: (data: OneExpenseData) => Promise<void>;
-    fetchTagsAction: (data: AllTagsData) => Promise<void>;
+    getAllTagsAction: () => Promise<AllTagsData | undefined>;
+    getExpensesAction: (
+        userId: number | undefined,
+    ) => Promise<AllExpensesData | undefined>;
     expenses: readonly Expense[];
+    userId: number | undefined;
 };
 
 /**
@@ -28,22 +37,13 @@ const Expenses = (props: ExpensesProps): JSX.Element => {
     );
 
     useEffect(() => {
-        // getTagsCall().then(
-        //     (data) => props.fetchTagsAction(data),
-        //     (error) => console.log(error),
-        // );
+        const { getAllTagsAction, getExpensesAction, userId } = props;
+        // get all tags
+        getAllTagsAction();
+        // get user's expenses
+        getExpensesAction(userId);
     }, []); // Pass an empty array so it only fires once
-    useEffect(() => {
-        // getExpensesCall(props.user.id).then(
-        //     (data) => {
-        //         console.log('GetExpenseCall success');
-        //         props.updateAllExpensesAction(data);
-        //     },
-        //     (error) => console.log(error),
-        // );
-    }, []); // Empty array so only fires once
 
-    //TODO: create a new container for ExpenseActionDrawer
     const { expenses } = props;
     return (
         <>

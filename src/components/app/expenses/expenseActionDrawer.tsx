@@ -9,10 +9,6 @@ import EditIcon from '@mui/icons-material/Edit';
 //import EditExpenseDialog from './editExpenseDialog';
 import AppSidePanel from '../shared/layout/appSidePanel';
 import {
-    updateExpenseCall,
-    deleteExpenseCall,
-} from '../../../api/expense/call';
-import {
     AccordionProps,
     Accordion,
     AccordionDetails,
@@ -26,10 +22,13 @@ import {
     ExpenseForm,
     ExpenseFormActions,
     ExpenseFormInputs,
+    ExpenseFormState,
 } from './expenseForm';
 import {
+    AllExpensesData,
     CreateExpenseParams,
     OneExpenseData,
+    UpdateExpenseParams,
 } from '../../../api/expense/types';
 
 // ===================================================================
@@ -51,13 +50,16 @@ const AppAccordion = styled((props: AccordionProps) => (
 //                            Component
 // ===================================================================
 
-// FIXME currently the ExpenseActionDrawer accepts a ton of props due to the
-// "& ExpenseProps" line. We should clean this up and possibly move some of
-// this logic up to pages/tag/index.tsx
+// Component props type
 type ExpenseActionDrawerProps = {
     createNewExpenseAction: (
         data: CreateExpenseParams,
     ) => Promise<OneExpenseData | undefined>;
+    updateExpenseAction: (
+        data: UpdateExpenseParams,
+    ) => Promise<OneExpenseData | undefined>;
+    deleteExpenseAction: (id: number) => Promise<AllExpensesData | undefined>;
+
     selectedExpense: Expense | undefined;
 };
 
@@ -82,6 +84,67 @@ const ExpenseActionDrawer = (props: ExpenseActionDrawerProps): JSX.Element => {
         else setExpanded(false);
     };
 
+    //#region button handlers
+    /**
+     * Handles new expense submission
+     *
+     * @param {ExpenseFormState} expenseFormState - Expense form
+     */
+    const onCreateExpenseSubmit = (
+        expenseFormState: ExpenseFormState,
+    ): void => {
+        const { createNewExpenseAction } = props;
+
+        createNewExpenseAction({
+            name: expenseFormState.name,
+            cost: expenseFormState.price,
+            date: expenseFormState.date.toDateString(),
+            link: expenseFormState.link,
+            tags: expenseFormState.tags,
+        });
+    };
+
+    /**
+     * Handles update expense submission
+     *
+     * @param {ExpenseFormState} expenseFormState  - Expense form
+     */
+    const onEditExpenseSubmit = (expenseFormState: ExpenseFormState): void => {
+        const { updateExpenseAction, selectedExpense } = props;
+
+        if (selectedExpense) {
+            updateExpenseAction({
+                expense: {
+                    id: selectedExpense.id,
+                    name: expenseFormState.name,
+                    cost: expenseFormState.price,
+                    date: expenseFormState.date.toDateString(),
+                    link: expenseFormState.link,
+                    tags: expenseFormState.tags,
+                },
+            });
+        }
+    };
+
+    /**
+     * Handles delete expense button click
+     *
+     * @param {React.MouseEvent<HTMLButtonElement, MouseEvent>} event - Click event
+     */
+    const onDeleteExpenseClick = (
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    ): void => {
+        event.preventDefault();
+
+        const { deleteExpenseAction, selectedExpense } = props;
+
+        // sanity check
+        if (selectedExpense) {
+            deleteExpenseAction(selectedExpense.id);
+        }
+    };
+    //#endregion
+
     return (
         <AppSidePanel direction='left'>
             <AppAccordion
@@ -103,16 +166,7 @@ const ExpenseActionDrawer = (props: ExpenseActionDrawerProps): JSX.Element => {
                         link: '',
                         tags: [],
                     }}
-                    onSubmit={(formState) => {
-                        // TODO: those types should match
-                        props.createNewExpenseAction({
-                            name: formState.name,
-                            cost: formState.price,
-                            date: formState.date.toDateString(),
-                            link: formState.link,
-                            tags: formState.tags,
-                        });
-                    }}
+                    onSubmit={onCreateExpenseSubmit}
                 >
                     <AccordionDetails>
                         <ExpenseFormInputs />
@@ -153,28 +207,7 @@ const ExpenseActionDrawer = (props: ExpenseActionDrawerProps): JSX.Element => {
                                   tags: [],
                               }
                     }
-                    onSubmit={(formState) => {
-                        if (props.selectedExpense == undefined) {
-                            // FIXME - throw error
-                        } else {
-                            updateExpenseCall({
-                                expense: {
-                                    id: props.selectedExpense.id,
-                                    name: formState.name,
-                                    cost: formState.price,
-                                    date: formState.date.toDateString(),
-                                    link: formState.link,
-                                    tags: formState.tags,
-                                },
-                            }).then(
-                                (data) => {
-                                    console.log(data);
-                                    props.updateOneExpenseAction(data);
-                                },
-                                (err) => console.log(err), //FIXME
-                            );
-                        }
-                    }}
+                    onSubmit={onEditExpenseSubmit}
                 >
                     <AccordionDetails>
                         <Typography>
@@ -216,17 +249,7 @@ const ExpenseActionDrawer = (props: ExpenseActionDrawerProps): JSX.Element => {
                     </Button>
                     <Button
                         disabled={props.selectedExpense == undefined}
-                        onClick={() => {
-                            if (props.selectedExpense) {
-                                deleteExpenseCall({
-                                    id: props.selectedExpense.id,
-                                }).then(
-                                    (data) =>
-                                        props.updateAllExpensesAction(data),
-                                    (err) => console.log(err), // FIXME - needs a real handler
-                                );
-                            }
-                        }}
+                        onClick={onDeleteExpenseClick}
                     >
                         Delete
                     </Button>

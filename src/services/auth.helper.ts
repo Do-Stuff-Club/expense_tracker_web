@@ -9,11 +9,11 @@ const userIdStorageKey = `${storageKey}-user-id`;
 //                               Types
 // ===================================================================
 export type AuthHeaders = {
-    client: string;
-    expiry: string;
-    uid: string;
-    'access-token': string;
-    'token-type': string;
+    client: string | null;
+    expiry: string | null;
+    uid: string | null;
+    'access-token': string | null;
+    'token-type': string | null;
 };
 
 // ===================================================================

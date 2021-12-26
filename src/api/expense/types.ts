@@ -14,9 +14,9 @@ export interface DeleteExpenseParams {
     id: number;
 }
 
-export interface UpdateExpenseParams {
+export type UpdateExpenseParams = {
     expense: Expense;
-}
+};
 
 export interface ExpenseResponse {
     id: number;

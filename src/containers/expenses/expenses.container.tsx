@@ -1,23 +1,26 @@
+// ===================================================================
+//                             Imports
+// ===================================================================
 import { connect } from 'react-redux';
+
 import withAuth from '../../components/app/shared/withAuthentication';
 import Expenses from '../../components/app/expenses/expenses.component';
-import {
-    updateAllExpensesAction,
-    updateOneExpenseAction,
-} from '../../redux/expenses/action';
-import { RootState } from '../../redux/store';
-import { fetchTagsAction } from '../../redux/tags/action';
 
+import { RootState } from '../../redux/store';
+import { getAllTagsAction } from '../../redux/tags/action';
+import { getExpensesAction } from '../../redux/expenses/action';
+
+// ===================================================================
+//                             Container
+// ===================================================================
 const stateToProps = (state: RootState) => ({
     expenses: state.expense.expenses,
+    userId: state.user.id,
 });
 
 const dispatchToProps = {
-    updateAllExpensesAction,
-    updateOneExpenseAction,
-    fetchTagsAction,
+    getAllTagsAction,
+    getExpensesAction,
 };
 
 export default connect(stateToProps, dispatchToProps)(withAuth(Expenses));
-
-//TODO: need to create INIT actions
