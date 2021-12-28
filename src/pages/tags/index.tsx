@@ -5,9 +5,8 @@ import { RootState } from '../../redux/store';
 import { connect, ConnectedProps } from 'react-redux';
 import withAuth from '../../components/app/shared/withAuthentication';
 import React, { useEffect, useState } from 'react';
-import { getTagsCall } from '../../api/tag/call';
 import {
-    fetchTagsAction,
+    getAllTagsAction,
     createTagAction,
     updateTagAction,
     deleteTagAction,
@@ -31,7 +30,7 @@ const stateToProps = (state: RootState) => ({
 });
 
 const dispatchToProps = {
-    fetchTagsAction,
+    getAllTagsAction,
     createTagAction,
     updateTagAction,
     deleteTagAction,
@@ -49,10 +48,7 @@ export type TagProps = ReduxProps;
  */
 function TagIndex(props: TagProps) {
     useEffect(() => {
-        getTagsCall().then(
-            (data) => props.fetchTagsAction(data),
-            (error) => console.log(error),
-        );
+        props.getAllTagsAction();
     }, []); // Pass an empty array so it only fires once
 
     const [selectedTag, setSelectedTag] = useState<Tag | undefined>(undefined);

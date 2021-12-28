@@ -10,6 +10,7 @@ import produce, { castDraft } from 'immer';
 export const defaultTagState: TagState = {
     map: {},
     rootIds: [],
+    loading: false,
 };
 
 /**

@@ -31,9 +31,6 @@ export default function tag(
             };
         case TagActionTypes.GET_TAGS_FAIL:
             return { ...defaultTagState, loading: false };
-
-        case TagActionTypes.FETCH_TAGS:
-            return action.payload.tags.reduce(setTagInState, defaultTagState);
         case TagActionTypes.CREATE_TAG:
             if (!containsId(state, action.payload.tag.id))
                 return setTagInState(state, action.payload.tag);
