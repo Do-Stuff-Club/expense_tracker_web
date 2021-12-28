@@ -1,7 +1,13 @@
-import { ExpenseAction, ExpenseActionTypes, ExpenseState } from './types';
+import {
+    Expense,
+    ExpenseAction,
+    ExpenseActionTypes,
+    ExpenseState,
+} from './types';
 
 export const defaultExpenseState: ExpenseState = {
     expenses: [],
+    loading: false,
 };
 
 /**
@@ -18,22 +24,53 @@ export default function expense(
 ): ExpenseState {
     console.log('In Expense Reducer!');
     switch (action.type) {
-        case ExpenseActionTypes.CREATE_EXPENSE:
-            return { expenses: [...state.expenses, action.payload.expense] };
-        case ExpenseActionTypes.UPDATE_ALL_EXPENSES:
-            return { expenses: action.payload.expenses };
-        case ExpenseActionTypes.UPDATE_ONE_EXPENSE:
-            // Replace the edited expense
-            console.log(action);
+        case ExpenseActionTypes.GET_EXPENSES_INIT:
+            return { ...state, loading: true };
+        case ExpenseActionTypes.GET_EXPENSES_SUCCESS:
             return {
-                expenses: state.expenses.map((expense) => {
-                    if (expense.id == action.payload.expense.id) {
-                        return action.payload.expense;
-                    } else {
-                        return expense;
-                    }
-                }),
+                ...state,
+                expenses: action.payload.expenses,
+                loading: false,
             };
+        case ExpenseActionTypes.GET_EXPENSES_FAIL:
+            return { ...state, loading: false };
+
+        case ExpenseActionTypes.CREATE_EXPENSE_INIT:
+            return { ...state, loading: true };
+        case ExpenseActionTypes.CREATE_EXPENSE_SUCCESS:
+            return {
+                ...state,
+                expenses: [...state.expenses, action.payload.expense],
+                loading: false,
+            };
+        case ExpenseActionTypes.CREATE_EXPENSE_FAIL:
+            return { ...state, loading: false };
+
+        case ExpenseActionTypes.UPDATE_EXPENSE_INIT:
+            return { ...state, loading: true };
+        case ExpenseActionTypes.UPDATE_EXPENSE_SUCCESS:
+            return {
+                ...state,
+                expenses: state.expenses.map((c) =>
+                    c.id === action.payload.expense.id
+                        ? action.payload.expense
+                        : c,
+                ),
+                loading: false,
+            };
+        case ExpenseActionTypes.UPDATE_EXPENSE_FAIL:
+            return { ...state, loading: false };
+
+        case ExpenseActionTypes.DELETE_EXPENSE_INIT:
+            return { ...state, loading: true };
+        case ExpenseActionTypes.DELETE_EXPENSE_SUCCESS:
+            return {
+                ...state,
+                expenses: action.payload.expenses,
+                loading: false,
+            };
+        case ExpenseActionTypes.DELETE_EXPENSE_FAIL:
+            return { ...state, loading: false };
         default:
             return state;
     }

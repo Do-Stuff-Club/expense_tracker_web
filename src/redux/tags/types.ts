@@ -9,6 +9,7 @@ export type Tag = {
 };
 
 export type TagState = {
+    loading: boolean;
     readonly map: Record<number, Tag>;
     readonly rootIds: ReadonlyArray<number>;
 };

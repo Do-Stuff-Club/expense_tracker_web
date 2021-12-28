@@ -21,6 +21,17 @@ export default function tag(
     action: TagAction,
 ): TagState {
     switch (action.type) {
+        case TagActionTypes.GET_TAGS_INIT:
+            return { ...defaultTagState, loading: true };
+        case TagActionTypes.GET_TAGS_SUCCESS:
+            return {
+                ...defaultTagState,
+                map: action.payload.tags,
+                loading: false,
+            };
+        case TagActionTypes.GET_TAGS_FAIL:
+            return { ...defaultTagState, loading: false };
+
         case TagActionTypes.FETCH_TAGS:
             return action.payload.tags.reduce(setTagInState, defaultTagState);
         case TagActionTypes.CREATE_TAG:

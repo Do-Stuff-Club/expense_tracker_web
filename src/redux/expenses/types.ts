@@ -11,6 +11,7 @@ export interface Expense {
 
 export interface ExpenseState {
     expenses: ReadonlyArray<Expense>;
+    loading: boolean;
 }
 
 export enum ExpenseActionTypes {
@@ -85,14 +86,14 @@ export type UpdateOneExpenseAction = {
     };
 };
 
-export interface DeleteExpenseAction {
+export type DeleteExpenseAction = {
     type:
         | ExpenseActionTypes.DELETE_EXPENSE
         | ExpenseActionTypes.DELETE_EXPENSE_INIT
         | ExpenseActionTypes.DELETE_EXPENSE_SUCCESS
         | ExpenseActionTypes.DELETE_EXPENSE_FAIL;
-    payload: { expense: Expense } | { expenses: readonly Expense[] };
-}
+    payload: { expenses: readonly Expense[] };
+};
 
 export type ExpenseAction =
     | GetExpensesAction
