@@ -3,9 +3,9 @@
 // ===================================================================
 import { Form, Formik } from 'formik';
 import React from 'react';
-import { FormProps } from '../shared/forms/utils';
-import FormButton from '../shared/forms/building_blocks/formButton';
-import TextField from '../shared/forms/building_blocks/textField';
+import { FormProps } from './utils';
+import FormButton from '../inputs/formButton';
+import TextField from '../inputs/textField';
 import * as Yup from 'yup';
 
 // ===================================================================

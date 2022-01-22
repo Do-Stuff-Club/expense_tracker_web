@@ -4,14 +4,14 @@
 import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 
-import { Expense } from '../../../redux/expenses/types';
+import { Expense } from '../../redux/expenses/types';
 
-import ExpenseActionDrawer from '../../../containers/expenses/expenseActionDrawer.container';
+import ExpenseActionDrawer from '../../containers/expenses/expenseActionDrawer.container';
 
 import ExpenseView from './expenseView';
 
-import { AllTagsData } from '../../../api/tag/types';
-import { AllExpensesData } from '../../../api/expense/types';
+import { AllTagsData } from '../../api/tag/types';
+import { AllExpensesData } from '../../api/expense/types';
 
 // ===================================================================
 //                             Component

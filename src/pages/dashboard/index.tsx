@@ -5,11 +5,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { RootState } from '../../redux/store';
-import withAuth from '../../components/app/shared/withAuthentication';
-import AppLayout from '../../components/app/shared/layout/appLayout';
-import { AppNavPage } from '../../components/app/shared/nav/utils';
+import withAuth from '../../components/misc/withAuthentication';
+import AppLayout from '../../components/layout/appLayout';
+import { AppNavPage } from '../../components/nav/utils';
 import { Box } from '@mui/material';
-import PieChart from '../../components/app/dashboard/pieChart';
+import PieChart from '../../components/dashboard/pieChart';
 
 // ===================================================================
 //                            Component

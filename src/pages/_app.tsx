@@ -4,7 +4,7 @@
 import React from 'react';
 import { AppProps } from 'next/app';
 import { wrapper } from '../redux/store';
-import AppThemeProvider from '../components/app/shared/theme/AppThemeProvider';
+import AppThemeProvider from '../components/theme/AppThemeProvider';
 import dynamic from 'next/dynamic';
 
 // ===================================================================

@@ -3,7 +3,7 @@
 // ===================================================================
 import { RootState } from '../../redux/store';
 import { connect, ConnectedProps } from 'react-redux';
-import withAuth from '../../components/app/shared/withAuthentication';
+import withAuth from '../../components/misc/withAuthentication';
 import React, { useEffect, useState } from 'react';
 import {
     getAllTagsAction,
@@ -11,13 +11,13 @@ import {
     updateTagAction,
     deleteTagAction,
 } from '../../redux/tags/action';
-import TagTreeView from '../../components/app/tags/tagTreeView';
+import TagTreeView from '../../components/tags/tagTreeView';
 import { Tag } from '../../redux/tags/types';
-import Debug from '../../components/debug';
-import AppLayout from '../../components/app/shared/layout/appLayout';
-import { AppNavPage } from '../../components/app/shared/nav/utils';
+import Debug from '../../components/misc/debug';
+import AppLayout from '../../components/layout/appLayout';
+import { AppNavPage } from '../../components/nav/utils';
 import { Box } from '@mui/material';
-import TagActionDrawer from '../../components/app/tags/tagActionDrawer';
+import TagActionDrawer from '../../components/tags/tagActionDrawer';
 
 // ===================================================================
 //                            Component

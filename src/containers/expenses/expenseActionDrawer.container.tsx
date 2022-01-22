@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ExpenseActionDrawer from '../../components/app/expenses/expenseActionDrawer';
+import ExpenseActionDrawer from '../../components/expenses/expenseActionDrawer';
 import {
     createNewExpenseAction,
     deleteExpenseAction,

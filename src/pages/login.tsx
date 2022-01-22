@@ -7,15 +7,15 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
 import { loginAction } from '../redux/user/action';
-import TestComponent from '../components/debug';
-import PageLayout from '../components/pageLayout';
+import TestComponent from '../components/misc/debug';
+import PageLayout from '../components/layout/pageLayout';
 import { loginCall } from '../api/user/call';
 import {
     LoginForm,
     LoginFormInputs,
     LoginFormActions,
     LoginFormState,
-} from '../components/app/shared/forms/loginForm';
+} from '../formik/forms/loginForm';
 import { Card, CardHeader, CardContent, CardActions } from '@mui/material';
 
 // ===================================================================

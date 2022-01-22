@@ -3,8 +3,8 @@
 // ===================================================================
 import { connect } from 'react-redux';
 
-import withAuth from '../../components/app/shared/withAuthentication';
-import Expenses from '../../components/app/expenses/expenses.component';
+import withAuth from '../../components/misc/withAuthentication';
+import Expenses from '../../components/expenses/expenses.component';
 
 import { RootState } from '../../redux/store';
 import { getAllTagsAction } from '../../redux/tags/action';

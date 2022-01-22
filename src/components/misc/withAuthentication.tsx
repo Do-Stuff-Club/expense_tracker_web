@@ -3,7 +3,7 @@
 // ===================================================================
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { isAuthenticated } from '../../../services/auth.helper';
+import { isAuthenticated } from '../../services/auth.helper';
 
 // ===================================================================
 //                            Component

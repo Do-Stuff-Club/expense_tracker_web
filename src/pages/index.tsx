@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { RootState } from '../redux/store';
 import { connect } from 'react-redux';
 import React from 'react';
-import PageLayout from '../components/pageLayout';
+import PageLayout from '../components/layout/pageLayout';
 import { Box, Typography } from '@mui/material';
 
 // ===================================================================

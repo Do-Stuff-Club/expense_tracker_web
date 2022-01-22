@@ -1,6 +1,6 @@
 import React from 'react';
-import AppLayout from '../../components/app/shared/layout/appLayout';
-import { AppNavPage } from '../../components/app/shared/nav/utils';
+import AppLayout from '../../components/layout/appLayout';
+import { AppNavPage } from '../../components/nav/utils';
 import Expenses from '../../containers/expenses/expenses.container';
 
 // ===================================================================

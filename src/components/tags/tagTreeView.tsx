@@ -2,7 +2,7 @@
 //                             Imports
 // ===================================================================
 import React, { SyntheticEvent, useState } from 'react';
-import { Tag, TagState } from '../../../redux/tags/types';
+import { Tag, TagState } from '../../redux/tags/types';
 import TreeItem from '@mui/lab/TreeItem';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';

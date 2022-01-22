@@ -3,12 +3,12 @@
 // ===================================================================
 import { useField } from 'formik';
 import React, { useState, useEffect } from 'react';
-import { Tag, TagState } from '../../../../../redux/tags/types';
+import { Tag, TagState } from '../../redux/tags/types';
 import { useSelector } from 'react-redux';
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/lab/Autocomplete';
-import { RootState } from '../../../../../redux/store';
+import { RootState } from '../../redux/store';
 
 // ===================================================================
 //                            Component

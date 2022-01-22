@@ -2,12 +2,11 @@
 //                             Imports
 // ===================================================================
 import React from 'react';
-import { Expense } from '../../../redux/expenses/types';
+import { Expense } from '../../redux/expenses/types';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-//import EditExpenseDialog from './editExpenseDialog';
-import AppSidePanel from '../shared/layout/appSidePanel';
+import AppSidePanel from '../layout/appSidePanel';
 import {
     AccordionProps,
     Accordion,
@@ -23,13 +22,13 @@ import {
     ExpenseFormActions,
     ExpenseFormInputs,
     ExpenseFormState,
-} from './expenseForm';
+} from '../../formik/forms/expenseForm';
 import {
     AllExpensesData,
     CreateExpenseParams,
     OneExpenseData,
     UpdateExpenseParams,
-} from '../../../api/expense/types';
+} from '../../api/expense/types';
 
 // ===================================================================
 //                         Helper Functions

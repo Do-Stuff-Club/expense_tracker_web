@@ -2,18 +2,18 @@
 //                             Imports
 // ===================================================================
 import React from 'react';
-import { Tag } from '../../../redux/tags/types';
+import { Tag } from '../../redux/tags/types';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoveIcon from '@mui/icons-material/SwapVert';
-import AppSidePanel from '../shared/layout/appSidePanel';
+import AppSidePanel from '../layout/appSidePanel';
 import {
     createTagCall,
     updateTagCall,
     deleteTagCall,
-} from '../../../api/tag/call';
-import { TagProps } from '../../../pages/tags/index';
+} from '../../api/tag/call';
+import { TagProps } from '../../pages/tags/index';
 import {
     AccordionProps,
     Accordion,
@@ -24,12 +24,16 @@ import {
     Button,
 } from '@mui/material';
 import styled from '@mui/styled-engine';
-import { TagForm, TagFormActions, TagFormInputs } from './tagForm';
+import {
+    TagForm,
+    TagFormActions,
+    TagFormInputs,
+} from '../../formik/forms/tagForm';
 import {
     TagMoveForm,
     TagMoveFormActions,
     TagMoveFormInputs,
-} from './tagMoveForm';
+} from '../../formik/forms/tagMoveForm';
 
 // ===================================================================
 //                         Helper Functions

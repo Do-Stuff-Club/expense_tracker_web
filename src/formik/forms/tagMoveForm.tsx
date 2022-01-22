@@ -3,11 +3,11 @@
 // ===================================================================
 import { Form, Formik } from 'formik';
 import React from 'react';
-import { FormProps } from '../shared/forms/utils';
-import FormButton from '../shared/forms/building_blocks/formButton';
+import { FormProps } from './utils';
+import FormButton from '../inputs/formButton';
 import * as Yup from 'yup';
-import { Tag } from '../../../redux/tags/types';
-import TagTreeViewSelector from '../shared/forms/building_blocks/tagTreeViewSelector';
+import { Tag } from '../../redux/tags/types';
+import TagTreeViewSelector from '../inputs/tagTreeViewSelector';
 
 // ===================================================================
 //                         Helper Functions
