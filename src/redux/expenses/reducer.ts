@@ -1,9 +1,4 @@
-import {
-    Expense,
-    ExpenseAction,
-    ExpenseActionTypes,
-    ExpenseState,
-} from './types';
+import { ExpenseAction, ExpenseActionTypes, ExpenseState } from './types';
 
 export const defaultExpenseState: ExpenseState = {
     expenses: [],

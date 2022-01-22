@@ -4,7 +4,7 @@
 import { AnyAction } from 'redux';
 import configureMockStore from 'redux-mock-store';
 import thunk, { ThunkDispatch } from 'redux-thunk';
-import { AllTagsData, OneTagData } from '../../api/tag/types';
+import { OneTagData } from '../../api/tag/types';
 import { defaultExpenseState } from '../expenses/reducer';
 import { RootState } from '../store';
 import { defaultTagState } from './state';
@@ -12,7 +12,7 @@ import { defaultUserState } from '../user/reducer';
 import {
     createTagAction,
     deleteTagAction,
-    fetchTagsAction,
+    getAllTagsAction,
     updateTagAction,
 } from './action';
 import { TagActionTypes } from './types';
@@ -30,16 +30,13 @@ const mockStore = configureMockStore<RootState, DispatchExtensions>(
 // ===================================================================
 //                              Tests
 // ===================================================================
-describe('fetchTagsAction()', () => {
+describe('getAllTagsAction()', () => {
     it('creates a single FETCH_TAGS action when it resolves', () => {
-        const testInput: AllTagsData = {
-            tags: [],
-        };
         const expectedActions = [
             {
                 type: TagActionTypes.FETCH_TAGS,
                 payload: {
-                    tags: testInput.tags,
+                    tags: [],
                 },
             },
         ];
@@ -49,7 +46,7 @@ describe('fetchTagsAction()', () => {
             tag: defaultTagState,
             expense: defaultExpenseState,
         });
-        return store.dispatch(fetchTagsAction(testInput)).then(() => {
+        return store.dispatch(getAllTagsAction()).then(() => {
             expect(store.getActions()).toEqual(expectedActions);
         });
     });
