@@ -9,12 +9,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import MoveIcon from '@mui/icons-material/SwapVert';
 import AppSidePanel from '../layout/appSidePanel';
 import {
-    createTagCall,
-    updateTagCall,
-    deleteTagCall,
-} from '../../api/tag/call';
-import { TagProps } from '../../pages/tags/index';
-import {
     AccordionProps,
     Accordion,
     AccordionDetails,
@@ -28,22 +22,18 @@ import {
     TagForm,
     TagFormActions,
     TagFormInputs,
+    TagFormState,
 } from '../../formik/forms/tagForm';
+
 import {
-    TagMoveForm,
-    TagMoveFormActions,
-    TagMoveFormInputs,
-} from '../../formik/forms/tagMoveForm';
+    CreateTagParams,
+    OneTagData,
+    UpdateTagParams,
+} from '../../api/tag/types';
 
 // ===================================================================
 //                         Helper Functions
 // ===================================================================
-enum TagAction {
-    CREATE = 'tag_action_panel_create',
-    RENAME = 'tag_action_panel_rename',
-    MOVE = 'tag_action_panel_move',
-    DELETE = 'tag_action_panel_delete',
-}
 
 const AppAccordion = styled((props: AccordionProps) => (
     <Accordion disableGutters elevation={0} square {...props} />
@@ -63,10 +53,19 @@ const AppAccordion = styled((props: AccordionProps) => (
 // FIXME currently the TagActionDrawer accepts a ton of props due to the
 // "& TagProps" line. We should clean this up and possibly move some of
 // this logic up to pages/tag/index.tsx
+// type TagActionDrawerProps = {
+//     actionHandler?: (action: TagAction) => void;
+//     selectedTag: Tag | undefined;
+// } & TagProps;
+
 type TagActionDrawerProps = {
-    actionHandler?: (action: TagAction) => void;
     selectedTag: Tag | undefined;
-} & TagProps;
+    createNewTagAction: (
+        data: CreateTagParams,
+    ) => Promise<OneTagData | undefined>;
+    updateTagAction: (data: UpdateTagParams) => Promise<OneTagData | undefined>;
+    deleteTagAction: (tagId: number) => Promise<OneTagData | undefined>;
+};
 
 /**
  * React component that renders a menu of buttons for interacting with tags.
@@ -90,6 +89,35 @@ export default function TagActionDrawer(
         else setExpanded(false);
     };
 
+    //#region button handlers
+    const onCreateTagSubmit = (formState: TagFormState): void => {
+        const { createNewTagAction, selectedTag } = props;
+
+        createNewTagAction({
+            name: formState.name,
+            parent_id: selectedTag ? selectedTag.id : undefined,
+        });
+    };
+
+    const onEditTagSubmit = (formState: TagFormState): void => {
+        const { updateTagAction, selectedTag } = props;
+        if (selectedTag !== undefined) {
+            updateTagAction({
+                name: formState.name,
+                parent_id: selectedTag?.parentId,
+                id: selectedTag.id,
+            });
+        }
+    };
+
+    const onDeleteTagSubmit = (): void => {
+        const { deleteTagAction, selectedTag } = props;
+        if (selectedTag) {
+            deleteTagAction(selectedTag.id);
+        }
+    };
+    //#endregion
+
     return (
         <AppSidePanel direction='left'>
             <AppAccordion
@@ -107,17 +135,7 @@ export default function TagActionDrawer(
                     initialState={{
                         name: '',
                     }}
-                    onSubmit={(formState) => {
-                        createTagCall({
-                            name: formState.name,
-                            parent_id: props.selectedTag
-                                ? props.selectedTag.id
-                                : undefined,
-                        }).then(
-                            (data) => props.createTagAction(data),
-                            (err) => console.log(err), // FIXME - needs a real handler
-                        );
-                    }}
+                    onSubmit={onCreateTagSubmit}
                 >
                     <AccordionDetails>
                         <TagFormInputs />
@@ -148,20 +166,7 @@ export default function TagActionDrawer(
                                   name: '',
                               }
                     }
-                    onSubmit={(formState) => {
-                        if (props.selectedTag == undefined) {
-                            // FIXME - throw error
-                        } else {
-                            updateTagCall({
-                                name: formState.name,
-                                parent_id: props.selectedTag?.parentId,
-                                id: props.selectedTag.id,
-                            }).then(
-                                (data) => props.updateTagAction(data),
-                                (err) => console.log(err), //FIXME
-                            );
-                        }
-                    }}
+                    onSubmit={onEditTagSubmit}
                 >
                     <AccordionDetails>
                         <Typography>
@@ -176,7 +181,7 @@ export default function TagActionDrawer(
                     </AccordionActions>
                 </TagForm>
             </AppAccordion>
-            <AppAccordion
+            {/* <AppAccordion
                 expanded={expanded === 'move'}
                 onChange={handleChange('move')}
             >
@@ -217,7 +222,7 @@ export default function TagActionDrawer(
                         />
                     </AccordionActions>
                 </TagMoveForm>
-            </AppAccordion>
+            </AppAccordion> */}
             <AppAccordion
                 expanded={expanded === 'delete'}
                 onChange={handleChange('delete')}
@@ -242,16 +247,7 @@ export default function TagActionDrawer(
                     </Button>
                     <Button
                         disabled={props.selectedTag == undefined}
-                        onClick={() => {
-                            if (props.selectedTag) {
-                                deleteTagCall({
-                                    id: props.selectedTag.id,
-                                }).then(
-                                    (data) => props.deleteTagAction(data),
-                                    (err) => console.log(err), // FIXME - needs a real handler
-                                );
-                            }
-                        }}
+                        onClick={onDeleteTagSubmit}
                     >
                         Delete
                     </Button>
