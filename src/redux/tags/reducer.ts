@@ -20,6 +20,8 @@ export default function tag(
     state = defaultTagState,
     action: TagAction,
 ): TagState {
+    console.log('In Tag Reducer!');
+    console.log(action);
     switch (action.type) {
         case TagActionTypes.GET_TAGS_INIT:
             return { ...defaultTagState, loading: true };
@@ -46,19 +48,55 @@ export default function tag(
                 loading: false,
             };
         }
-        //TODO: add remaining reducers
         case TagActionTypes.GET_TAGS_FAIL:
             return { ...defaultTagState, loading: false };
-        case TagActionTypes.CREATE_TAG:
+
+        case TagActionTypes.CREATE_TAG_INIT:
+            return { ...state, loading: true };
+        case TagActionTypes.CREATE_TAG_SUCCESS:
             if (!containsId(state, action.payload.tag.id))
-                return setTagInState(state, action.payload.tag);
+                return {
+                    ...setTagInState(state, action.payload.tag),
+                    loading: false,
+                };
             else return state;
-        case TagActionTypes.UPDATE_TAG:
+        case TagActionTypes.CREATE_TAG_FAIL:
+            return { ...state, loading: false };
+
+        case TagActionTypes.UPDATE_TAG_INIT:
+            return { ...state, loading: true };
+        case TagActionTypes.UPDATE_TAG_SUCCESS:
             if (containsId(state, action.payload.tag.id))
-                return setTagInState(state, action.payload.tag);
+                return {
+                    ...setTagInState(state, action.payload.tag),
+                    loading: false,
+                };
             else return state;
-        case TagActionTypes.DELETE_TAG:
-            return removeTagInState(state, action.payload.tag);
+        case TagActionTypes.UPDATE_TAG_FAIL:
+            return { ...state, loading: false };
+
+        case TagActionTypes.MOVE_TAG_INIT:
+            return { ...state, loading: true };
+        case TagActionTypes.MOVE_TAG_SUCCESS:
+            if (containsId(state, action.payload.tag.id))
+                return {
+                    ...setTagInState(state, action.payload.tag),
+                    loading: false,
+                };
+            else return state;
+        case TagActionTypes.MOVE_TAG_FAIL:
+            return { ...state, loading: true };
+
+        //TODO: add remaining reducers
+        case TagActionTypes.DELETE_TAG_INIT:
+            return { ...state, loading: true };
+        case TagActionTypes.DELETE_TAG_SUCCESS:
+            return {
+                ...removeTagInState(state, action.payload.tag),
+                loading: false,
+            };
+        case TagActionTypes.DELETE_TAG_FAIL:
+            return { ...state, loading: false };
         default:
             return state;
     }

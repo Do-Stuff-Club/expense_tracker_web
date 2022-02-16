@@ -8,6 +8,7 @@ import { TagAction, TagActionTypes } from './types';
 import {
     AllTagsData,
     CreateTagParams,
+    MoveTagParams,
     OneTagData,
     UpdateTagParams,
 } from '../../api/tag/types';
@@ -15,6 +16,7 @@ import {
     createTagCall,
     deleteTagCall,
     getTagsCall,
+    moveTagCall,
     updateTagCall,
 } from '../../api/tag/call';
 
@@ -177,6 +179,41 @@ const deleteTagActionSuccess = (payload: OneTagData) => {
 //#endregion
 
 //TODO: add move tag action
+//#region Move tag action
+export const moveTagAction = (
+    data: MoveTagParams,
+): ThunkAction<
+    Promise<OneTagData | undefined>,
+    RootState,
+    unknown,
+    Action<string>
+> => async (dispatch: Dispatch) => {
+    // init move tag
+    dispatch({ type: TagActionTypes.MOVE_TAG_INIT });
+
+    let response = undefined;
+    try {
+        // API call to move tag
+        response = await moveTagCall(data);
+        // dispatch success action
+        dispatch(moveTagActionSuccess(response));
+    } catch (error) {
+        // handle the failure
+        dispatch(moveTagActionFail());
+    }
+
+    // return the tag object
+    return response;
+};
+
+const moveTagActionFail = (): Action<string> => {
+    return { type: TagActionTypes.MOVE_TAG_FAIL };
+};
+
+const moveTagActionSuccess = (payload: OneTagData) => {
+    return { type: TagActionTypes.MOVE_TAG_SUCCESS, payload };
+};
+//#endregion
 
 // export const createTagAction = (
 //     data: OneTagData,

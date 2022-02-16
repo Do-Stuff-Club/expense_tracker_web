@@ -26,7 +26,15 @@ import {
 } from '../../formik/forms/tagForm';
 
 import {
+    TagMoveForm,
+    TagMoveFormActions,
+    TagMoveFormInputs,
+    TagMoveFormState,
+} from '../../formik/forms/tagMoveForm';
+
+import {
     CreateTagParams,
+    MoveTagParams,
     OneTagData,
     UpdateTagParams,
 } from '../../api/tag/types';
@@ -64,6 +72,7 @@ type TagActionDrawerProps = {
         data: CreateTagParams,
     ) => Promise<OneTagData | undefined>;
     updateTagAction: (data: UpdateTagParams) => Promise<OneTagData | undefined>;
+    moveTagAction: (data: MoveTagParams) => Promise<OneTagData | undefined>;
     deleteTagAction: (tagId: number) => Promise<OneTagData | undefined>;
 };
 
@@ -106,6 +115,20 @@ export default function TagActionDrawer(
                 name: formState.name,
                 parent_id: selectedTag?.parentId,
                 id: selectedTag.id,
+            });
+        }
+    };
+
+    const onMoveTagSubmit = (formState: TagMoveFormState): void => {
+        const { moveTagAction } = props;
+        if (
+            formState.toMove !== undefined &&
+            formState.newParent !== undefined
+        ) {
+            moveTagAction({
+                id: formState.toMove.id,
+                name: formState.toMove.name,
+                new_parent_id: formState.newParent.id,
             });
         }
     };
@@ -172,7 +195,7 @@ export default function TagActionDrawer(
                         <Typography>
                             {props.selectedTag
                                 ? 'Selected Tag: ' + props.selectedTag.name
-                                : 'Please select an expense.'}
+                                : 'Please select a tag.'}
                         </Typography>
                         <TagFormInputs />
                     </AccordionDetails>
@@ -181,7 +204,7 @@ export default function TagActionDrawer(
                     </AccordionActions>
                 </TagForm>
             </AppAccordion>
-            {/* <AppAccordion
+            <AppAccordion
                 expanded={expanded === 'move'}
                 onChange={handleChange('move')}
             >
@@ -194,24 +217,7 @@ export default function TagActionDrawer(
                 </AccordionSummary>
                 <TagMoveForm
                     initialState={{ toMove: undefined, newParent: undefined }}
-                    onSubmit={(formState) => {
-                        if (
-                            formState.toMove != undefined &&
-                            formState.newParent != undefined
-                        ) {
-                            updateTagCall({
-                                name: formState.toMove.name,
-                                parent_id: formState.newParent.id,
-                                id: formState.toMove.id,
-                            }).then(
-                                (data) => props.updateTagAction(data),
-                                (err) => console.log(err), //FIXME
-                            );
-                        } else {
-                            //FIXME throw proper error message
-                            console.log('UNDEFINED TAGS IN MOVE TAG');
-                        }
-                    }}
+                    onSubmit={onMoveTagSubmit}
                 >
                     <AccordionDetails>
                         <TagMoveFormInputs selectedTag={props.selectedTag} />
@@ -222,7 +228,7 @@ export default function TagActionDrawer(
                         />
                     </AccordionActions>
                 </TagMoveForm>
-            </AppAccordion> */}
+            </AppAccordion>
             <AppAccordion
                 expanded={expanded === 'delete'}
                 onChange={handleChange('delete')}
@@ -238,7 +244,7 @@ export default function TagActionDrawer(
                     <Typography>
                         {props.selectedTag
                             ? 'Selected Tag: ' + props.selectedTag.name
-                            : 'Please select an expense.'}
+                            : 'Please select a tag.'}
                     </Typography>
                 </AccordionDetails>
                 <AccordionActions>

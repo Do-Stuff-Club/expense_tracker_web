@@ -5,6 +5,7 @@ import {
     AllTagsData,
     CreateTagParams,
     DeleteTagParams,
+    MoveTagParams,
     OneTagData,
     TagResponse,
     UpdateTagParams,
@@ -65,8 +66,15 @@ export async function createTagCall(
     params: CreateTagParams,
 ): Promise<OneTagData> {
     try {
+        const recordParams: Record<string, string> = {
+            name: params.name,
+        };
+        if (params.parent_id)
+            recordParams['parent_id'] = params.parent_id.toString();
+        const paramString = new URLSearchParams(recordParams);
+
         const data = await post<TagResponse>(
-            `/tags/?name=${params.name}&parent_id=${params.parent_id}`,
+            `/tags/?${paramString}`,
             {},
             undefined,
         );
@@ -92,6 +100,30 @@ export async function updateTagCall(
     try {
         const data = await put<TagResponse>(
             `/tags/${params.id}?name=${params.name}&=${params.parent_id}`,
+            {},
+            undefined,
+        );
+
+        const tag = tagFromResponse(data);
+
+        return Promise.resolve({
+            tag: tag,
+        });
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+/**
+ * API call to move a tag.
+ *
+ * @param {MoveTagParams} params - input parameters from the page
+ * @returns {Promise<OneTagData>} promise with data to send to Redux, if successful.
+ */
+export async function moveTagCall(params: MoveTagParams): Promise<OneTagData> {
+    try {
+        const data = await put<TagResponse>(
+            `/tags/${params.id}?name=${params.name}&parent_id=${params.new_parent_id}`,
             {},
             undefined,
         );

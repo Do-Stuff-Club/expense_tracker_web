@@ -9,6 +9,12 @@ export type UpdateTagParams = CreateTagParams & {
     id: number;
 };
 
+export type MoveTagParams = {
+    id: number;
+    name: string; //FIXME server crashes without name
+    new_parent_id: number;
+};
+
 export interface DeleteTagParams {
     id: number;
 }

@@ -5,6 +5,7 @@ import {
     createNewTagAction,
     deleteTagAction,
     updateTagAction,
+    moveTagAction,
 } from '../../redux/tags/action';
 import { Tag } from '../../redux/tags/types';
 
@@ -18,6 +19,7 @@ const stateToProps = (
 const dispatchToProps = {
     createNewTagAction,
     updateTagAction,
+    moveTagAction,
     deleteTagAction,
 };
 
