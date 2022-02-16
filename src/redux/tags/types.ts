@@ -57,7 +57,6 @@ export enum TagActionTypes {
 
 export type FetchTagsAction = {
     type:
-        | TagActionTypes.FETCH_TAGS
         | TagActionTypes.GET_TAGS_INIT
         | TagActionTypes.GET_TAGS_SUCCESS
         | TagActionTypes.GET_TAGS_FAIL;
@@ -68,7 +67,6 @@ export type FetchTagsAction = {
 
 export type CreateTagAction = {
     type:
-        | TagActionTypes.CREATE_TAG // FIXME remove the old action types
         | TagActionTypes.CREATE_TAG_INIT
         | TagActionTypes.CREATE_TAG_SUCCESS
         | TagActionTypes.CREATE_TAG_FAIL;
@@ -79,7 +77,6 @@ export type CreateTagAction = {
 
 export type UpdateTagAction = {
     type:
-        | TagActionTypes.UPDATE_TAG // FIXME remove the old action types
         | TagActionTypes.UPDATE_TAG_INIT
         | TagActionTypes.UPDATE_TAG_SUCCESS
         | TagActionTypes.UPDATE_TAG_FAIL;
@@ -90,7 +87,6 @@ export type UpdateTagAction = {
 
 export type MoveTagAction = {
     type:
-        | TagActionTypes.MOVE_TAG // FIXME remove the old action types
         | TagActionTypes.MOVE_TAG_INIT
         | TagActionTypes.MOVE_TAG_SUCCESS
         | TagActionTypes.MOVE_TAG_FAIL;
@@ -101,7 +97,6 @@ export type MoveTagAction = {
 
 export type DeleteTagAction = {
     type:
-        | TagActionTypes.DELETE_TAG // FIXME remove the old action types
         | TagActionTypes.DELETE_TAG_INIT
         | TagActionTypes.DELETE_TAG_SUCCESS
         | TagActionTypes.DELETE_TAG_FAIL;

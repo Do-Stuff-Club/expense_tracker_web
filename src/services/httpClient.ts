@@ -213,7 +213,7 @@ export const patch = async <TReturn>(
 /**
  * Handles auth info persistance, if response is 401 or 403 auth info is cleared, otherwise it's persisted
  *
- * @param {AxiosResponse} response - http response
+ * @param {Response} response - Response information from HTTP call
  */
 const handleAuthInfoPersistance = (response: Response) => {
     if (response.status === 401 || response.status === 403) {
@@ -252,7 +252,7 @@ const setAuthHeaders = (headers: Headers, authRequest = true) => {
 /**
  * Handles http response errors.
  *
- * @param {AxiosResponse} response - Http response
+ * @param {Response} response - Error response from HTTP call
  * @returns {TReturn} - Response data
  * @template TReturn - Return type
  */

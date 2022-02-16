@@ -59,7 +59,6 @@ export type GetExpensesAction = {
 
 export type CreateExpenseAction = {
     type:
-        | ExpenseActionTypes.CREATE_EXPENSE
         | ExpenseActionTypes.CREATE_EXPENSE_INIT
         | ExpenseActionTypes.CREATE_EXPENSE_FAIL
         | ExpenseActionTypes.CREATE_EXPENSE_SUCCESS;
@@ -77,7 +76,6 @@ export interface UpdateAllExpensesAction {
 
 export type UpdateOneExpenseAction = {
     type:
-        | ExpenseActionTypes.UPDATE_ONE_EXPENSE
         | ExpenseActionTypes.UPDATE_EXPENSE_INIT
         | ExpenseActionTypes.UPDATE_EXPENSE_SUCCESS
         | ExpenseActionTypes.UPDATE_EXPENSE_FAIL;
@@ -88,7 +86,6 @@ export type UpdateOneExpenseAction = {
 
 export type DeleteExpenseAction = {
     type:
-        | ExpenseActionTypes.DELETE_EXPENSE
         | ExpenseActionTypes.DELETE_EXPENSE_INIT
         | ExpenseActionTypes.DELETE_EXPENSE_SUCCESS
         | ExpenseActionTypes.DELETE_EXPENSE_FAIL;
