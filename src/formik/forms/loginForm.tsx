@@ -2,6 +2,7 @@
 //                             Imports
 // ===================================================================
 import { Form, Formik } from 'formik';
+import * as Yup from 'yup';
 import React from 'react';
 import { FormProps } from './utils';
 import FormButton from '../inputs/formButton';
@@ -15,24 +16,6 @@ export type LoginFormState = {
     password: string;
 };
 
-type LoginFormErrors = Partial<LoginFormState>;
-
-/**
- * Helper function that analyzes the form's current state and returns a
- * formik errors object
- *
- * @param {LoginFormState} values - form's current state
- * @returns {LoginFormErrors} formik error object
- */
-function validate(values: LoginFormState): LoginFormErrors {
-    const errors: LoginFormErrors = {};
-
-    if (!values.email.includes('@')) {
-        errors.email = 'Not a valid email address';
-    }
-
-    return errors;
-}
 // ===================================================================
 //                            Component
 // ===================================================================
@@ -50,7 +33,12 @@ export function LoginForm(props: LoginFormProps): JSX.Element {
     return (
         <Formik
             initialValues={props.initialState}
-            validate={validate}
+            validationSchema={Yup.object({
+                email: Yup.string()
+                    .required('Email cannot be empty')
+                    .email('Not a valid email'),
+                password: Yup.string().required('Password cannot be empty'),
+            })}
             onSubmit={props.onSubmit}
         >
             <Form noValidate>{props.children}</Form>
