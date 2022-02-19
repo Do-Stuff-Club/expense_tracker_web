@@ -6,7 +6,7 @@ import { getAllTagsAction } from '../../redux/tags/action';
 
 const stateToProps = (state: RootState) => ({
     tag: state.tag,
-    userId: state.user.id,
+    userId: state.user.user.id,
 });
 
 const dispatchToProps = {

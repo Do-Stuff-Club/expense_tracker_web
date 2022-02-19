@@ -9,7 +9,6 @@ import { connect, ConnectedProps } from 'react-redux';
 import { loginAction } from '../redux/user/action';
 import TestComponent from '../components/misc/debug';
 import PageLayout from '../components/layout/pageLayout';
-import { loginCall } from '../api/user/call';
 import {
     LoginForm,
     LoginFormInputs,
@@ -35,24 +34,16 @@ type LoginProps = ReduxProps;
  * @returns {Element} Page element
  */
 function Login(props: LoginProps) {
+    const router = useRouter();
+
     const initialState = {
         email: '',
         password: '',
     };
 
     const onSubmit = (values: LoginFormState) => {
-        loginCall(values).then(
-            (data) => {
-                props.loginAction(data);
-                router.push('/dashboard');
-            },
-            (error) => {
-                console.log(error);
-            },
-        );
+        props.loginAction(values).then(() => router.push('/dashboard'));
     };
-
-    const router = useRouter();
 
     return (
         <PageLayout pageName='Expense Tracker Login' center={true}>

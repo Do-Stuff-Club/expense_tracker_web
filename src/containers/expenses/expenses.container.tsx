@@ -15,7 +15,7 @@ import { getExpensesAction } from '../../redux/expenses/action';
 // ===================================================================
 const stateToProps = (state: RootState) => ({
     expenses: state.expense.expenses,
-    userId: state.user.id,
+    userId: state.user.user.id,
 });
 
 const dispatchToProps = {

@@ -2,8 +2,9 @@ import { getUserId } from '../../services/auth.helper';
 import { UserAction, UserActionTypes, UserState } from './types';
 
 export const defaultUserState: UserState = {
+    loading: false,
     loggedIn: false,
-    id: undefined,
+    user: { id: undefined },
 };
 
 /**
@@ -19,15 +20,25 @@ export default function user(
     action: UserAction,
 ): UserState {
     switch (action.type) {
-        case UserActionTypes.LOGIN:
-            return action.payload;
+        case UserActionTypes.LOGIN_INIT:
+            return { ...state, loading: true };
+        case UserActionTypes.LOGIN_SUCCESS:
+            return {
+                ...state,
+                user: action.payload,
+                loading: false,
+            };
+        case UserActionTypes.LOGIN_FAIL:
+            return { ...state, loading: false };
         default:
             return {
                 ...state,
-                id:
-                    getUserId() !== undefined
-                        ? parseInt(getUserId() as string)
-                        : undefined,
+                user: {
+                    id:
+                        getUserId() !== undefined
+                            ? parseInt(getUserId() as string)
+                            : undefined,
+                },
             };
     }
 }

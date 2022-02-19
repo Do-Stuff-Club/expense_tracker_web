@@ -17,7 +17,6 @@ export default function expense(
     state = defaultExpenseState,
     action: ExpenseAction,
 ): ExpenseState {
-    console.log('In Expense Reducer!');
     switch (action.type) {
         case ExpenseActionTypes.GET_EXPENSES_INIT:
             return { ...state, loading: true };
