@@ -87,7 +87,6 @@ export default function tag(
         case TagActionTypes.MOVE_TAG_FAIL:
             return { ...state, loading: true };
 
-        //TODO: add remaining reducers
         case TagActionTypes.DELETE_TAG_INIT:
             return { ...state, loading: true };
         case TagActionTypes.DELETE_TAG_SUCCESS:

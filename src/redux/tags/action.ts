@@ -25,6 +25,11 @@ import {
 // ===================================================================
 
 //#region get all tags actions
+/**
+ * Action to get tag list
+ *
+ * @returns {Promise<AllTagsData | undefined>} - List of all tags
+ */
 export const getAllTagsAction = (): ThunkAction<
     Promise<AllTagsData | undefined>,
     RootState,
@@ -97,11 +102,22 @@ export const createNewTagAction = (
     return response;
 };
 
+/**
+ * Returns create new tag fail action
+ *
+ * @returns {Action<string>} - FAIL action
+ */
 const createNewTagActionFail = (): Action<string> => {
     return { type: TagActionTypes.CREATE_TAG_FAIL };
 };
 
-const createNewTagActionSuccess = (payload: OneTagData) => {
+/**
+ * Returns create new tag success action
+ *
+ * @param {OneTagData} payload - action payload
+ * @returns {TagAction} - SUCCESS action
+ */
+const createNewTagActionSuccess = (payload: OneTagData): TagAction => {
     return { type: TagActionTypes.CREATE_TAG_SUCCESS, payload };
 };
 //#endregion
@@ -133,11 +149,22 @@ export const updateTagAction = (
     return response;
 };
 
+/**
+ * Returns update tag fail action
+ *
+ * @returns {Action<string>} - FAIL action
+ */
 const updateTagActionFail = (): Action<string> => {
     return { type: TagActionTypes.UPDATE_TAG_FAIL };
 };
 
-const updateTagActionSuccess = (payload: OneTagData) => {
+/**
+ * Returns update tag success action
+ *
+ * @param {OneTagData} payload - action payload
+ * @returns {TagAction} - SUCCESS action
+ */
+const updateTagActionSuccess = (payload: OneTagData): TagAction => {
     return { type: TagActionTypes.UPDATE_TAG_SUCCESS, payload };
 };
 //#endregion
@@ -169,16 +196,26 @@ export const deleteTagAction = (
     return response;
 };
 
+/**
+ * Returns delete tag fail action
+ *
+ * @returns {Action<string>} - FAIL action
+ */
 const deleteTagActionFail = (): Action<string> => {
     return { type: TagActionTypes.DELETE_TAG_FAIL };
 };
 
-const deleteTagActionSuccess = (payload: OneTagData) => {
+/**
+ * Returns delete tag success action
+ *
+ * @param {OneTagData} payload - action payload
+ * @returns {TagAction} - SUCCESS action
+ */
+const deleteTagActionSuccess = (payload: OneTagData): TagAction => {
     return { type: TagActionTypes.DELETE_TAG_SUCCESS, payload };
 };
 //#endregion
 
-//TODO: add move tag action
 //#region Move tag action
 export const moveTagAction = (
     data: MoveTagParams,
@@ -206,50 +243,22 @@ export const moveTagAction = (
     return response;
 };
 
+/**
+ * Returns move tag fail action
+ *
+ * @returns {Action<string>} - FAIL action
+ */
 const moveTagActionFail = (): Action<string> => {
     return { type: TagActionTypes.MOVE_TAG_FAIL };
 };
 
-const moveTagActionSuccess = (payload: OneTagData) => {
+/**
+ * Returns move tag success action
+ *
+ * @param {OneTagData} payload - action payload
+ * @returns {TagAction} - SUCCESS action
+ */
+const moveTagActionSuccess = (payload: OneTagData): TagAction => {
     return { type: TagActionTypes.MOVE_TAG_SUCCESS, payload };
 };
 //#endregion
-
-// export const createTagAction = (
-//     data: OneTagData,
-// ): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
-//     dispatch,
-// ) => {
-//     dispatch({
-//         type: TagActionTypes.CREATE_TAG,
-//         payload: {
-//             tag: data.tag,
-//         },
-//     });
-// };
-
-// export const updateTagAction = (
-//     data: OneTagData,
-// ): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
-//     dispatch,
-// ) => {
-//     dispatch({
-//         type: TagActionTypes.UPDATE_TAG,
-//         payload: {
-//             tag: data.tag,
-//         },
-//     });
-// };
-
-// export const deleteTagAction = (
-//     data: OneTagData,
-// ): ThunkAction<Promise<void>, RootState, unknown, Action<string>> => async (
-//     dispatch,
-// ) => {
-//     dispatch({
-//         type: TagActionTypes.DELETE_TAG,
-//         payload: {
-//             tag: data.tag,
-//         },
-//     });
-// };
