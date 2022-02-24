@@ -10,11 +10,10 @@ context('Navigation', () => {
     });
 
     it('Navigates to the sign up page when sign up is pressed', () => {
-        
         // we click login
         cy.findByText('Sign Up', { timeout: 7500 }).click();
 
         // we should be at /login
-        cy.location('pathname').should('include', '/signup')
+        cy.location('pathname').should('include', '/signup');
     });
 });
