@@ -1,12 +1,11 @@
 {
+    
     "data": {
-        "data": {
-            "id": 1,
-            "email": "potato@potato.com",
-            "provider": "email",
-            "uid": "potato@potato.com",
-            "allow_password_change": false
-        }
+        "id": 1,
+        "email": "potato@potato.com",
+        "provider": "email",
+        "uid": "potato@potato.com",
+        "allow_password_change": false
     },
     "status": 200,
     "statusText": "OK",
@@ -18,33 +17,5 @@
         "expiry": "1646630821",
         "token-type": "Bearer",
         "uid": "potato@potato.com"
-    },
-    "config": {
-        "url": "/auth/sign_in",
-        "method": "post",
-        "data": "{\"email\":\"potato@potato.com\",\"password\":\"asdfasdf\"}",
-        "headers": {
-            "Accept": "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-            "access-token": "43nEKqbQ2lb6tYJZ481QNw",
-            "token-type": "Bearer",
-            "uid": "potato@potato.com",
-            "expiry": "1646448009",
-            "client": "Wa44xrPvcfCZEAhHyEM86Q"
-        },
-        "baseURL": "https://expense-tracker-test-api.herokuapp.com/",
-        "transformRequest": [null],
-        "transformResponse": [null],
-        "timeout": 0,
-        "xsrfCookieName": "XSRF-TOKEN",
-        "xsrfHeaderName": "X-XSRF-TOKEN",
-        "maxContentLength": -1,
-        "maxBodyLength": -1,
-        "transitional": {
-            "silentJSONParsing": true,
-            "forcedJSONParsing": true,
-            "clarifyTimeoutError": false
-        }
-    },
-    "request": {}
+    }
 }
