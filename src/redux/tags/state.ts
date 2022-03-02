@@ -91,3 +91,17 @@ export const removeTagInState = produce((draft: TagState, tag: Tag) => {
 export const containsId = (state: TagState, id: number): boolean => {
     return id in state.map;
 };
+
+/**
+ * Computes the tag's ancestry and returns it as a list. Includes the tag itself
+ *
+ * @param state
+ * @param id
+ */
+export const getTagAncestry = (state: TagState, id: number): readonly Tag[] => {
+    const tag = state.map[id];
+    if (tag && tag.parentId == undefined) return [tag];
+    else if (tag && tag.parentId != undefined)
+        return [...getTagAncestry(state, tag.parentId), tag];
+    else return []; // FIXME shouldn't need this case- we're getting bad data from server or redux
+};

@@ -10,6 +10,8 @@ import { ExpenseAction } from './expenses/types';
 import expense, { defaultExpenseState } from './expenses/reducer';
 import tag from './tags/reducer';
 import { defaultTagState } from './tags/state';
+import dashboard, { defaultDashboardState } from './dashboard/reducer';
+import { DashboardAction } from './dashboard/types';
 
 const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
 
@@ -17,6 +19,7 @@ const defaultState = {
     user: defaultUserState,
     tag: defaultTagState,
     expense: defaultExpenseState,
+    dashboard: defaultDashboardState,
 };
 
 type HydrateAction = {
@@ -24,9 +27,14 @@ type HydrateAction = {
     payload: RootState;
 };
 
-type AppAction = HydrateAction | UserAction | TagAction | ExpenseAction;
+type AppAction =
+    | HydrateAction
+    | UserAction
+    | TagAction
+    | ExpenseAction
+    | DashboardAction;
 
-const combinedReducer = combineReducers({ user, tag, expense });
+const combinedReducer = combineReducers({ user, tag, expense, dashboard });
 export type RootState = ReturnType<typeof combinedReducer>;
 
 // create your reducer

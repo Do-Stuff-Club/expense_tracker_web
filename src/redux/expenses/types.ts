@@ -15,8 +15,6 @@ export interface ExpenseState {
 }
 
 export enum ExpenseActionTypes {
-    CREATE_EXPENSE = 'create_expense',
-
     //#endregion get all expenses
     GET_EXPENSES_INIT = 'GET_EXPENSES_INIT',
     GET_EXPENSES_SUCCESS = 'GET_EXPENSES_SUCCESS',

@@ -198,12 +198,11 @@ export async function updateExpenseCall(
  * @returns {Promise<AllExpensesData>} promise with data to send to Redux, if successful.
  */
 export async function queryExpensesCall(
-    userId: number | undefined,
     params: QueryExpenseParams,
 ): Promise<AllExpensesData> {
     try {
         const data = await get<Array<string>>(
-            `/select_purchases?user_id=${userId}`,
+            `/select_purchases?user_id=${params.user_id}`,
             {},
             {
                 filters: {

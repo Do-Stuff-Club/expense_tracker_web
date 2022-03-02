@@ -19,6 +19,7 @@ export type UpdateExpenseParams = {
 };
 
 export interface QueryExpenseParams {
+    user_id: number | undefined;
     start_date: Date;
     end_date: Date;
     tags: ReadonlyArray<Tag>;

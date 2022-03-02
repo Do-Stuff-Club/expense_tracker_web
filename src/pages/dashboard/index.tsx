@@ -1,7 +1,7 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
 import { RootState } from '../../redux/store';
@@ -9,23 +9,27 @@ import withAuth from '../../components/misc/withAuthentication';
 import AppLayout from '../../components/layout/appLayout';
 import { AppNavPage } from '../../components/nav/utils';
 import { Box } from '@mui/material';
-<<<<<<< HEAD:pages/dashboard/index.tsx
-import PieChart from '../../components/app/dashboard/pieChart';
-import WidgetActionDrawer from '../../components/app/dashboard/widgetActionDrawer';
-=======
 import PieChart from '../../components/dashboard/pieChart';
->>>>>>> main:src/pages/dashboard/index.tsx
+import DashboardActionDrawer from '../../containers/dashboard/dashboardActionDrawer.container';
+import { getExpensesAction } from '../../redux/expenses/action';
+import { getAllTagsAction } from '../../redux/tags/action';
 
 // ===================================================================
 //                            Component
 // ===================================================================
 const stateToProps = (state: RootState) => ({
+    userId: state.user.user.id,
     auth: {
         loggedIn: state.user.loggedIn,
     },
     ...state,
 });
-const connector = connect(stateToProps, {});
+
+const dispatchToProps = {
+    getAllTagsAction,
+    getExpensesAction,
+};
+const connector = connect(stateToProps, dispatchToProps);
 type ReduxProps = ConnectedProps<typeof connector>;
 export type DashboardProps = ReduxProps;
 
@@ -36,20 +40,23 @@ export type DashboardProps = ReduxProps;
  * @returns {Element} Page element
  */
 function Dashboard(props: DashboardProps) {
+    useEffect(() => {
+        const { getAllTagsAction, getExpensesAction, userId } = props;
+        // get all tags
+        getAllTagsAction();
+        // get user's expenses
+        getExpensesAction(userId);
+    }, []); // Pass an empty array so it only fires once
     return (
         <AppLayout page={AppNavPage.DASHBOARD}>
-            <WidgetActionDrawer {...props} />
+            <DashboardActionDrawer />
             <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
                 <PieChart
-                    labels={['Red', 'Blue', 'Yellow']}
-                    values={[300, 50, 100]}
-                    colors={[
-                        'rgb(255, 99, 132)',
-                        'rgb(54, 162, 235)',
-                        'rgb(255, 205, 86)',
-                    ]}
-                    height={'150px'}
-                    width={'150px'}
+                    tags={props.tag.rootIds.map((id) => props.tag.map[id])}
+                    expenses={props.expense.expenses}
+                    tagState={props.tag}
+                    height={'250px'}
+                    width={'250px'}
                 ></PieChart>
             </Box>
         </AppLayout>
