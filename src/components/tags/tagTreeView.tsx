@@ -7,6 +7,7 @@ import TreeItem from '@mui/lab/TreeItem';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import TagComponent from './tag.component';
 
 /**
  * Recursively renders a tag tree using TreeItems.
@@ -70,16 +71,26 @@ export default function TagTreeView(props: TagTreeViewProps): JSX.Element {
         }
     };
     return (
-        <TreeView
-            defaultCollapseIcon={<ExpandMoreIcon />}
-            defaultExpandIcon={<ChevronRightIcon />}
-            selected={selectedTag != undefined ? selectedTag.name : ''}
-            onNodeSelect={nodeSelectHandler}
-            multiSelect={false}
-        >
-            {props.tags.rootIds.map((id) =>
-                renderTagTree(props.tags.map[id], props.tags),
-            )}
-        </TreeView>
+        <>
+            {/* <TreeView
+                defaultCollapseIcon={<ExpandMoreIcon />}
+                defaultExpandIcon={<ChevronRightIcon />}
+                selected={selectedTag != undefined ? selectedTag.name : ''}
+                onNodeSelect={nodeSelectHandler}
+                multiSelect={false}
+            >
+                {props.tags.rootIds.map((id) =>
+                    renderTagTree(props.tags.map[id], props.tags),
+                )}
+            </TreeView> */}
+            {props.tags.rootIds.map((id) => (
+                <TagComponent
+                    key={id}
+                    tag={props.tags.map[id]}
+                    tags={props.tags.map}
+                    root
+                />
+            ))}
+        </>
     );
 }

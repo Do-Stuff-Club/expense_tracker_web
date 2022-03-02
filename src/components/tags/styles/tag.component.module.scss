@@ -1,0 +1,55 @@
+.et-tag-container {
+    display: flex;
+    width: 100%;
+
+    & .et-tag-content {
+        display: flex;
+        flex-direction: column;
+
+        width: 100%;
+        cursor: pointer;
+
+        & > .et-tag-item {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            padding: 0.2em 0;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.04);
+            }
+
+            &:focus {
+                background-color: rgba(0, 0, 0, 0.12);
+            }
+
+            & > .et-tag-tree-item-indicator {
+                display: flex;
+                align-items: center;
+                width: 100%;
+
+                width: 1.2em;
+                margin: 0 0.3em;
+
+                & > .et-tag-tree-item-indicator-icon {
+                    width: 1em;
+                    height: 1em;
+
+                    transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+                }
+            }
+
+            & > .et-tag-name {
+                font-size: 12pt;
+
+                font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            }
+        }
+
+        & > .et-tag-children-container {
+            display: flex;
+            flex-direction: column;
+            margin-left: 1em;
+        }
+    }
+}
