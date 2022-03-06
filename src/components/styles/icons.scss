@@ -1,0 +1,11 @@
+$icons: url('../../assets/icons.png');
+
+@mixin iconAsBackground($left, $top) {
+    object-fit: none;
+    background-image: $icons;
+    width: 24px;
+    height: 24px;
+    background-position: $left $top;
+    zoom: 0.7;
+    opacity: 0.5;
+}

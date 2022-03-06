@@ -1,3 +1,5 @@
+@import '../../styles/icons.scss';
+
 .et-tag-container {
     display: flex;
     width: 100%;
@@ -43,6 +45,27 @@
                 font-size: 12pt;
 
                 font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            }
+
+            & > .et-tag-item-actions {
+                display: flex;
+                padding: 0 1em;
+
+                & > .et-tag-item-action {
+                    margin: 0 0.3em;
+                }
+
+                & > .et-tag-item-edit {
+                    @include iconAsBackground(-324px, -252px);
+                }
+
+                & > .et-tag-item-add {
+                    @include iconAsBackground(-360px, -540px);
+                }
+
+                & > .et-tag-item-delete {
+                    @include iconAsBackground(-36px, -720px);
+                }
             }
         }
 

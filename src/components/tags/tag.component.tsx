@@ -1,9 +1,10 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import React from 'react';
+import React, { useRef } from 'react';
 import { Tag } from '../../redux/tags/types';
 import styles from './styles/tag.component.module.scss';
+import icons from '../../assets/icons.png';
 
 type TagProps = {
     tag: Tag;
@@ -29,11 +30,27 @@ const TagComponent = (props: TagProps): JSX.Element => {
         root,
     } = props;
 
-    // console.log(tag);
+    const tagRef = useRef<HTMLDivElement>(null);
+
+    const onItemClick = (): void => {
+        if (tagRef.current) {
+            focusTag(tagRef.current);
+        }
+    };
+
+    const focusTag = (tagElement: HTMLDivElement): void => {
+        tagElement.focus();
+    };
+
     return (
         <div className={styles['et-tag-container']}>
             <div className={styles['et-tag-content']}>
-                <div className={styles['et-tag-item']}>
+                <div
+                    ref={tagRef}
+                    onClick={onItemClick}
+                    className={styles['et-tag-item']}
+                    tabIndex={0}
+                >
                     <div className={styles['et-tag-tree-item-indicator']}>
                         {childIds.length > 0 ? (
                             <ChevronRight />
@@ -42,6 +59,20 @@ const TagComponent = (props: TagProps): JSX.Element => {
                         )}
                     </div>
                     <div className={styles['et-tag-name']}>{name}</div>
+                    <div className={styles['et-tag-item-actions']}>
+                        <div
+                            title='Edit'
+                            className={`${styles['et-tag-item-edit']} ${styles['et-tag-item-action']}`}
+                        ></div>
+                        <div
+                            title='Add'
+                            className={`${styles['et-tag-item-add']} ${styles['et-tag-item-action']}`}
+                        ></div>
+                        <div
+                            title='Delete'
+                            className={`${styles['et-tag-item-delete']} ${styles['et-tag-item-action']}`}
+                        ></div>
+                    </div>
                 </div>
                 <div className={styles['et-tag-children-container']}>
                     {childIds.map((id) => (
@@ -58,7 +89,8 @@ const TagComponent = (props: TagProps): JSX.Element => {
     );
 };
 
-//TODO: move this ot a utils or other helpers folder
+//#region Private methods
+//TODO: move this to a utils or other helpers folder
 const ChevronRight = (): JSX.Element => {
     return (
         <svg
@@ -72,7 +104,7 @@ const ChevronRight = (): JSX.Element => {
     );
 };
 
-//TODO: move this ot a utils or other helpers folder
+//TODO: move this to a utils or other helpers folder
 const ChildTreeItemIcon = (): JSX.Element => {
     return (
         <svg
@@ -85,5 +117,6 @@ const ChildTreeItemIcon = (): JSX.Element => {
         </svg>
     );
 };
+//#endregion
 
 export default TagComponent;
