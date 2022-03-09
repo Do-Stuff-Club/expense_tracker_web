@@ -1,5 +1,6 @@
 @import '../../styles/icons.scss';
 
+//TODO: refactor this scss
 .et-tag-container {
     display: flex;
     width: 100%;
@@ -19,10 +20,18 @@
 
             &:hover {
                 background-color: rgba(0, 0, 0, 0.04);
+
+                & > .et-tag-item-actions {
+                    visibility: visible;
+                }
             }
 
-            &:focus {
+            &:focus-within {
                 background-color: rgba(0, 0, 0, 0.12);
+
+                & > .et-tag-item-actions {
+                    visibility: visible;
+                }
             }
 
             & > .et-tag-tree-item-indicator {
@@ -45,26 +54,36 @@
                 font-size: 12pt;
 
                 font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+
+                & > .et-tag-name-input {
+                    z-index: 10;
+                }
             }
 
             & > .et-tag-item-actions {
+                visibility: hidden;
                 display: flex;
                 padding: 0 1em;
 
                 & > .et-tag-item-action {
                     margin: 0 0.3em;
+                    width: 1em;
+                    height: 1em;
                 }
 
                 & > .et-tag-item-edit {
-                    @include iconAsBackground(-324px, -252px);
+                    &.et-tag-item-action-active {
+                        opacity: 1;
+                    }
+                    @include editIcon;
                 }
 
                 & > .et-tag-item-add {
-                    @include iconAsBackground(-360px, -540px);
+                    @include iconAsBackground(-360px * 2, -540px * 2);
                 }
 
                 & > .et-tag-item-delete {
-                    @include iconAsBackground(-36px, -720px);
+                    @include iconAsBackground(-36px * 2, -720px * 2);
                 }
             }
         }

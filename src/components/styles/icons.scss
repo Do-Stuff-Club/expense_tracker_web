@@ -1,11 +1,16 @@
 $icons: url('../../assets/icons.png');
+$icons_Hi-Res: url('../../assets/icons_Hi-Res.png');
 
 @mixin iconAsBackground($left, $top) {
     object-fit: none;
-    background-image: $icons;
-    width: 24px;
-    height: 24px;
+    background: $icons_Hi-Res;
+    width: 48px;
+    height: 48px;
     background-position: $left $top;
-    zoom: 0.7;
-    opacity: 0.5;
+    zoom: 0.45;
+    opacity: 0.3;
+}
+
+@mixin editIcon {
+    @include iconAsBackground(-324px * 2, -252px * 2);
 }

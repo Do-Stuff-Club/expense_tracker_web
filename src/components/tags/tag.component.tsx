@@ -1,10 +1,11 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import React, { useRef } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import Input from '@mui/material/Input';
+
 import { Tag } from '../../redux/tags/types';
 import styles from './styles/tag.component.module.scss';
-import icons from '../../assets/icons.png';
 
 type TagProps = {
     tag: Tag;
@@ -16,6 +17,7 @@ type TagProps = {
 //                            Component
 // ===================================================================
 
+//TODO: refactor this component
 /**
  * Renders hierarchical view of a single tag
  *
@@ -30,27 +32,40 @@ const TagComponent = (props: TagProps): JSX.Element => {
         root,
     } = props;
 
-    const tagRef = useRef<HTMLDivElement>(null);
+    const editTagNameInputRef = useRef<HTMLInputElement>(null);
 
-    const onItemClick = (): void => {
-        if (tagRef.current) {
-            focusTag(tagRef.current);
-        }
+    const [selectedTag, setSelectedTag] = useState<Tag | undefined>(undefined);
+    const [isEditing, setIsEditing] = useState(false);
+
+    // focus the tag name input once input gets rendered
+    useEffect(() => {
+        editTagNameInputRef?.current?.focus();
+    }, [isEditing]);
+
+    const onEditClick = (): void => {
+        // set current tag as selected
+        setSelectedTag(tag);
+
+        // enable editing
+        setIsEditing(true);
     };
 
-    const focusTag = (tagElement: HTMLDivElement): void => {
-        tagElement.focus();
+    const onTagNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        e.preventDefault();
+
+        const name = e.target.value;
+        if (selectedTag) setSelectedTag({ ...selectedTag, name });
+    };
+
+    const onTagNameInputBlur = (): void => {
+        setSelectedTag(undefined);
+        setIsEditing(false);
     };
 
     return (
         <div className={styles['et-tag-container']}>
             <div className={styles['et-tag-content']}>
-                <div
-                    ref={tagRef}
-                    onClick={onItemClick}
-                    className={styles['et-tag-item']}
-                    tabIndex={0}
-                >
+                <div className={styles['et-tag-item']}>
                     <div className={styles['et-tag-tree-item-indicator']}>
                         {childIds.length > 0 ? (
                             <ChevronRight />
@@ -58,11 +73,30 @@ const TagComponent = (props: TagProps): JSX.Element => {
                             !root && <ChildTreeItemIcon />
                         )}
                     </div>
-                    <div className={styles['et-tag-name']}>{name}</div>
+                    <div className={styles['et-tag-name']}>
+                        {isEditing ? (
+                            <Input
+                                className={styles['et-tag-name-input']}
+                                inputRef={editTagNameInputRef}
+                                value={selectedTag?.name}
+                                onChange={onTagNameChange}
+                                onBlur={onTagNameInputBlur}
+                            />
+                        ) : (
+                            name
+                        )}
+                    </div>
                     <div className={styles['et-tag-item-actions']}>
                         <div
+                            onClick={onEditClick}
                             title='Edit'
-                            className={`${styles['et-tag-item-edit']} ${styles['et-tag-item-action']}`}
+                            className={`${styles['et-tag-item-edit']} ${
+                                styles['et-tag-item-action']
+                            } ${
+                                isEditing
+                                    ? styles['et-tag-item-action-active']
+                                    : ''
+                            }`}
                         ></div>
                         <div
                             title='Add'
