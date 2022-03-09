@@ -4,13 +4,19 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Input from '@mui/material/Input';
 
+import TagContainer from '../../containers/tags/tag.container';
+
 import { Tag } from '../../redux/tags/types';
 import styles from './styles/tag.component.module.scss';
+import { OneTagData, UpdateTagParams } from '../../api/tag/types';
 
-type TagProps = {
+type TagComponentProps = {
     tag: Tag;
     tags: Record<number, Tag>;
     root: boolean;
+
+    // TODO: add other actions (add new tag, move tag, delete tag)
+    updateTagAction: (data: UpdateTagParams) => Promise<OneTagData | undefined>;
 };
 
 // ===================================================================
@@ -21,10 +27,10 @@ type TagProps = {
 /**
  * Renders hierarchical view of a single tag
  *
- * @param {TagProps} props - Tag component props
+ * @param {TagComponentProps} props - Tag component props
  * @returns {Element} a hierarchical view of a single tag
  */
-const TagComponent = (props: TagProps): JSX.Element => {
+const TagComponent = (props: TagComponentProps): JSX.Element => {
     const {
         tag,
         tag: { name, childIds },
@@ -58,6 +64,18 @@ const TagComponent = (props: TagProps): JSX.Element => {
     };
 
     const onTagNameInputBlur = (): void => {
+        const { updateTagAction } = props;
+
+        // update the tag
+        if (selectedTag) {
+            updateTagAction({
+                id: selectedTag.id,
+                name: selectedTag.name,
+                parent_id: selectedTag.parentId,
+            });
+        }
+
+        // unselect the tag and close editing mode
         setSelectedTag(undefined);
         setIsEditing(false);
     };
@@ -110,7 +128,7 @@ const TagComponent = (props: TagProps): JSX.Element => {
                 </div>
                 <div className={styles['et-tag-children-container']}>
                     {childIds.map((id) => (
-                        <TagComponent
+                        <TagContainer
                             key={id}
                             tag={tags[id]}
                             tags={tags}
