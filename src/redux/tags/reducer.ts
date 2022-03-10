@@ -20,7 +20,7 @@ export default function tag(
     state = defaultTagState,
     action: TagAction,
 ): TagState {
-    console.log('In Tag Reducer!');
+    // TODO: this console should be excluded from the prod build
     console.log(action);
     switch (action.type) {
         case TagActionTypes.GET_TAGS_INIT:

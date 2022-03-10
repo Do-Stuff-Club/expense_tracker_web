@@ -1,7 +1,7 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 import Input from '@mui/material/Input';
 
 import TagContainer from '../../containers/tags/tag.container';
@@ -9,6 +9,7 @@ import TagContainer from '../../containers/tags/tag.container';
 import { Tag } from '../../redux/tags/types';
 import styles from './styles/tag.component.module.scss';
 import { OneTagData, UpdateTagParams } from '../../api/tag/types';
+import { useTreeItem } from '../misc/hooks/useTreeItem.hook';
 
 type TagComponentProps = {
     tag: Tag;
@@ -23,7 +24,7 @@ type TagComponentProps = {
 //                            Component
 // ===================================================================
 
-//TODO: refactor this component
+//TODO: Create reusable tree item component
 /**
  * Renders hierarchical view of a single tag
  *
@@ -36,48 +37,60 @@ const TagComponent = (props: TagComponentProps): JSX.Element => {
         tag: { name, childIds },
         tags,
         root,
+        updateTagAction,
     } = props;
 
-    const editTagNameInputRef = useRef<HTMLInputElement>(null);
+    const [
+        selectedTag,
+        isEditing,
+        editTag,
+        updateTag,
+        changeTagName,
+        editTagNameInputRef,
+    ] = useTreeItem<
+        Tag,
+        (data: UpdateTagParams) => Promise<OneTagData | undefined>
+    >(tag, { updateTreeItemAction: updateTagAction });
 
-    const [selectedTag, setSelectedTag] = useState<Tag | undefined>(undefined);
-    const [isEditing, setIsEditing] = useState(false);
-
-    // focus the tag name input once input gets rendered
-    useEffect(() => {
-        editTagNameInputRef?.current?.focus();
-    }, [isEditing]);
-
+    //#region action handlers
     const onEditClick = (): void => {
-        // set current tag as selected
-        setSelectedTag(tag);
-
-        // enable editing
-        setIsEditing(true);
+        editTag();
     };
 
     const onTagNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
         e.preventDefault();
 
         const name = e.target.value;
-        if (selectedTag) setSelectedTag({ ...selectedTag, name });
+        changeTagName(name);
     };
 
     const onTagNameInputBlur = (): void => {
-        const { updateTagAction } = props;
+        updateTag();
+    };
+    //#endregion
 
-        // update the tag
-        if (selectedTag) {
-            updateTagAction({
-                id: selectedTag.id,
-                name: selectedTag.name,
-                parent_id: selectedTag.parentId,
-            });
+    /**
+     * Renders tree item indicator, chevron right/down, etc
+     *
+     * @returns {Element} Tree item indicator (icon)
+     */
+    const TreeItemIndicator = (): JSX.Element => {
+        if (childIds.length > 0) {
+            // if has children (aka can be expanded) render chevron-right icon
+            return (
+                <div
+                    className={`${styles['et-tag-tree-item-indicator-icon']} ${styles['icon-chevron-right']}`}
+                />
+            );
+        } else if (!root) {
+            // if has no children and is not a root item render bottom left corner
+            return (
+                <div
+                    className={`${styles['et-tag-tree-item-indicator-icon']} ${styles['icon-child-tree-item']}`}
+                />
+            );
         }
-
-        // unselect the tag and close editing mode
-        setSelectedTag(undefined);
-        setIsEditing(false);
+        return <></>;
     };
 
     return (
@@ -85,11 +98,7 @@ const TagComponent = (props: TagComponentProps): JSX.Element => {
             <div className={styles['et-tag-content']}>
                 <div className={styles['et-tag-item']}>
                     <div className={styles['et-tag-tree-item-indicator']}>
-                        {childIds.length > 0 ? (
-                            <ChevronRight />
-                        ) : (
-                            !root && <ChildTreeItemIcon />
-                        )}
+                        <TreeItemIndicator />
                     </div>
                     <div className={styles['et-tag-name']}>
                         {isEditing ? (
@@ -140,35 +149,5 @@ const TagComponent = (props: TagComponentProps): JSX.Element => {
         </div>
     );
 };
-
-//#region Private methods
-//TODO: move this to a utils or other helpers folder
-const ChevronRight = (): JSX.Element => {
-    return (
-        <svg
-            className={styles['et-tag-tree-item-indicator-icon']}
-            focusable='false'
-            aria-hidden='true'
-            viewBox='0 0 24 24'
-        >
-            <path d='M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'></path>
-        </svg>
-    );
-};
-
-//TODO: move this to a utils or other helpers folder
-const ChildTreeItemIcon = (): JSX.Element => {
-    return (
-        <svg
-            className={styles['et-tag-tree-item-indicator-icon']}
-            focusable='false'
-            aria-hidden='true'
-            viewBox='0 0 24 24'
-        >
-            <polyline points='14,0 14,14 28,14' fill='none' stroke='black' />
-        </svg>
-    );
-};
-//#endregion
 
 export default TagComponent;

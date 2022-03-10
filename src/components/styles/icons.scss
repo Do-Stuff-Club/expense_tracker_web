@@ -1,16 +1,35 @@
 $icons: url('../../assets/icons.png');
 $icons_Hi-Res: url('../../assets/icons_Hi-Res.png');
 
-@mixin iconAsBackground($left, $top) {
+@mixin iconAsBackground($left, $top, $opacity: 1) {
     object-fit: none;
     background: $icons_Hi-Res;
     width: 48px;
     height: 48px;
     background-position: $left $top;
     zoom: 0.45;
-    opacity: 0.3;
+    opacity: $opacity;
 }
 
-@mixin editIcon {
-    @include iconAsBackground(-324px * 2, -252px * 2);
+// tree item action icons
+@mixin edit-icon {
+    @include iconAsBackground(-324px * 2, -252px * 2, 0.3);
+}
+
+@mixin add-icon {
+    @include iconAsBackground(-360px * 2, -540px * 2, 0.3);
+}
+
+@mixin delete-icon {
+    @include iconAsBackground(-36px * 2, -720px * 2, 0.3);
+}
+
+// tree view indicator icons
+@mixin chevron-right {
+    @include iconAsBackground(-36px * 2, -144px * 2);
+}
+
+@mixin child-tree-item {
+    @include iconAsBackground(0, -144px * 2);
+    transform: rotate(-45deg);
 }
