@@ -41,6 +41,8 @@ const TagComponent = (props: TagComponentProps): JSX.Element => {
     } = props;
 
     const treeItemChildrenRef = useRef<HTMLDivElement>(null);
+    const treeItemIndicatorRef = useRef<HTMLDivElement>(null);
+
     const [expanded, setExpanded] = useState(false);
     const onTreeItemIndicatorClick = (e: MouseEvent): void => {
         e.preventDefault();
@@ -50,6 +52,11 @@ const TagComponent = (props: TagComponentProps): JSX.Element => {
             if (!expanded)
                 treeItemChildrenRef.current.style.height = `${treeItemChildrenRef.current.scrollHeight}px`;
             else treeItemChildrenRef.current.style.height = '0';
+        }
+
+        // expand/collapse the section
+        if (treeItemIndicatorRef.current) {
+            treeItemIndicatorRef.current.classList.toggle(styles['expanded']);
         }
 
         // toggle tree item
@@ -95,6 +102,7 @@ const TagComponent = (props: TagComponentProps): JSX.Element => {
             // if has children (aka can be expanded) render chevron-right icon
             return (
                 <div
+                    ref={treeItemIndicatorRef}
                     onClick={onTreeItemIndicatorClick}
                     className={`${styles['et-tag-tree-item-indicator-icon']} ${
                         styles['icon-chevron-right']
