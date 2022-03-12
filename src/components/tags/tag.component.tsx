@@ -1,7 +1,7 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState, MouseEvent, useRef } from 'react';
 import Input from '@mui/material/Input';
 
 import TagContainer from '../../containers/tags/tag.container';
@@ -39,6 +39,22 @@ const TagComponent = (props: TagComponentProps): JSX.Element => {
         root,
         updateTagAction,
     } = props;
+
+    const treeItemChildrenRef = useRef<HTMLDivElement>(null);
+    const [expanded, setExpanded] = useState(false);
+    const onTreeItemIndicatorClick = (e: MouseEvent): void => {
+        e.preventDefault();
+
+        // expand/collapse the section
+        if (treeItemChildrenRef.current) {
+            if (!expanded)
+                treeItemChildrenRef.current.style.height = `${treeItemChildrenRef.current.scrollHeight}px`;
+            else treeItemChildrenRef.current.style.height = '0';
+        }
+
+        // toggle tree item
+        setExpanded(!expanded);
+    };
 
     const [
         selectedTag,
@@ -79,7 +95,10 @@ const TagComponent = (props: TagComponentProps): JSX.Element => {
             // if has children (aka can be expanded) render chevron-right icon
             return (
                 <div
-                    className={`${styles['et-tag-tree-item-indicator-icon']} ${styles['icon-chevron-right']}`}
+                    onClick={onTreeItemIndicatorClick}
+                    className={`${styles['et-tag-tree-item-indicator-icon']} ${
+                        styles['icon-chevron-right']
+                    } ${expanded ? styles['expanded'] : ''}`}
                 />
             );
         } else if (!root) {
@@ -135,7 +154,12 @@ const TagComponent = (props: TagComponentProps): JSX.Element => {
                         ></div>
                     </div>
                 </div>
-                <div className={styles['et-tag-children-container']}>
+                <div
+                    ref={treeItemChildrenRef}
+                    className={`${styles['et-tag-children-container']} ${
+                        expanded ? styles['expanded'] : ''
+                    }`}
+                >
                     {childIds.map((id) => (
                         <TagContainer
                             key={id}

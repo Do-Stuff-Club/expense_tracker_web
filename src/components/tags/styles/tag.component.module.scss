@@ -45,6 +45,12 @@
                 & > .et-tag-tree-item-indicator-icon {
                     &.icon-chevron-right {
                         @include chevron-right;
+                        transition: all 2000ms;
+
+                        &.expanded {
+                            transform: rotate(90deg);
+                            transition: all 2000ms;
+                        }
                     }
                     &.icon-child-tree-item {
                         @include child-tree-item;
@@ -95,9 +101,18 @@
         }
 
         & > .et-tag-children-container {
+            &.expanded {
+                visibility: visible;
+            }
+
             display: flex;
             flex-direction: column;
             margin-left: 1em;
+            overflow: hidden;
+
+            transition: all 200ms;
+            visibility: collapse;
+            height: 0;
         }
     }
 }
