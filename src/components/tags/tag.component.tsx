@@ -1,15 +1,13 @@
 // ===================================================================
 //                             Imports
 // ===================================================================
-import React, { ChangeEvent, useState, MouseEvent, useRef } from 'react';
-import Input from '@mui/material/Input';
+import React from 'react';
 
 import TagContainer from '../../containers/tags/tag.container';
+import TreeItem from './treeItem.component';
 
 import { Tag } from '../../redux/tags/types';
-import styles from './styles/tag.component.module.scss';
 import { OneTagData, UpdateTagParams } from '../../api/tag/types';
-import { useTreeItem } from '../misc/hooks/useTreeItem.hook';
 
 type TagComponentProps = {
     tag: Tag;
@@ -23,8 +21,7 @@ type TagComponentProps = {
 // ===================================================================
 //                            Component
 // ===================================================================
-
-//TODO: Create reusable tree item component
+//TODO: custom tree item component should be replace with the mui one
 /**
  * Renders hierarchical view of a single tag
  *
@@ -34,151 +31,28 @@ type TagComponentProps = {
 const TagComponent = (props: TagComponentProps): JSX.Element => {
     const {
         tag,
-        tag: { name, childIds },
+        tag: { childIds },
         tags,
         root,
         updateTagAction,
     } = props;
 
-    const treeItemChildrenRef = useRef<HTMLDivElement>(null);
-    const treeItemIndicatorRef = useRef<HTMLDivElement>(null);
-
-    const [expanded, setExpanded] = useState(false);
-    const onTreeItemIndicatorClick = (e: MouseEvent): void => {
-        e.preventDefault();
-
-        // expand/collapse the section
-        if (treeItemChildrenRef.current) {
-            if (!expanded)
-                treeItemChildrenRef.current.style.height = `${treeItemChildrenRef.current.scrollHeight}px`;
-            else treeItemChildrenRef.current.style.height = '0';
-        }
-
-        // expand/collapse the section
-        if (treeItemIndicatorRef.current) {
-            treeItemIndicatorRef.current.classList.toggle(styles['expanded']);
-        }
-
-        // toggle tree item
-        setExpanded(!expanded);
-    };
-
-    const [
-        selectedTag,
-        isEditing,
-        editTag,
-        updateTag,
-        changeTagName,
-        editTagNameInputRef,
-    ] = useTreeItem<
-        Tag,
-        (data: UpdateTagParams) => Promise<OneTagData | undefined>
-    >(tag, { updateTreeItemAction: updateTagAction });
-
-    //#region action handlers
-    const onEditClick = (): void => {
-        editTag();
-    };
-
-    const onTagNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
-        e.preventDefault();
-
-        const name = e.target.value;
-        changeTagName(name);
-    };
-
-    const onTagNameInputBlur = (): void => {
-        updateTag();
-    };
-    //#endregion
-
-    /**
-     * Renders tree item indicator, chevron right/down, etc
-     *
-     * @returns {Element} Tree item indicator (icon)
-     */
-    const TreeItemIndicator = (): JSX.Element => {
-        if (childIds.length > 0) {
-            // if has children (aka can be expanded) render chevron-right icon
-            return (
-                <div
-                    ref={treeItemIndicatorRef}
-                    onClick={onTreeItemIndicatorClick}
-                    className={`${styles['et-tag-tree-item-indicator-icon']} ${
-                        styles['icon-chevron-right']
-                    } ${expanded ? styles['expanded'] : ''}`}
-                />
-            );
-        } else if (!root) {
-            // if has no children and is not a root item render bottom left corner
-            return (
-                <div
-                    className={`${styles['et-tag-tree-item-indicator-icon']} ${styles['icon-child-tree-item']}`}
-                />
-            );
-        }
-        return <></>;
-    };
-
     return (
-        <div className={styles['et-tag-container']}>
-            <div className={styles['et-tag-content']}>
-                <div className={styles['et-tag-item']}>
-                    <div className={styles['et-tag-tree-item-indicator']}>
-                        <TreeItemIndicator />
-                    </div>
-                    <div className={styles['et-tag-name']}>
-                        {isEditing ? (
-                            <Input
-                                className={styles['et-tag-name-input']}
-                                inputRef={editTagNameInputRef}
-                                value={selectedTag?.name}
-                                onChange={onTagNameChange}
-                                onBlur={onTagNameInputBlur}
-                            />
-                        ) : (
-                            name
-                        )}
-                    </div>
-                    <div className={styles['et-tag-item-actions']}>
-                        <div
-                            onClick={onEditClick}
-                            title='Edit'
-                            className={`${styles['et-tag-item-edit']} ${
-                                styles['et-tag-item-action']
-                            } ${
-                                isEditing
-                                    ? styles['et-tag-item-action-active']
-                                    : ''
-                            }`}
-                        ></div>
-                        <div
-                            title='Add'
-                            className={`${styles['et-tag-item-add']} ${styles['et-tag-item-action']}`}
-                        ></div>
-                        <div
-                            title='Delete'
-                            className={`${styles['et-tag-item-delete']} ${styles['et-tag-item-action']}`}
-                        ></div>
-                    </div>
-                </div>
-                <div
-                    ref={treeItemChildrenRef}
-                    className={`${styles['et-tag-children-container']} ${
-                        expanded ? styles['expanded'] : ''
-                    }`}
-                >
-                    {childIds.map((id) => (
-                        <TagContainer
-                            key={id}
-                            tag={tags[id]}
-                            tags={tags}
-                            root={false}
-                        />
-                    ))}
-                </div>
-            </div>
-        </div>
+        <TreeItem
+            treeItem={tag}
+            updateTreeItemAction={updateTagAction}
+            expandable={childIds.length > 0}
+            isRootItem={root}
+        >
+            {childIds.map((id) => (
+                <TagContainer
+                    key={id}
+                    tag={tags[id]}
+                    tags={tags}
+                    root={false}
+                />
+            ))}
+        </TreeItem>
     );
 };
 
