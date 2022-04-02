@@ -4,6 +4,9 @@
 import React from 'react';
 import { Tag, TagState } from '../../redux/tags/types';
 import TagTreeItem from '../../containers/tags/tag.container';
+import TreeView from '@mui/lab/TreeView';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 // ===================================================================
 //                            Component
@@ -21,7 +24,10 @@ type TagTreeViewProps = {
  */
 export default function TagTreeView(props: TagTreeViewProps): JSX.Element {
     return (
-        <>
+        <TreeView
+            defaultCollapseIcon={<ExpandMoreIcon />}
+            defaultExpandIcon={<ChevronRightIcon />}
+        >
             {props.tags.rootIds.map((id) => (
                 <TagTreeItem
                     key={id}
@@ -30,6 +36,6 @@ export default function TagTreeView(props: TagTreeViewProps): JSX.Element {
                     root
                 />
             ))}
-        </>
+        </TreeView>
     );
 }

@@ -2,15 +2,15 @@
 //                             Imports
 // ===================================================================
 import Input from '@mui/material/Input';
-import React, {
-    useRef,
-    useState,
-    MouseEvent,
-    ChangeEvent,
-    RefObject,
-} from 'react';
+import TreeItem from '@mui/lab/TreeItem';
+
+import React, { ChangeEvent } from 'react';
 import { useTreeItem } from '../misc/hooks/useTreeItem.hook';
 import styles from './styles/treeItem.component.module.scss';
+
+// Needed for customizing lab component themes see https://mui.com/components/about-the-lab/#typescript
+import type {} from '@mui/lab/themeAugmentation';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 type TreeItemType = { id: number; name: string; parentId?: number };
 type TreeItemProps = {
@@ -31,13 +31,11 @@ type TreeItemProps = {
  * @param {TreeItemProps} props - Tree view props for single item
  * @returns {Element} tree view for a single item
  */
-const TreeItem = (props: TreeItemProps): JSX.Element => {
+const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
     // props extraction
     const {
         treeItem,
         treeItem: { name },
-        isRootItem,
-        expandable,
         children,
         updateTreeItemAction,
     } = props;
@@ -56,38 +54,7 @@ const TreeItem = (props: TreeItemProps): JSX.Element => {
         updateTreeItemAction,
     });
 
-    // state
-    const [expanded, setExpanded] = useState(false);
-
-    // refs
-    const treeItemChildrenRef = useRef<HTMLDivElement>(null);
-    const treeItemIndicatorRef = useRef<HTMLDivElement>(null);
-
     //#region user action handlers
-    /**
-     * Handles tree item indicator click event
-     *
-     * @param {MouseEvent} e - Mouse click event
-     */
-    const onTreeItemIndicatorClick = (e: MouseEvent): void => {
-        e.preventDefault();
-
-        // expand/collapse the section by changing the physical height
-        if (treeItemChildrenRef.current) {
-            if (!expanded)
-                treeItemChildrenRef.current.style.height = `${treeItemChildrenRef.current.scrollHeight}px`;
-            else treeItemChildrenRef.current.style.height = '0';
-        }
-
-        // expand/collapse the section
-        if (treeItemIndicatorRef.current) {
-            treeItemIndicatorRef.current.classList.toggle(styles['expanded']);
-        }
-
-        // toggle tree item
-        setExpanded(!expanded);
-    };
-
     const onTreeItemNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
         e.preventDefault();
 
@@ -108,118 +75,102 @@ const TreeItem = (props: TreeItemProps): JSX.Element => {
     };
     //#endregion
 
-    return (
-        <div className={styles['et-tree-item-container']}>
-            <div className={styles['et-tree-item-content']}>
-                <div className={styles['et-tree-item']}>
-                    <div className={styles['et-tree-item-indicator']}>
-                        <TreeItemIndicator
-                            expanded={expanded}
-                            expandable={expandable}
-                            isRootItem={isRootItem}
-                            iconRef={treeItemIndicatorRef}
-                            onIconClick={onTreeItemIndicatorClick}
+    /**
+     * Custom theme for the tree item
+     */
+    const theme = createTheme({
+        components: {
+            MuiTreeItem: {
+                styleOverrides: {
+                    content: {
+                        padding: 'padding: 0.2em 0',
+                        width: '100%',
+                        alignItems: 'center',
+
+                        '&:hover': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+
+                            [`& .${styles['et-tree-item-actions']}`]: {
+                                visibility: 'visible',
+                            },
+                        },
+
+                        '&:focus-within': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.12)',
+
+                            [`& .${styles['et-tree-item-actions']}`]: {
+                                visibility: 'visible',
+                            },
+                        },
+                    },
+                    label: {
+                        display: 'flex',
+                    },
+                },
+            },
+        },
+    });
+
+    //TODO: edit is not working properly. Input keeps losing focus
+    const TreeItemLabel = (): JSX.Element => {
+        return (
+            <>
+                <div className={styles['et-tree-item-name']}>
+                    {isEditing ? (
+                        <Input
+                            className={styles['et-tree-item-name-input']}
+                            inputRef={editTreeItemNameInputRef}
+                            value={selectedTreeItem?.name}
+                            onChange={onTreeItemNameChange}
+                            onBlur={onTreeItemNameInputBlur}
                         />
-                    </div>
-                    <div className={styles['et-tree-item-name']}>
-                        {isEditing ? (
-                            <Input
-                                className={styles['et-tree-item-name-input']}
-                                inputRef={editTreeItemNameInputRef}
-                                value={selectedTreeItem?.name}
-                                onChange={onTreeItemNameChange}
-                                onBlur={onTreeItemNameInputBlur}
-                            />
-                        ) : (
-                            name
-                        )}
-                    </div>
-                    <div className={styles['et-tree-item-actions']}>
-                        <div
-                            onClick={onEditClick}
-                            title='Edit'
-                            className={`${styles['et-tree-item-edit']} ${
-                                styles['et-tree-item-action']
-                            } ${
-                                isEditing
-                                    ? styles['et-tree-item-action-active']
-                                    : ''
-                            }`}
-                        ></div>
-                        <div
-                            onClick={onAddClick}
-                            title='Add'
-                            className={`${styles['et-tree-item-add']} ${
-                                styles['et-tree-item-action']
-                            } ${
-                                isAdding
-                                    ? styles['et-tree-item-action-active']
-                                    : ''
-                            }`}
-                        ></div>
-                        <div
-                            title='Delete'
-                            className={`${styles['et-tree-item-delete']} ${styles['et-tree-item-action']}`}
-                        ></div>
-                    </div>
+                    ) : (
+                        name
+                    )}
                 </div>
-                <div
-                    ref={treeItemChildrenRef}
-                    className={`${styles['et-tree-item-children-container']} ${
-                        expanded ? styles['expanded'] : ''
-                    }`}
+                <div className={styles['et-tree-item-actions']}>
+                    <div
+                        onClick={onEditClick}
+                        title='Edit'
+                        className={`${styles['et-tree-item-edit']} ${
+                            styles['et-tree-item-action']
+                        } ${
+                            isEditing
+                                ? styles['et-tree-item-action-active']
+                                : ''
+                        }`}
+                    ></div>
+                    <div
+                        onClick={onAddClick}
+                        title='Add'
+                        className={`${styles['et-tree-item-add']} ${
+                            styles['et-tree-item-action']
+                        } ${
+                            isAdding ? styles['et-tree-item-action-active'] : ''
+                        }`}
+                    ></div>
+                    <div
+                        title='Delete'
+                        className={`${styles['et-tree-item-delete']} ${styles['et-tree-item-action']}`}
+                    ></div>
+                </div>
+            </>
+        );
+    };
+
+    return (
+        <ThemeProvider theme={theme}>
+            <div className={styles['et-tree-item-container']}>
+                <TreeItem
+                    className={styles['et-tree-item']}
+                    nodeId={treeItem.id.toString()}
+                    label={<TreeItemLabel />}
                 >
                     {children}
-                </div>
+                </TreeItem>
             </div>
-        </div>
+        </ThemeProvider>
     );
 };
 
-//#region Helper component
-type TreeItemIndicatorProps = {
-    expanded: boolean;
-    expandable?: boolean;
-    isRootItem?: boolean;
-    iconRef: RefObject<HTMLDivElement>;
-    onIconClick: (e: MouseEvent) => void;
-};
-/**
- * Renders tree item indicator, chevron right/down, etc
- *
- * @param {TreeItemIndicatorProps} props - Tree item indicator props
- * @returns {Element} Tree item indicator (icon)
- */
-const TreeItemIndicator = (props: TreeItemIndicatorProps): JSX.Element => {
-    const {
-        expandable,
-        expanded,
-        isRootItem,
-        iconRef: treeItemIndicatorRef,
-        onIconClick: onTreeItemIndicatorClick,
-    } = props;
-
-    if (expandable) {
-        // if has children (aka can be expanded) render chevron-right icon
-        return (
-            <div
-                ref={treeItemIndicatorRef}
-                onClick={onTreeItemIndicatorClick}
-                className={`${styles['et-tree-item-indicator-icon']} ${
-                    styles['icon-chevron-right']
-                } ${expanded ? styles['expanded'] : ''}`}
-            />
-        );
-    } else if (!isRootItem) {
-        // if has no children and is not a root item render bottom left corner
-        return (
-            <div
-                className={`${styles['et-tree-item-indicator-icon']} ${styles['icon-child-tree-item']}`}
-            />
-        );
-    }
-    return <></>;
-};
-//#endregion
-
-export default TreeItem;
+export default TreeItemComponent;
