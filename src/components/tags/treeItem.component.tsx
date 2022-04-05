@@ -16,6 +16,7 @@ type TreeItemType = { id: number; name: string; parentId?: number };
 type TreeItemProps = {
     treeItem: TreeItemType;
     updateTreeItemAction: CallableFunction;
+    createTreeItemAction: CallableFunction;
 
     isRootItem?: boolean;
     expandable?: boolean;
@@ -49,6 +50,12 @@ const theme = createTheme({
                             visibility: 'visible',
                         },
                     },
+
+                    '&.Mui-selected': {
+                        [`& .${styles['et-tree-item-actions']}`]: {
+                            visibility: 'visible',
+                        },
+                    },
                 },
                 label: {
                     display: 'flex',
@@ -74,6 +81,7 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
         treeItem: { name },
         children,
         updateTreeItemAction,
+        createTreeItemAction,
     } = props;
 
     // hooks
@@ -109,6 +117,15 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
 
     const onAddClick = (): void => {
         addTreeItem();
+
+        // add new tree item
+        const newTreeItem: TreeItemType = {
+            name: `${name} - Child ${(children?.length ?? 0) + 1}`,
+            id: -1, // not used, can be anything
+            parentId: treeItem.id,
+        };
+
+        createTreeItemAction(newTreeItem);
     };
     //#endregion
 
@@ -152,15 +169,7 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
                                 <div
                                     onClick={onAddClick}
                                     title='Add'
-                                    className={`${styles['et-tree-item-add']} ${
-                                        styles['et-tree-item-action']
-                                    } ${
-                                        isAdding
-                                            ? styles[
-                                                  'et-tree-item-action-active'
-                                              ]
-                                            : ''
-                                    }`}
+                                    className={`${styles['et-tree-item-add']} ${styles['et-tree-item-action']}`}
                                 ></div>
                                 <div
                                     title='Delete'

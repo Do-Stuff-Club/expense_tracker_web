@@ -7,15 +7,20 @@ import TagContainer from '../../containers/tags/tag.container';
 import TreeItemComponent from './treeItem.component';
 
 import { Tag } from '../../redux/tags/types';
-import { OneTagData, UpdateTagParams } from '../../api/tag/types';
+import {
+    CreateTagParams,
+    OneTagData,
+    UpdateTagParams,
+} from '../../api/tag/types';
 
 type TagComponentProps = {
     tag: Tag;
     tags: Record<number, Tag>;
     root: boolean;
 
-    // TODO: add other actions (add new tag, move tag, delete tag)
+    // TODO: add other actions (move tag, delete tag)
     updateTagAction: (data: UpdateTagParams) => Promise<OneTagData | undefined>;
+    createTagAction: (data: CreateTagParams) => Promise<OneTagData | undefined>;
 };
 
 // ===================================================================
@@ -34,12 +39,14 @@ const TagComponent = (props: TagComponentProps): JSX.Element => {
         tags,
         root,
         updateTagAction,
+        createTagAction,
     } = props;
 
     return (
         <TreeItemComponent
             treeItem={tag}
             updateTreeItemAction={updateTagAction}
+            createTreeItemAction={createTagAction}
             expandable={childIds.length > 0}
             isRootItem={root}
         >

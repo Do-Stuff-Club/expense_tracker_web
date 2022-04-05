@@ -2,7 +2,10 @@ import { connect } from 'react-redux';
 
 import TagComponent from '../../components/tags/tag.component';
 import { RootState } from '../../redux/store';
-import { updateTagAction } from '../../redux/tags/action';
+import {
+    createNewTagAction as createTagAction,
+    updateTagAction,
+} from '../../redux/tags/action';
 import { Tag } from '../../redux/tags/types';
 
 const stateToProps = (
@@ -19,7 +22,7 @@ const stateToProps = (
 });
 
 const dispatchToProps = {
-    // createNewTagAction,
+    createTagAction,
     updateTagAction,
     // moveTagAction,
     // deleteTagAction,
