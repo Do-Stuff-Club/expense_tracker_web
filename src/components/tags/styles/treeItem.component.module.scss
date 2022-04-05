@@ -9,21 +9,15 @@
         width: 100%;
         align-items: center;
 
-        // &:hover {
-        //     // background-color: rgba(0, 0, 0, 0.04);
-        //     // background-color: green;
+        & .et-tree-item-name {
+            font-size: 12pt;
 
-        //     & .et-tree-item-actions {
-        //         visibility: visible;
-        //     }
-        // }
-        // &:focus-within {
-        //     // background-color: rgba(0, 0, 0, 0.12);
+            font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 
-        //     & .et-tree-item-actions {
-        //         visibility: visible;
-        //     }
-        // }
+            & > .et-tree-item-name-input {
+                z-index: 10;
+            }
+        }
 
         & .et-tree-item-actions {
             visibility: hidden;

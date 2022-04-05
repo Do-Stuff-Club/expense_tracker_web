@@ -22,6 +22,42 @@ type TreeItemProps = {
     children?: JSX.Element[];
 };
 
+/**
+ * Custom theme for the tree item
+ */
+const theme = createTheme({
+    components: {
+        MuiTreeItem: {
+            styleOverrides: {
+                content: {
+                    padding: 'padding: 0.2em 0',
+                    width: '100%',
+                    alignItems: 'center',
+
+                    '&:hover': {
+                        backgroundColor: 'rgba(0, 0, 0, 0.04)',
+
+                        [`& .${styles['et-tree-item-actions']}`]: {
+                            visibility: 'visible',
+                        },
+                    },
+
+                    '&:focus-within': {
+                        backgroundColor: 'rgba(0, 0, 0, 0.12)',
+
+                        [`& .${styles['et-tree-item-actions']}`]: {
+                            visibility: 'visible',
+                        },
+                    },
+                },
+                label: {
+                    display: 'flex',
+                },
+            },
+        },
+    },
+});
+
 // ===================================================================
 //                            Component
 // ===================================================================
@@ -56,6 +92,7 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
 
     //#region user action handlers
     const onTreeItemNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        e.stopPropagation();
         e.preventDefault();
 
         const name = e.target.value;
@@ -75,96 +112,63 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
     };
     //#endregion
 
-    /**
-     * Custom theme for the tree item
-     */
-    const theme = createTheme({
-        components: {
-            MuiTreeItem: {
-                styleOverrides: {
-                    content: {
-                        padding: 'padding: 0.2em 0',
-                        width: '100%',
-                        alignItems: 'center',
-
-                        '&:hover': {
-                            backgroundColor: 'rgba(0, 0, 0, 0.04)',
-
-                            [`& .${styles['et-tree-item-actions']}`]: {
-                                visibility: 'visible',
-                            },
-                        },
-
-                        '&:focus-within': {
-                            backgroundColor: 'rgba(0, 0, 0, 0.12)',
-
-                            [`& .${styles['et-tree-item-actions']}`]: {
-                                visibility: 'visible',
-                            },
-                        },
-                    },
-                    label: {
-                        display: 'flex',
-                    },
-                },
-            },
-        },
-    });
-
-    //TODO: edit is not working properly. Input keeps losing focus
-    const TreeItemLabel = (): JSX.Element => {
-        return (
-            <>
-                <div className={styles['et-tree-item-name']}>
-                    {isEditing ? (
-                        <Input
-                            className={styles['et-tree-item-name-input']}
-                            inputRef={editTreeItemNameInputRef}
-                            value={selectedTreeItem?.name}
-                            onChange={onTreeItemNameChange}
-                            onBlur={onTreeItemNameInputBlur}
-                        />
-                    ) : (
-                        name
-                    )}
-                </div>
-                <div className={styles['et-tree-item-actions']}>
-                    <div
-                        onClick={onEditClick}
-                        title='Edit'
-                        className={`${styles['et-tree-item-edit']} ${
-                            styles['et-tree-item-action']
-                        } ${
-                            isEditing
-                                ? styles['et-tree-item-action-active']
-                                : ''
-                        }`}
-                    ></div>
-                    <div
-                        onClick={onAddClick}
-                        title='Add'
-                        className={`${styles['et-tree-item-add']} ${
-                            styles['et-tree-item-action']
-                        } ${
-                            isAdding ? styles['et-tree-item-action-active'] : ''
-                        }`}
-                    ></div>
-                    <div
-                        title='Delete'
-                        className={`${styles['et-tree-item-delete']} ${styles['et-tree-item-action']}`}
-                    ></div>
-                </div>
-            </>
-        );
-    };
-
     return (
         <ThemeProvider theme={theme}>
             <div className={styles['et-tree-item-container']}>
                 <TreeItem
                     className={styles['et-tree-item']}
                     nodeId={treeItem.id.toString()}
-                    label={<TreeItemLabel />}
+                    label={
+                        <>
+                            <div className={styles['et-tree-item-name']}>
+                                {isEditing ? (
+                                    <Input
+                                        className={
+                                            styles['et-tree-item-name-input']
+                                        }
+                                        inputRef={editTreeItemNameInputRef}
+                                        value={selectedTreeItem?.name}
+                                        onChange={onTreeItemNameChange}
+                                        onBlur={onTreeItemNameInputBlur}
+                                    />
+                                ) : (
+                                    name
+                                )}
+                            </div>
+                            <div className={styles['et-tree-item-actions']}>
+                                <div
+                                    onClick={onEditClick}
+                                    title='Edit'
+                                    className={`${
+                                        styles['et-tree-item-edit']
+                                    } ${styles['et-tree-item-action']} ${
+                                        isEditing
+                                            ? styles[
+                                                  'et-tree-item-action-active'
+                                              ]
+                                            : ''
+                                    }`}
+                                ></div>
+                                <div
+                                    onClick={onAddClick}
+                                    title='Add'
+                                    className={`${styles['et-tree-item-add']} ${
+                                        styles['et-tree-item-action']
+                                    } ${
+                                        isAdding
+                                            ? styles[
+                                                  'et-tree-item-action-active'
+                                              ]
+                                            : ''
+                                    }`}
+                                ></div>
+                                <div
+                                    title='Delete'
+                                    className={`${styles['et-tree-item-delete']} ${styles['et-tree-item-action']}`}
+                                ></div>
+                            </div>
+                        </>
+                    }
                 >
                     {children}
                 </TreeItem>
