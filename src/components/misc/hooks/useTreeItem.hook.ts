@@ -24,7 +24,7 @@ export const useTreeItem = <
     () => void,
     (name: string) => void,
     RefObject<HTMLInputElement>,
-    boolean,
+    () => void,
     () => void,
 ] => {
     // used for auto focusing
@@ -35,7 +35,6 @@ export const useTreeItem = <
         TreeItemType | undefined
     >(undefined);
     const [isEditing, setIsEditing] = useState(false);
-    const [isAdding, setIsAdding] = useState(false);
 
     // focus the tree item name input once input gets rendered
     useEffect(() => {
@@ -56,12 +55,20 @@ export const useTreeItem = <
         setIsEditing(true);
     };
 
+    /**
+     * Adds new tree item
+     */
     const addTreeItem = (): void => {
         // set current item as selected
         setSelectedTreeItem(treeItem);
+    };
 
-        // enable editing
-        setIsAdding(true);
+    /**
+     * Deletes selected tree item
+     */
+    const deleteTreeItem = (): void => {
+        // set current item as selected
+        setSelectedTreeItem(treeItem);
     };
 
     /**
@@ -106,7 +113,7 @@ export const useTreeItem = <
         changeItemName,
         editTreeItemNameInputRef,
 
-        isAdding,
         addTreeItem,
+        deleteTreeItem,
     ];
 };

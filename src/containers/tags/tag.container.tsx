@@ -5,6 +5,7 @@ import { RootState } from '../../redux/store';
 import {
     createNewTagAction as createTagAction,
     updateTagAction,
+    deleteTagAction as removeTagAction,
 } from '../../redux/tags/action';
 import { Tag } from '../../redux/tags/types';
 
@@ -24,8 +25,8 @@ const stateToProps = (
 const dispatchToProps = {
     createTagAction,
     updateTagAction,
+    removeTagAction,
     // moveTagAction,
-    // deleteTagAction,
 };
 
 export default connect(stateToProps, dispatchToProps)(TagComponent);

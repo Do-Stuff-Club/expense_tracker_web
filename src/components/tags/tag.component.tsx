@@ -18,9 +18,10 @@ type TagComponentProps = {
     tags: Record<number, Tag>;
     root: boolean;
 
-    // TODO: add other actions (move tag, delete tag)
+    // TODO: add other actions (move tag)
     updateTagAction: (data: UpdateTagParams) => Promise<OneTagData | undefined>;
     createTagAction: (data: CreateTagParams) => Promise<OneTagData | undefined>;
+    removeTagAction: (tagId: number) => Promise<OneTagData | undefined>;
 };
 
 // ===================================================================
@@ -40,6 +41,7 @@ const TagComponent = (props: TagComponentProps): JSX.Element => {
         root,
         updateTagAction,
         createTagAction,
+        removeTagAction,
     } = props;
 
     return (
@@ -47,6 +49,7 @@ const TagComponent = (props: TagComponentProps): JSX.Element => {
             treeItem={tag}
             updateTreeItemAction={updateTagAction}
             createTreeItemAction={createTagAction}
+            removeTreeItemAction={removeTagAction}
             expandable={childIds.length > 0}
             isRootItem={root}
         >

@@ -4,19 +4,28 @@
 import Input from '@mui/material/Input';
 import TreeItem from '@mui/lab/TreeItem';
 
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useTreeItem } from '../misc/hooks/useTreeItem.hook';
 import styles from './styles/treeItem.component.module.scss';
 
 // Needed for customizing lab component themes see https://mui.com/components/about-the-lab/#typescript
 import type {} from '@mui/lab/themeAugmentation';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+} from '@mui/material';
 
 type TreeItemType = { id: number; name: string; parentId?: number };
 type TreeItemProps = {
     treeItem: TreeItemType;
     updateTreeItemAction: CallableFunction;
     createTreeItemAction: CallableFunction;
+    removeTreeItemAction: CallableFunction;
 
     isRootItem?: boolean;
     expandable?: boolean;
@@ -82,6 +91,7 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
         children,
         updateTreeItemAction,
         createTreeItemAction,
+        removeTreeItemAction,
     } = props;
 
     // hooks
@@ -92,29 +102,34 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
         updateTreeItem,
         changeTreeItemName,
         editTreeItemNameInputRef,
-        isAdding,
         addTreeItem,
+        deleteTreeItem,
     ] = useTreeItem<TreeItemType, CallableFunction>(treeItem, {
         updateTreeItemAction,
     });
 
+    // state
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
     //#region user action handlers
-    const onTreeItemNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
-        e.stopPropagation();
-        e.preventDefault();
-
-        const name = e.target.value;
-        changeTreeItemName(name);
-    };
-
+    //#region framework action handlers
+    /**
+     * Edit input blur handler
+     */
     const onTreeItemNameInputBlur = (): void => {
         updateTreeItem();
     };
 
+    /**
+     * Edit icon click handler
+     */
     const onEditClick = (): void => {
         editTreeItem();
     };
 
+    /**
+     * Add icon click handler
+     */
     const onAddClick = (): void => {
         addTreeItem();
 
@@ -127,6 +142,59 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
 
         createTreeItemAction(newTreeItem);
     };
+
+    /**
+     * Delete icon click handler
+     */
+    const onDeleteClick = (): void => {
+        deleteTreeItem();
+
+        // show the confirmation dialog
+        openDeleteDialog();
+    };
+    //#endregion
+
+    /**
+     * Updates the name of the selected tree item
+     *
+     * @param {ChangeEvent<HTMLInputElement>} e - input Event
+     */
+    const onTreeItemNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const name = e.target.value;
+        changeTreeItemName(name);
+    };
+
+    //#region delete tree item
+
+    /**
+     * Opens a confirmation dialog for delete action
+     */
+    const openDeleteDialog = (): void => {
+        setShowDeleteDialog(true);
+    };
+
+    /**
+     * Closes the confirmation dialog
+     */
+    const closeDeleteDialog = (): void => {
+        setShowDeleteDialog(false);
+    };
+
+    /**
+     * Removes tree item
+     */
+    const removeTreeItem = (): void => {
+        // close the dialog
+        closeDeleteDialog();
+
+        //remove tree item
+        removeTreeItemAction(treeItem.id);
+    };
+    //#endregion
+
     //#endregion
 
     return (
@@ -172,9 +240,36 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
                                     className={`${styles['et-tree-item-add']} ${styles['et-tree-item-action']}`}
                                 ></div>
                                 <div
+                                    onClick={onDeleteClick}
                                     title='Delete'
                                     className={`${styles['et-tree-item-delete']} ${styles['et-tree-item-action']}`}
                                 ></div>
+                                <Dialog
+                                    open={showDeleteDialog}
+                                    onClose={closeDeleteDialog}
+                                >
+                                    <DialogTitle>Warning</DialogTitle>
+                                    <DialogContent>
+                                        <DialogContentText>
+                                            {`Are you sure you want to delete '${name}' tag. This action is permanent`}
+                                        </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button
+                                            variant='outlined'
+                                            onClick={closeDeleteDialog}
+                                        >
+                                            No
+                                        </Button>
+                                        <Button
+                                            onClick={removeTreeItem}
+                                            variant='outlined'
+                                            color='warning'
+                                        >
+                                            Yes
+                                        </Button>
+                                    </DialogActions>
+                                </Dialog>
                             </div>
                         </>
                     }
