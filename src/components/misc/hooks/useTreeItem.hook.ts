@@ -22,6 +22,7 @@ export const useTreeItem = <
     boolean,
     () => void,
     () => void,
+    () => void,
     (name: string) => void,
     RefObject<HTMLInputElement>,
     () => void,
@@ -53,6 +54,17 @@ export const useTreeItem = <
 
         // enable editing
         setIsEditing(true);
+    };
+
+    /**
+     * Cancels edit mode for changing the name of the tree item
+     */
+    const cancelEditTreeItem = (): void => {
+        // set current item as selected
+        setSelectedTreeItem(undefined); // FIXME double check this
+
+        // enable editing
+        setIsEditing(false);
     };
 
     /**
@@ -109,6 +121,7 @@ export const useTreeItem = <
 
         isEditing,
         editTreeItem,
+        cancelEditTreeItem,
         updateTreeItem,
         changeItemName,
         editTreeItemNameInputRef,

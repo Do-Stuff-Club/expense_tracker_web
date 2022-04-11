@@ -4,7 +4,7 @@
 import Input from '@mui/material/Input';
 import TreeItem from '@mui/lab/TreeItem';
 
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, MouseEvent } from 'react';
 import { useTreeItem } from '../misc/hooks/useTreeItem.hook';
 import styles from './styles/treeItem.component.module.scss';
 
@@ -99,6 +99,7 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
         selectedTreeItem,
         isEditing,
         editTreeItem,
+        cancelEditTreeItem,
         updateTreeItem,
         changeTreeItemName,
         editTreeItemNameInputRef,
@@ -117,7 +118,33 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
      * Edit input blur handler
      */
     const onTreeItemNameInputBlur = (): void => {
+        cancelEditTreeItem(); // FIXME review this
+    };
+
+    /**
+     * Prevent onBlurs from occuring before button clicks when editing a tree item.
+     * Without this, onBlur() gets called before onClick() handlers for edit submit and cancel,
+     * rendering those buttons useless.
+     *
+     * @param e {MouseEvent} - The event object for MouseDown
+     */
+    const onTreeItemEditMouseDown = (e: MouseEvent<HTMLDivElement>): void => {
+        e.preventDefault();
+    };
+
+    /**
+     * Edit input submit handler
+     */
+    const onTreeItemNameInputSubmit = (): void => {
         updateTreeItem();
+    };
+
+    /**
+     * Edit input submit handler
+     */
+    const onTreeItemNameInputCancel = (): void => {
+        console.log('goodbye');
+        cancelEditTreeItem();
     };
 
     /**
@@ -205,72 +232,118 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
                     nodeId={treeItem.id.toString()}
                     label={
                         <>
-                            <div className={styles['et-tree-item-name']}>
-                                {isEditing ? (
-                                    <Input
+                            {isEditing ? (
+                                <>
+                                    <div
+                                        className={styles['et-tree-item-name']}
+                                    >
+                                        <Input
+                                            className={
+                                                styles[
+                                                    'et-tree-item-name-input'
+                                                ]
+                                            }
+                                            inputRef={editTreeItemNameInputRef}
+                                            value={selectedTreeItem?.name}
+                                            onChange={onTreeItemNameChange}
+                                            onBlur={onTreeItemNameInputBlur}
+                                        />
+                                    </div>
+                                    <div
                                         className={
-                                            styles['et-tree-item-name-input']
+                                            styles['et-tree-item-actions']
                                         }
-                                        inputRef={editTreeItemNameInputRef}
-                                        value={selectedTreeItem?.name}
-                                        onChange={onTreeItemNameChange}
-                                        onBlur={onTreeItemNameInputBlur}
-                                    />
-                                ) : (
-                                    name
-                                )}
-                            </div>
-                            <div className={styles['et-tree-item-actions']}>
-                                <div
-                                    onClick={onEditClick}
-                                    title='Edit'
-                                    className={`${
-                                        styles['et-tree-item-edit']
-                                    } ${styles['et-tree-item-action']} ${
-                                        isEditing
-                                            ? styles[
-                                                  'et-tree-item-action-active'
-                                              ]
-                                            : ''
-                                    }`}
-                                ></div>
-                                <div
-                                    onClick={onAddClick}
-                                    title='Add'
-                                    className={`${styles['et-tree-item-add']} ${styles['et-tree-item-action']}`}
-                                ></div>
-                                <div
-                                    onClick={onDeleteClick}
-                                    title='Delete'
-                                    className={`${styles['et-tree-item-delete']} ${styles['et-tree-item-action']}`}
-                                ></div>
-                                <Dialog
-                                    open={showDeleteDialog}
-                                    onClose={closeDeleteDialog}
-                                >
-                                    <DialogTitle>Warning</DialogTitle>
-                                    <DialogContent>
-                                        <DialogContentText>
-                                            {`Are you sure you want to delete '${name}' tag. This action is permanent`}
-                                        </DialogContentText>
-                                    </DialogContent>
-                                    <DialogActions>
-                                        <Button
-                                            variant='outlined'
-                                            onClick={closeDeleteDialog}
+                                        onMouseDown={onTreeItemEditMouseDown}
+                                    >
+                                        <div
+                                            onClick={onTreeItemNameInputSubmit}
+                                            title='Submit'
+                                            className={`${
+                                                styles['et-tree-item-edit-done']
+                                            } ${
+                                                styles['et-tree-item-action']
+                                            } ${
+                                                isEditing
+                                                    ? styles[
+                                                          'et-tree-item-action-active'
+                                                      ]
+                                                    : ''
+                                            }`}
+                                        ></div>
+                                        <div
+                                            onClick={onTreeItemNameInputCancel}
+                                            title='Cancel'
+                                            className={`${styles['et-tree-item-edit-cancel']} ${styles['et-tree-item-action']}`}
+                                        ></div>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div
+                                        className={styles['et-tree-item-name']}
+                                        onDoubleClick={onEditClick}
+                                    >
+                                        {name}
+                                    </div>
+                                    <div
+                                        className={
+                                            styles['et-tree-item-actions']
+                                        }
+                                    >
+                                        <div
+                                            onClick={onEditClick}
+                                            title='Edit'
+                                            className={`${
+                                                styles['et-tree-item-edit']
+                                            } ${
+                                                styles['et-tree-item-action']
+                                            } ${
+                                                isEditing
+                                                    ? styles[
+                                                          'et-tree-item-action-active'
+                                                      ]
+                                                    : ''
+                                            }`}
+                                        ></div>
+                                        <div
+                                            onClick={onAddClick}
+                                            title='Add'
+                                            className={`${styles['et-tree-item-add']} ${styles['et-tree-item-action']}`}
+                                        ></div>
+                                        <div
+                                            onClick={onDeleteClick}
+                                            title='Delete'
+                                            className={`${styles['et-tree-item-delete']} ${styles['et-tree-item-action']}`}
+                                        ></div>
+                                        <Dialog
+                                            open={showDeleteDialog}
+                                            onClose={closeDeleteDialog}
                                         >
-                                            No
-                                        </Button>
-                                        <Button
-                                            onClick={removeTreeItem}
-                                            variant='outlined'
-                                            color='warning'
-                                        >
-                                            Yes
-                                        </Button>
-                                    </DialogActions>
-                                </Dialog>
-                            </div>
+                                            <DialogTitle>Warning</DialogTitle>
+                                            <DialogContent>
+                                                <DialogContentText>
+                                                    {`Are you sure you want to delete '${name}' tag. This action is permanent`}
+                                                </DialogContentText>
+                                            </DialogContent>
+                                            <DialogActions>
+                                                <Button
+                                                    variant='outlined'
+                                                    onClick={closeDeleteDialog}
+                                                >
+                                                    No
+                                                </Button>
+                                                <Button
+                                                    onClick={removeTreeItem}
+                                                    variant='outlined'
+                                                    color='warning'
+                                                >
+                                                    Yes
+                                                </Button>
+                                            </DialogActions>
+                                        </Dialog>
+                                    </div>
+                                </>
+                            )}
                         </>
                     }
                 >

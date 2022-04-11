@@ -49,6 +49,14 @@
             & > .et-tree-item-delete {
                 @include delete-icon;
             }
+
+            & > .et-tree-item-edit-done {
+                @include checkmark-icon;
+            }
+
+            & > .et-tree-item-edit-cancel {
+                @include x-icon;
+            }
         }
     }
 }
