@@ -148,7 +148,7 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
      *
      * TODO maybe factor this out into a custom hook?
      *
-     * @param {KeyboardDown} e - The event object for KeyDown
+     * @param {KeyboardEvent} e - The event object for KeyDown
      */
     const onTreeItemEditKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
         if (e.key === 'Escape') onTreeItemNameInputCancel();
