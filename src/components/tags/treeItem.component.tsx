@@ -4,7 +4,7 @@
 import Input from '@mui/material/Input';
 import TreeItem from '@mui/lab/TreeItem';
 
-import React, { ChangeEvent, useState, MouseEvent } from 'react';
+import React, { ChangeEvent, useState, MouseEvent, KeyboardEvent } from 'react';
 import { useTreeItem } from '../misc/hooks/useTreeItem.hook';
 import styles from './styles/treeItem.component.module.scss';
 
@@ -126,10 +126,32 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
      * Without this, onBlur() gets called before onClick() handlers for edit submit and cancel,
      * rendering those buttons useless.
      *
-     * @param e {MouseEvent} - The event object for MouseDown
+     * @param {MouseEvent} e - The event object for MouseDown
      */
     const onTreeItemEditMouseDown = (e: MouseEvent<HTMLDivElement>): void => {
         e.preventDefault();
+    };
+
+    /**
+     * Submit edits when pressing "Enter"
+     * TODO maybe factor this out into a custom hook?
+     *
+     * @param {KeyboardEvent} e - The event object for KeyPress
+     */
+    const onTreeItemEditKeyPress = (e: KeyboardEvent<HTMLDivElement>): void => {
+        if (e.key === 'Enter') onTreeItemNameInputSubmit();
+    };
+
+    /**
+     * Cancel edits when pressing "ESC." Needs to be KeyDown instead of KeyPress:
+     * https://stackoverflow.com/questions/46878707/how-do-i-detect-the-keyboardevent-for-the-escape-key
+     *
+     * TODO maybe factor this out into a custom hook?
+     *
+     * @param {KeyboardDown} e - The event object for KeyDown
+     */
+    const onTreeItemEditKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
+        if (e.key === 'Escape') onTreeItemNameInputCancel();
     };
 
     /**
@@ -143,7 +165,6 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
      * Edit input submit handler
      */
     const onTreeItemNameInputCancel = (): void => {
-        console.log('goodbye');
         cancelEditTreeItem();
     };
 
@@ -236,6 +257,8 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
                                 <>
                                     <div
                                         className={styles['et-tree-item-name']}
+                                        onKeyPress={onTreeItemEditKeyPress} // Handler for Enter
+                                        onKeyDown={onTreeItemEditKeyDown} // Handler for ESC
                                     >
                                         <Input
                                             className={
@@ -254,21 +277,13 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
                                             styles['et-tree-item-actions']
                                         }
                                         onMouseDown={onTreeItemEditMouseDown}
+                                        onKeyPress={onTreeItemEditKeyPress}
                                     >
                                         <div
                                             onClick={onTreeItemNameInputSubmit}
                                             title='Submit'
-                                            className={`${
-                                                styles['et-tree-item-edit-done']
-                                            } ${
-                                                styles['et-tree-item-action']
-                                            } ${
-                                                isEditing
-                                                    ? styles[
-                                                          'et-tree-item-action-active'
-                                                      ]
-                                                    : ''
-                                            }`}
+                                            className={`${styles['et-tree-item-edit-done']} ${styles['et-tree-item-action']} 
+                                            `}
                                         ></div>
                                         <div
                                             onClick={onTreeItemNameInputCancel}
