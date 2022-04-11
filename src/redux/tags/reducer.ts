@@ -26,12 +26,17 @@ export default function tag(
         case TagActionTypes.GET_TAGS_INIT:
             return { ...defaultTagState, loading: true };
         case TagActionTypes.GET_TAGS_SUCCESS: {
+            console.log(action.payload.tags);
             const rootIds = [...state.rootIds];
 
-            const map = action.payload.tags.reduce((prev: Tag, curr: Tag) => ({
-                ...prev,
-                [curr.id]: curr,
-            }));
+            const map = action.payload.tags.reduce(
+                // acc stands for "accumulator," more commonly used in OCaml and other functional languages
+                (acc: Record<number, Tag>, curr: Tag) => ({
+                    ...acc,
+                    [curr.id]: curr,
+                }),
+                {},
+            );
 
             action.payload.tags.forEach((tag) => {
                 if (tag.parentId === null && !rootIds.includes(tag.id)) {
