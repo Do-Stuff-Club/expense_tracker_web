@@ -26,7 +26,6 @@ export default function tag(
         case TagActionTypes.GET_TAGS_INIT:
             return { ...defaultTagState, loading: true };
         case TagActionTypes.GET_TAGS_SUCCESS: {
-            console.log(action.payload.tags);
             const rootIds = [...state.rootIds];
 
             const map = action.payload.tags.reduce(

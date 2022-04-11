@@ -143,15 +143,32 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
     };
 
     /**
-     * Cancel edits when pressing "ESC." Needs to be KeyDown instead of KeyPress:
+     * Cancel edits when pressing "ESC"
+     *
+     * Needs to be KeyDown instead of KeyPress:
      * https://stackoverflow.com/questions/46878707/how-do-i-detect-the-keyboardevent-for-the-escape-key
      *
      * TODO maybe factor this out into a custom hook?
      *
      * @param {KeyboardEvent} e - The event object for KeyDown
      */
-    const onTreeItemEditKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
+    const onTreeItemEditEsc = (e: KeyboardEvent<HTMLDivElement>): void => {
         if (e.key === 'Escape') onTreeItemNameInputCancel();
+    };
+
+    /**
+     * Show delete prompt when pressing "DEL"
+     *
+     * Needs to be KeyDown instead of KeyPress:
+     * https://stackoverflow.com/questions/46878707/how-do-i-detect-the-keyboardevent-for-the-escape-key
+     *
+     * TODO maybe factor this out into a custom hook?
+     *
+     * @param {KeyboardEvent} e - The event object for KeyDown
+     */
+    const onTreeItemDel = (e: KeyboardEvent<HTMLDivElement>): void => {
+        console.log(e.key);
+        if (e.key === 'Delete') onDeleteClick();
     };
 
     /**
@@ -258,7 +275,7 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
                                     <div
                                         className={styles['et-tree-item-name']}
                                         onKeyPress={onTreeItemEditKeyPress} // Handler for Enter
-                                        onKeyDown={onTreeItemEditKeyDown} // Handler for ESC
+                                        onKeyDown={onTreeItemEditEsc} // Handler for ESC
                                     >
                                         <Input
                                             className={
@@ -297,6 +314,8 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
                                     <div
                                         className={styles['et-tree-item-name']}
                                         onDoubleClick={onEditClick}
+                                        onKeyDown={onTreeItemDel}
+                                        tabIndex={0}
                                     >
                                         {name}
                                     </div>
