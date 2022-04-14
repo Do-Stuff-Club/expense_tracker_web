@@ -14,6 +14,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 type TagTreeViewProps = {
     tags: TagState;
     onSelect?: (tag?: Tag) => void;
+    edit?: boolean;
 };
 
 /**

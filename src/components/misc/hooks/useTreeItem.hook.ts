@@ -1,5 +1,12 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 
+export enum TreeItemState {
+    DEFAULT, // Default state
+    EDIT, // Edit mode
+    CREATE, // Creating new child tag
+    // TODO should delete be in here?
+}
+
 /* eslint-disable jsdoc/no-undefined-types */
 /**
  * Custom hook that takes care of tree item actions
@@ -11,36 +18,51 @@ import { RefObject, useEffect, useRef, useState } from 'react';
  */
 export const useTreeItem = <
     TreeItemType extends { id: number; name: string; parentId?: number },
+    ChildTreeItemType extends { id: number; name: string; parentId: number },
     UpdateActionType extends CallableFunction
 >(
     treeItem: TreeItemType,
+    childTreeItem: ChildTreeItemType,
     actions: {
         updateTreeItemAction: UpdateActionType;
+        createTreeItemAction: UpdateActionType;
     },
 ): [
     TreeItemType | undefined,
-    boolean,
+    ChildTreeItemType | undefined,
+    TreeItemState,
+    () => void,
     () => void,
     () => void,
     () => void,
     (name: string) => void,
     RefObject<HTMLInputElement>,
+    RefObject<HTMLInputElement>,
+    () => void,
+    (name: string) => void,
     () => void,
     () => void,
 ] => {
     // used for auto focusing
     const editTreeItemNameInputRef = useRef<HTMLInputElement>(null);
+    const createTreeItemNameInputRef = useRef<HTMLInputElement>(null);
 
     // states
     const [selectedTreeItem, setSelectedTreeItem] = useState<
         TreeItemType | undefined
     >(undefined);
-    const [isEditing, setIsEditing] = useState(false);
+    const [selectedChildTreeItem, setSelectedChildTreeItem] = useState<
+        ChildTreeItemType | undefined
+    >(undefined);
+    const [state, setState] = useState(TreeItemState.DEFAULT);
 
     // focus the tree item name input once input gets rendered
     useEffect(() => {
         editTreeItemNameInputRef?.current?.focus();
-    }, [isEditing]);
+    }, [state == TreeItemState.EDIT]);
+    useEffect(() => {
+        createTreeItemNameInputRef?.current?.focus();
+    }, [state == TreeItemState.CREATE]);
 
     // TODO: Can be a separate hook
     //#region Update tree item name
@@ -53,7 +75,7 @@ export const useTreeItem = <
         setSelectedTreeItem(treeItem);
 
         // enable editing
-        setIsEditing(true);
+        setState(TreeItemState.EDIT);
     };
 
     /**
@@ -63,8 +85,8 @@ export const useTreeItem = <
         // set current item as selected
         setSelectedTreeItem(undefined); // FIXME double check this
 
-        // enable editing
-        setIsEditing(false);
+        // disable editing
+        setState(TreeItemState.DEFAULT);
     };
 
     /**
@@ -73,6 +95,21 @@ export const useTreeItem = <
     const addTreeItem = (): void => {
         // set current item as selected
         setSelectedTreeItem(treeItem);
+        setSelectedChildTreeItem(childTreeItem);
+
+        setState(TreeItemState.CREATE);
+    };
+
+    /**
+     * Cancels add mode for creating new child tree item
+     */
+    const cancelCreateTreeItem = (): void => {
+        // set current item as selected
+        setSelectedTreeItem(undefined); // FIXME double check this
+        setSelectedChildTreeItem(undefined); // FIXME double check this
+
+        // disable editing
+        setState(TreeItemState.DEFAULT);
     };
 
     /**
@@ -94,6 +131,16 @@ export const useTreeItem = <
     };
 
     /**
+     * Changes name of the tree item
+     *
+     * @param {string} name - New name of the tree item
+     */
+    const changeCreateItemName = (name: string): void => {
+        if (selectedChildTreeItem)
+            setSelectedChildTreeItem({ ...childTreeItem, name });
+    };
+
+    /**
      * Updates the tree item by called a store action
      */
     const updateTreeItem = (): void => {
@@ -105,28 +152,52 @@ export const useTreeItem = <
             updateTreeItemAction({
                 id: selectedTreeItem.id,
                 name: selectedTreeItem.name,
-                parent_id: selectedTreeItem.parentId,
+                parentId: selectedTreeItem.parentId,
             });
         }
 
         // unselect the tree item and close editing mode
         setSelectedTreeItem(undefined);
-        setIsEditing(false);
+        setState(TreeItemState.DEFAULT);
     };
 
     //#endregion
 
+    /**
+     * Creates the tree item by called a store action
+     */
+    const createTreeItem = (): void => {
+        const { createTreeItemAction } = actions;
+        // TODO gotta review this condition and figure out if error messages are needed
+        if (selectedChildTreeItem && selectedChildTreeItem.name.trim() != '')
+            createTreeItemAction({
+                name: selectedChildTreeItem.name,
+                parentId: selectedChildTreeItem.parentId,
+            });
+        console.log(selectedChildTreeItem?.parentId);
+
+        // unselect the tree item and close editing mode
+        setSelectedTreeItem(undefined);
+        setSelectedChildTreeItem(undefined);
+        setState(TreeItemState.DEFAULT);
+    };
+
     return [
         selectedTreeItem,
+        selectedChildTreeItem,
 
-        isEditing,
+        state,
         editTreeItem,
         cancelEditTreeItem,
         updateTreeItem,
+        createTreeItem,
         changeItemName,
         editTreeItemNameInputRef,
+        createTreeItemNameInputRef,
 
         addTreeItem,
+        changeCreateItemName,
+        cancelCreateTreeItem,
         deleteTreeItem,
     ];
 };

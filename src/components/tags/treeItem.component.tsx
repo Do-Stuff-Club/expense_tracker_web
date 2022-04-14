@@ -5,7 +5,7 @@ import Input from '@mui/material/Input';
 import TreeItem from '@mui/lab/TreeItem';
 
 import React, { ChangeEvent, useState, MouseEvent, KeyboardEvent } from 'react';
-import { useTreeItem } from '../misc/hooks/useTreeItem.hook';
+import { TreeItemState, useTreeItem } from '../misc/hooks/useTreeItem.hook';
 import styles from './styles/treeItem.component.module.scss';
 
 // Needed for customizing lab component themes see https://mui.com/components/about-the-lab/#typescript
@@ -21,6 +21,7 @@ import {
 } from '@mui/material';
 
 type TreeItemType = { id: number; name: string; parentId?: number };
+type ChildTreeItemType = { id: number; name: string; parentId: number };
 type TreeItemProps = {
     treeItem: TreeItemType;
     updateTreeItemAction: CallableFunction;
@@ -97,17 +98,27 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
     // hooks
     const [
         selectedTreeItem,
-        isEditing,
+        selectedChildTreeItem,
+        state,
         editTreeItem,
         cancelEditTreeItem,
         updateTreeItem,
+        createTreeItem,
         changeTreeItemName,
         editTreeItemNameInputRef,
+        createTreeItemNameInputRef,
         addTreeItem,
+        changeCreateItemName,
+        cancelCreateTreeItem,
         deleteTreeItem,
-    ] = useTreeItem<TreeItemType, CallableFunction>(treeItem, {
-        updateTreeItemAction,
-    });
+    ] = useTreeItem<TreeItemType, ChildTreeItemType, CallableFunction>(
+        treeItem,
+        { name: '', id: -1, parentId: treeItem.id },
+        {
+            updateTreeItemAction,
+            createTreeItemAction,
+        },
+    );
 
     // state
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -197,15 +208,6 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
      */
     const onAddClick = (): void => {
         addTreeItem();
-
-        // add new tree item
-        const newTreeItem: TreeItemType = {
-            name: `${name} - Child ${(children?.length ?? 0) + 1}`,
-            id: -1, // not used, can be anything
-            parentId: treeItem.id,
-        };
-
-        createTreeItemAction(newTreeItem);
     };
 
     /**
@@ -231,6 +233,63 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
         const name = e.target.value;
         changeTreeItemName(name);
     };
+
+    //#region create tree item
+    /**
+     * Create input submit handler
+     */
+    const onCreateTreeItemNameInputSubmit = (): void => {
+        createTreeItem();
+    };
+
+    /**
+     * Create input submit handler
+     */
+    const onCreateTreeItemNameInputCancel = (): void => {
+        console.log('cancel create');
+        cancelCreateTreeItem();
+    };
+
+    const onTreeItemCreateKeyPress = (
+        e: KeyboardEvent<HTMLDivElement>,
+    ): void => {
+        if (e.key === 'Enter') onCreateTreeItemNameInputSubmit();
+    };
+
+    /**
+     * Cancel edits when pressing "ESC"
+     *
+     * Needs to be KeyDown instead of KeyPress:
+     * https://stackoverflow.com/questions/46878707/how-do-i-detect-the-keyboardevent-for-the-escape-key
+     *
+     * TODO maybe factor this out into a custom hook?
+     *
+     * @param {KeyboardEvent} e - The event object for KeyDown
+     */
+    const onTreeItemCreateEsc = (e: KeyboardEvent<HTMLDivElement>): void => {
+        if (e.key === 'Escape') onCreateTreeItemNameInputCancel();
+    };
+
+    const onTreeItemCreateMouseDown = (e: MouseEvent<HTMLDivElement>): void => {
+        e.preventDefault();
+    };
+
+    const onCreateTreeItemNameChange = (
+        e: ChangeEvent<HTMLInputElement>,
+    ): void => {
+        console.log('changing child name');
+        e.stopPropagation();
+        e.preventDefault();
+
+        const name = e.target.value;
+        changeCreateItemName(name);
+    };
+
+    const onCreateTreeItemNameInputBlur = (): void => {
+        cancelEditTreeItem(); // FIXME review this
+    };
+
+    //#endregion
 
     //#region delete tree item
 
@@ -261,7 +320,57 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
     //#endregion
 
     //#endregion
+    const createChild = (
+        <div
+            className={styles['et-tree-item-container']}
+            key={treeItem.id.toString() + '_new_child'}
+        >
+            <TreeItem
+                className={styles['et-tree-item']}
+                nodeId={treeItem.id.toString() + '_new_child'}
+                label={
+                    <>
+                        <div
+                            className={styles['et-tree-item-name']}
+                            onKeyPress={onTreeItemCreateKeyPress} // Handler for Enter
+                            onKeyDown={onTreeItemCreateEsc} // Handler for ESC
+                        >
+                            <Input
+                                className={styles['et-tree-item-name-input']}
+                                inputRef={createTreeItemNameInputRef}
+                                value={selectedChildTreeItem?.name}
+                                onChange={onCreateTreeItemNameChange}
+                                onBlur={onCreateTreeItemNameInputBlur}
+                            />
+                        </div>
+                        <div
+                            className={styles['et-tree-item-actions']}
+                            onMouseDown={onTreeItemCreateMouseDown}
+                            onKeyPress={onTreeItemCreateKeyPress}
+                        >
+                            <div
+                                onClick={onCreateTreeItemNameInputSubmit}
+                                title='Submit'
+                                className={`${styles['et-tree-item-edit-done']} ${styles['et-tree-item-action']} 
+                                            `}
+                            ></div>
+                            <div
+                                onClick={onCreateTreeItemNameInputCancel}
+                                title='Cancel'
+                                className={`${styles['et-tree-item-edit-cancel']} ${styles['et-tree-item-action']}`}
+                            ></div>
+                        </div>
+                    </>
+                }
+            ></TreeItem>
+        </div>
+    );
+    const treeChildren =
+        state == TreeItemState.CREATE
+            ? [createChild, ...(children || [])] // funny trick since children can be undefined
+            : children;
 
+    console.log(state);
     return (
         <ThemeProvider theme={theme}>
             <div className={styles['et-tree-item-container']}>
@@ -270,7 +379,7 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
                     nodeId={treeItem.id.toString()}
                     label={
                         <>
-                            {isEditing ? (
+                            {state == TreeItemState.EDIT ? (
                                 <>
                                     <div
                                         className={styles['et-tree-item-name']}
@@ -327,17 +436,7 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
                                         <div
                                             onClick={onEditClick}
                                             title='Edit'
-                                            className={`${
-                                                styles['et-tree-item-edit']
-                                            } ${
-                                                styles['et-tree-item-action']
-                                            } ${
-                                                isEditing
-                                                    ? styles[
-                                                          'et-tree-item-action-active'
-                                                      ]
-                                                    : ''
-                                            }`}
+                                            className={`${styles['et-tree-item-edit']} ${styles['et-tree-item-action']} `}
                                         ></div>
                                         <div
                                             onClick={onAddClick}
@@ -381,7 +480,7 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
                         </>
                     }
                 >
-                    {children}
+                    {treeChildren}
                 </TreeItem>
             </div>
         </ThemeProvider>
