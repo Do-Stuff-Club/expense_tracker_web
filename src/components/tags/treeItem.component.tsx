@@ -341,6 +341,7 @@ const TreeItemComponent = (props: TreeItemProps): JSX.Element => {
                                 value={selectedChildTreeItem?.name}
                                 onChange={onCreateTreeItemNameChange}
                                 onBlur={onCreateTreeItemNameInputBlur}
+                                placeholder='Type new tag name here'
                             />
                         </div>
                         <div
