@@ -2,7 +2,7 @@ import { Tag } from '../../redux/tags/types';
 
 export type CreateTagParams = {
     name: string;
-    parent_id?: number;
+    parentId?: number;
 };
 
 export type UpdateTagParams = CreateTagParams & {

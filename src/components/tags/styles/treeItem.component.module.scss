@@ -1,0 +1,182 @@
+@import '../../styles/icons.scss';
+
+.et-tree-item-container {
+    display: flex;
+    width: 100%;
+
+    & > .et-tree-item {
+        // display: flex;
+        width: 100%;
+        align-items: center;
+
+        & .et-tree-item-name {
+            font-size: 12pt;
+
+            font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+
+            & > .et-tree-item-name-input {
+                z-index: 10;
+            }
+        }
+
+        & .et-tree-item-actions {
+            visibility: hidden;
+            display: flex;
+            padding: 0 1rem;
+
+            & > .et-tree-item-action {
+                margin: 0 0.3rem;
+                width: 1rem;
+                height: 1rem;
+
+                &:hover {
+                    opacity: 0.6;
+                }
+
+                &.et-tree-item-action-active {
+                    opacity: 1;
+                }
+            }
+
+            & > .et-tree-item-edit {
+                @include edit-icon;
+            }
+
+            & > .et-tree-item-add {
+                @include add-icon;
+            }
+
+            & > .et-tree-item-delete {
+                @include delete-icon;
+            }
+
+            & > .et-tree-item-edit-done {
+                @include checkmark-icon;
+            }
+
+            & > .et-tree-item-edit-cancel {
+                @include x-icon;
+            }
+        }
+    }
+}
+
+//TODO: refactor this scss
+/*
+.et-tree-item-container {
+    display: flex;
+    width: 100%;
+
+    & .et-tree-item-content {
+        display: flex;
+        flex-direction: column;
+
+        width: 100%;
+        cursor: pointer;
+
+        & > .et-tree-item {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            padding: 0.2em 0;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.04);
+
+                & > .et-tree-item-actions {
+                    visibility: visible;
+                }
+            }
+
+            &:focus-within {
+                background-color: rgba(0, 0, 0, 0.12);
+
+                & > .et-tree-item-actions {
+                    visibility: visible;
+                }
+            }
+
+            & > .et-tree-item-indicator {
+                display: flex;
+                align-items: center;
+                width: 100%;
+
+                width: 1.2rem;
+                margin: 0 0.3rem;
+
+                & > .et-tree-item-indicator-icon {
+                    &.icon-chevron-right {
+                        @include chevron-right;
+                        transition: transform 200ms
+                            cubic-bezier(0.42, 0, 0.15, 1.4);
+
+                        &.expanded {
+                            transform: rotate(90deg);
+                        }
+                    }
+                    &.icon-child-tree-item {
+                        @include child-tree-item;
+                    }
+                }
+            }
+
+            & > .et-tree-item-name {
+                font-size: 12pt;
+
+                font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+
+                & > .et-tree-item-name-input {
+                    z-index: 10;
+                }
+            }
+
+            & > .et-tree-item-actions {
+                visibility: hidden;
+                display: flex;
+                padding: 0 1rem;
+
+                & > .et-tree-item-action {
+                    margin: 0 0.3rem;
+                    width: 1rem;
+                    height: 1rem;
+
+                    &:hover {
+                        opacity: 0.6;
+                    }
+
+                    &.et-tree-item-action-active {
+                        opacity: 1;
+                    }
+                }
+
+                & > .et-tree-item-edit {
+                    @include edit-icon;
+                }
+
+                & > .et-tree-item-add {
+                    @include add-icon;
+                }
+
+                & > .et-tree-item-delete {
+                    @include delete-icon;
+                }
+            }
+        }
+
+        & > .et-tree-item-children-container {
+            &.expanded {
+                visibility: visible;
+            }
+
+            display: flex;
+            flex-direction: column;
+            margin-left: 1rem;
+            overflow: hidden;
+
+            transition: all 200ms;
+            visibility: collapse;
+            height: 0;
+        }
+    }
+}
+*/

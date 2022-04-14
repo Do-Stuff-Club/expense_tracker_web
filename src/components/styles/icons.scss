@@ -1,0 +1,44 @@
+$icons: url('../../assets/icons.png');
+$icons_Hi-Res: url('../../assets/icons_Hi-Res.png');
+
+@mixin iconAsBackground($left, $top, $opacity: 1) {
+    object-fit: none;
+    background: $icons_Hi-Res;
+    width: 48px;
+    height: 48px;
+    background-position: $left $top;
+    zoom: 0.45;
+    opacity: $opacity;
+}
+
+// tree item action icons
+// Each icon in the picture is 36px x 36px, so use increments of 36px to find the right coordinates for your icon
+@mixin edit-icon {
+    @include iconAsBackground(-324px * 2, -252px * 2, 0.3);
+}
+
+@mixin add-icon {
+    @include iconAsBackground(-360px * 2, -540px * 2, 0.3);
+}
+
+@mixin delete-icon {
+    @include iconAsBackground(-36px * 2, -720px * 2, 0.3);
+}
+
+@mixin checkmark-icon {
+    @include iconAsBackground(-288px * 2, -108px * 2, 0.3);
+}
+
+@mixin x-icon {
+    @include iconAsBackground(-324px * 2, -792px * 2, 0.3);
+}
+
+// tree view indicator icons
+@mixin chevron-right {
+    @include iconAsBackground(-36px * 2, -144px * 2);
+}
+
+@mixin child-tree-item {
+    @include iconAsBackground(0, -144px * 2);
+    transform: rotate(-45deg);
+}

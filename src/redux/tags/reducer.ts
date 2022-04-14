@@ -20,7 +20,7 @@ export default function tag(
     state = defaultTagState,
     action: TagAction,
 ): TagState {
-    console.log('In Tag Reducer!');
+    // TODO: this console should be excluded from the prod build
     console.log(action);
     switch (action.type) {
         case TagActionTypes.GET_TAGS_INIT:
@@ -28,10 +28,14 @@ export default function tag(
         case TagActionTypes.GET_TAGS_SUCCESS: {
             const rootIds = [...state.rootIds];
 
-            const map = action.payload.tags.reduce((prev: Tag, curr: Tag) => ({
-                ...prev,
-                [curr.id]: curr,
-            }));
+            const map = action.payload.tags.reduce(
+                // acc stands for "accumulator," more commonly used in OCaml and other functional languages
+                (acc: Record<number, Tag>, curr: Tag) => ({
+                    ...acc,
+                    [curr.id]: curr,
+                }),
+                {},
+            );
 
             action.payload.tags.forEach((tag) => {
                 if (tag.parentId === null && !rootIds.includes(tag.id)) {

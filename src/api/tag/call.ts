@@ -69,8 +69,8 @@ export async function createTagCall(
         const recordParams: Record<string, string> = {
             name: params.name,
         };
-        if (params.parent_id)
-            recordParams['parent_id'] = params.parent_id.toString();
+        if (params.parentId)
+            recordParams['parent_id'] = params.parentId.toString();
         const paramString = new URLSearchParams(recordParams);
 
         const data = await post<TagResponse>(
@@ -99,7 +99,7 @@ export async function updateTagCall(
 ): Promise<OneTagData> {
     try {
         const data = await put<TagResponse>(
-            `/tags/${params.id}?name=${params.name}&=${params.parent_id}`,
+            `/tags/${params.id}?name=${params.name}&=${params.parentId}`,
             {},
             undefined,
         );

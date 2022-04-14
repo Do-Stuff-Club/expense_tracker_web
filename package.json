@@ -36,6 +36,7 @@
         "redux": "^4.0.5",
         "redux-devtools-extension": "^2.13.8",
         "redux-thunk": "^2.3.0",
+        "sass": "^1.49.9",
         "seedrandom": "^3.0.5",
         "whatwg-fetch": "^3.6.2",
         "yup": "^0.32.9"

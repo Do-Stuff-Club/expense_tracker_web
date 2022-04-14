@@ -23,7 +23,6 @@ export default function withAuth<BaseProps>(
     const component: React.ComponentType<BaseProps> = (
         props: BaseProps,
     ): JSX.Element => {
-        console.log('Cookies!');
         const router = useRouter();
         useEffect(() => {
             if (!isAuthenticated()) {

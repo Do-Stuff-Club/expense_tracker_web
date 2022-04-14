@@ -104,7 +104,7 @@ export default function TagActionDrawer(
 
         createNewTagAction({
             name: formState.name,
-            parent_id: selectedTag ? selectedTag.id : undefined,
+            parentId: selectedTag ? selectedTag.id : undefined,
         });
     };
 
@@ -113,7 +113,7 @@ export default function TagActionDrawer(
         if (selectedTag !== undefined) {
             updateTagAction({
                 name: formState.name,
-                parent_id: selectedTag?.parentId,
+                parentId: selectedTag?.parentId,
                 id: selectedTag.id,
             });
         }
